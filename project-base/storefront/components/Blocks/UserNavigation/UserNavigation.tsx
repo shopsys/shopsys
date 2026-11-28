@@ -14,7 +14,7 @@ export const UserNavigation: FC = () => {
                 <UserMenu hideFocusTrap className="hidden lg:flex" />
             </div>
 
-            <Button className="w-full lg:hidden" variant="secondary" onClick={() => setIsUserMenuOpen(true)}>
+            <Button className="w-full lg:hidden" variant="outline" onClick={() => setIsUserMenuOpen(true)}>
                 <MenuIcon className="size-4" />
                 {t('My menu')}
             </Button>

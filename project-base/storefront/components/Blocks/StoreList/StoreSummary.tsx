@@ -3,6 +3,7 @@ import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDate
 import { OpeningHoursOfPickupDay } from 'components/Blocks/OpeningHours/OpeningHoursOfPickupDay';
 import OpeningHoursToday from 'components/Blocks/OpeningHours/OpeningHoursToday';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { ChoiceIndicator } from 'components/Forms/Lib/ChoiceIndicator';
 import { TIDs } from 'cypress/tids';
 import { type KeyboardEvent, type MouseEvent } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -75,7 +76,7 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
             onClick={onClick}
             onKeyDown={onKeyDown}
         >
-            {isSelectionMode && <StoreSelectionIndicator isSelected={isSelected} />}
+            {isSelectionMode && <ChoiceIndicator checked={isSelected} inputType="radio" />}
 
             <div className="flex flex-1 flex-col justify-between gap-1 md:flex-row md:gap-4">
                 <div className="flex flex-col gap-1">
@@ -134,20 +135,3 @@ export const StoreSummary: FC<StoreSummaryProps> = ({
         </div>
     );
 };
-
-const StoreSelectionIndicator: FC<{ isSelected: boolean }> = ({ isSelected }) => (
-    <span
-        aria-hidden="true"
-        className={twMergeCustom(
-            'flex size-5 min-w-5 rounded-full border-2 bg-input-bg-default p-1.25 transition xl:mt-0',
-            isSelected ? 'border-input-border-active bg-input-fill' : 'border-input-border-default',
-        )}
-    >
-        <span
-            className={twMergeCustom(
-                'h-full w-full rounded-full bg-icon-inverted opacity-0 transition',
-                isSelected && 'opacity-100',
-            )}
-        />
-    </span>
-);

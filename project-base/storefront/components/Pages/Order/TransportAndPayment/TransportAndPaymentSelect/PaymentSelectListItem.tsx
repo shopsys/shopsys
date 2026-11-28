@@ -57,7 +57,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({
         <TransportAndPaymentListItem
             key={payment.uuid}
             className={twJoin(
-                'group mb-3 rounded-xl border border-transparent py-0 transition last:mb-0 last:border-b',
+                'group mb-3 rounded-card border border-transparent py-0 transition last:mb-0 last:border-b',
                 'bg-background-more',
                 !isActive && 'hover:border-border-less hover:bg-background-default',
             )}
@@ -78,7 +78,7 @@ export const PaymentListItem: FC<PaymentListItemProps> = ({
                     onClick={changePayment}
                 />
             ) : (
-                <div className="w-full px-4 vl:px-5 py-4 font-secondary font-semibold text-sm">{paymentLabel}</div>
+                <div className="w-full px-4 vl:px-5 py-4 text-sm">{paymentLabel}</div>
             )}
         </TransportAndPaymentListItem>
     );

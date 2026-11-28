@@ -6,53 +6,59 @@ import {
     notImplementedYetHandler,
 } from 'components/Basic/NotImplementedYet/NotImplementedYet';
 import { Button } from 'components/Forms/Button/Button';
-import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
+import { StyleguidePreview, StyleguideSubSection } from './StyleguideElements';
 
 export const StyleguideNotImplementedYet: FC = () => {
     return (
-        <StyleguideSection className="flex flex-col gap-5" title="Not implemented yet">
-            <StyleguideSubSection title="Toast message implementation">
-                <p>Show toast message:</p>
-                <div className="flex gap-2">
+        <>
+            <StyleguideSubSection
+                description="notImplementedYetHandler shows a toast message on click or on mouse enter."
+                title="Toast message"
+            >
+                <StyleguidePreview className="flex flex-wrap gap-3">
                     <Button size="small" type="button" onClick={notImplementedYetHandler}>
-                        Button with not implemented onClick
+                        Not implemented onClick
                     </Button>
-                    <Button size="small" type="button" variant="primary" onMouseEnter={notImplementedYetHandler}>
-                        Button with not implemented onClick onMouseEnter
+                    <Button size="small" type="button" variant="outline" onMouseEnter={notImplementedYetHandler}>
+                        Not implemented onMouseEnter
                     </Button>
-                </div>
+                </StyleguidePreview>
             </StyleguideSubSection>
 
-            <StyleguideSubSection title='"Not implemented yet" tooltip'>
-                <p>Simple hover tooltip:</p>
-                <NotImplementedTooltip>
-                    <Button size="small" type="button" variant="primary">
-                        Hover over
-                    </Button>
-                </NotImplementedTooltip>
+            <StyleguideSubSection description="NotImplementedTooltip shows a tooltip on hover." title="Tooltip">
+                <StyleguidePreview>
+                    <NotImplementedTooltip>
+                        <Button size="small" type="button">
+                            Hover over
+                        </Button>
+                    </NotImplementedTooltip>
+                </StyleguidePreview>
             </StyleguideSubSection>
 
-            <StyleguideSubSection title='"Not implemented yet" wrapper'>
-                <p>Wrap around element/s:</p>
-                <NotImplementedYetWrapper>
-                    <p>
-                        SEO is a marketing tactic that costs five percent of overall budget but brings in more than 20
-                        percent of revenue for many Fortune 500 companies, and yet very few of them prioritize it.
-                        Instead, while slowly changing, too many CMOS still favor paid search, which costs 20 percent
-                        and brings in… 20 percent. In search, businesses need to shift priorities. Now.
-                    </p>
-                    <p>
-                        Link volume is one of the most powerful signals{' '}
-                        <strong>search engines use to rank websites</strong>. There’s a way to use links to generate
-                        better search results, but too many marketers rely on traditional (or even black hat) tactics
-                        that just don’t work anymore.
-                    </p>
-                </NotImplementedYetWrapper>
+            <StyleguideSubSection description="NotImplementedYetWrapper wraps around elements." title="Wrapper">
+                <StyleguidePreview>
+                    <NotImplementedYetWrapper>
+                        <p>
+                            SEO is a marketing tactic that costs five percent of overall budget but brings in more than
+                            20 percent of revenue for many Fortune 500 companies, and yet very few of them prioritize
+                            it. Instead, while slowly changing, too many CMOS still favor paid search, which costs 20
+                            percent and brings in… 20 percent. In search, businesses need to shift priorities. Now.
+                        </p>
+                        <p>
+                            Link volume is one of the most powerful signals{' '}
+                            <strong>search engines use to rank websites</strong>. There’s a way to use links to generate
+                            better search results, but too many marketers rely on traditional (or even black hat)
+                            tactics that just don’t work anymore.
+                        </p>
+                    </NotImplementedYetWrapper>
+                </StyleguidePreview>
             </StyleguideSubSection>
 
-            <StyleguideSubSection title='"Not implemented yet" inject'>
-                <p>Inject inside positioned element:</p>
-                <div className="relative">
+            <StyleguideSubSection
+                description="NotImplementedYetInject is injected inside a positioned element."
+                title="Inject"
+            >
+                <StyleguidePreview className="relative pt-12 vl:pt-12">
                     <p>
                         SEO is a marketing tactic that costs five percent of overall budget but brings in more than 20
                         percent of revenue for many Fortune 500 companies, and yet very few of them prioritize it.
@@ -60,17 +66,17 @@ export const StyleguideNotImplementedYet: FC = () => {
                         and brings in… 20 percent. In search, businesses need to shift priorities. Now.
                     </p>
                     <NotImplementedYetInject />
-                </div>
+                </StyleguidePreview>
             </StyleguideSubSection>
 
-            <StyleguideSubSection title='"Not implemented yet" tag'>
-                <div>
+            <StyleguideSubSection description="NotImplementedYetTag marks a feature name." title="Tag">
+                <StyleguidePreview>
                     <h4>
                         Example feature
                         <NotImplementedYetTag />
                     </h4>
-                </div>
+                </StyleguidePreview>
             </StyleguideSubSection>
-        </StyleguideSection>
+        </>
     );
 };

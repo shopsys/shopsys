@@ -7,8 +7,9 @@
 @import './grapesjs.css';
 
 @layer components {
+    /* descriptions (category, product, popups) read like the rest of the interface; articles add .user-text-large */
     .user-text {
-        @apply text-text-default text-md leading-relaxed md:text-lg;
+        @apply text-text-default text-md leading-relaxed;
 
         h1,
         h2,
@@ -23,9 +24,15 @@
             }
         }
 
+        /* small headings stay in the text font, Raleway is for headings from 18px */
+        h5,
+        h6 {
+            @apply font-default;
+        }
+
         h2 {
-            @apply text-3xl;
-            @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
+            @apply text-2xl;
+            @apply mt-8 mb-4 lg:mt-10 lg:mb-5;
         }
 
         [id] {
@@ -33,31 +40,31 @@
         }
 
         h3 {
-            @apply text-2xl;
-            @apply mt-8 mb-4 lg:mt-10 lg:mb-5;
-        }
-
-        h4 {
             @apply text-xl;
             @apply mt-6 mb-3 lg:mt-8 lg:mb-4;
         }
 
-        h5 {
+        h4 {
             @apply text-lg;
             @apply mt-5 mb-3 lg:mt-6 lg:mb-3;
         }
 
-        h6 {
-            @apply text-lg tracking-normal normal-case;
+        h5 {
+            @apply text-md;
             @apply mt-4 mb-2 lg:mt-5 lg:mb-3;
         }
 
-        p {
-            @apply mb-6 text-lg lg:mb-8 lg:text-lg;
+        h6 {
+            @apply text-md tracking-normal normal-case;
+            @apply mt-4 mb-2 lg:mt-5 lg:mb-3;
         }
 
-        p a {
-            @apply text-lg lg:text-lg;
+        /* base.css gives every p its own size and line height, here paragraphs follow the text around them */
+        p {
+            font-size: inherit;
+            line-height: inherit;
+
+            @apply mb-4 lg:mb-5;
         }
 
         a {
@@ -74,7 +81,7 @@
 
         strong,
         b {
-            @apply font-bold;
+            @apply font-semibold;
         }
 
         em,
@@ -87,37 +94,37 @@
         }
 
         ul {
-            @apply mb-6 ml-10 list-outside list-["•\0020"] space-y-3 lg:mb-8;
+            @apply mb-4 ml-10 list-outside list-["•\0020"] space-y-2 lg:mb-5;
 
             li {
                 @apply marker:text-border-brand marker:text-xl;
             }
 
             ul {
-                @apply my-2 list-outside list-["◦\0020"] space-y-3;
+                @apply my-2 list-outside list-["◦\0020"] space-y-2;
 
                 ul {
-                    @apply list-outside list-["▪\0020"] space-y-3;
+                    @apply list-outside list-["▪\0020"] space-y-2;
                 }
             }
         }
 
         ol {
-            @apply mb-6 ml-10 list-outside list-decimal space-y-3 lg:mb-8;
+            @apply mb-4 ml-10 list-outside list-decimal space-y-2 lg:mb-5;
 
             ol {
-                @apply my-2 list-outside list-decimal space-y-3;
+                @apply my-2 list-outside list-decimal space-y-2;
 
                 ol {
-                    @apply list-outside list-decimal space-y-3;
+                    @apply list-outside list-decimal space-y-2;
                 }
             }
 
             ul {
-                @apply my-2 space-y-3;
+                @apply my-2 space-y-2;
 
                 ul {
-                    @apply space-y-3;
+                    @apply space-y-2;
                 }
             }
         }
@@ -153,9 +160,11 @@
         }
 
         .gjs-button-link {
-            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-lg border-2 text-center leading-4.5 font-semibold no-underline outline-hidden transition-all hover:no-underline;
-            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3 py-1.75;
-            @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered;
+            /* The CMS button keeps its 2px border, so its padding is 2px smaller than the large button to keep the same height. */
+            @apply my-3 block h-fit w-fit cursor-pointer items-center justify-center gap-2 rounded-button border-2 text-center font-secondary font-semibold text-base no-underline outline-hidden transition-all hover:no-underline;
+            @apply border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default! [&>div]:text-button-primary-text-default! px-3.5 py-2 vl:py-2.5;
+            @apply hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered!;
+            @apply active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active!;
         }
 
         table {
@@ -319,6 +328,40 @@
             &:empty {
                 @apply min-h-52 w-full bg-emerald-100;
             }
+        }
+    }
+
+    /* long reads (articles, blog): larger text from md, a larger heading scale and more space between blocks */
+    .user-text-large {
+        @apply md:text-lg;
+
+        h2 {
+            @apply text-3xl;
+            @apply mt-10 mb-5 lg:mt-12 lg:mb-6;
+        }
+
+        h3 {
+            @apply text-2xl;
+            @apply mt-8 mb-4 lg:mt-10 lg:mb-5;
+        }
+
+        h4 {
+            @apply text-xl;
+            @apply mt-6 mb-3 lg:mt-8 lg:mb-4;
+        }
+
+        h5,
+        h6 {
+            @apply text-lg;
+        }
+
+        p {
+            @apply mb-6 lg:mb-8;
+        }
+
+        ul,
+        ol {
+            @apply mb-6 space-y-3 lg:mb-8;
         }
     }
 }

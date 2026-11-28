@@ -1,11 +1,13 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import {
     useCustomerUserManageProfileForm,
     useCustomerUserManageProfileFormMeta,
@@ -135,15 +137,15 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
     const popupTitle = mode === 'edit' ? t('Edit customer user') : t('Add customer user');
 
     return (
-        <Popup contentClassName="overflow-y-auto" title={popupTitle}>
+        <Popup size="small" contentClassName="-mx-1 overflow-y-auto px-1" title={popupTitle}>
             <FormProvider {...formProviderMethods}>
                 <Form
                     formName={formMeta.formName}
                     onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerUserManageProfileFormHandler)}
                 >
                     <FormContentWrapper>
-                        <FormBlockWrapper>
-                            <FormHeading>{t('Personal data')}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{t('Personal data')}</FormHeading>
 
                             <TextInputControlled
                                 control={formProviderMethods.control}
@@ -196,8 +198,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
                             />
                         </FormBlockWrapper>
 
-                        <FormBlockWrapper>
-                            <FormHeading>{formMeta.fields.roleGroup.label}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{formMeta.fields.roleGroup.label}</FormHeading>
 
                             <div
                                 aria-label={t('Select role group', { ns: 'accessibility' })}
@@ -210,7 +212,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
                                 {isRoleGroupsFetching ? (
                                     <div className="flex flex-col gap-2">
                                         {Array.from({ length: 5 }).map((_, index) => (
-                                            <Skeleton key={index} className="h-6 w-1/2 rounded" />
+                                            <Skeleton key={index} className="h-6 w-1/2 rounded-detail" />
                                         ))}
                                     </div>
                                 ) : (
@@ -225,11 +227,19 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({
                             </div>
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.customer_users_manage_submit_button}>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton
+                                className="w-full sm:w-auto"
+                                wrapperClassName="w-full sm:w-fit"
+                                data-tid={TIDs.customer_users_manage_submit_button}
+                            >
                                 {mode === 'edit' ? t('Save user') : t('Add user')}
                             </SubmitButton>
-                        </FormButtonWrapper>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

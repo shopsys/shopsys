@@ -1,3 +1,9 @@
+import {
+    FIELD_VALUE_PADDING_CLASS_NAME,
+    FieldSize,
+    getFieldHeightClassName,
+    getFieldStateClassName,
+} from 'components/Forms/Lib/fieldUtils';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
@@ -29,7 +35,7 @@ export type TextInputProps = NativeProps & {
     label?: ReactNode;
     hasError?: boolean;
     hasWarning?: boolean;
-    inputSize?: 'small' | 'default';
+    inputSize?: FieldSize;
 };
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -87,18 +93,13 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer w-full rounded-input border-2 px-3 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
-                    'border-input-border-default bg-input-bg-default text-input-text-default',
-                    'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
-                    !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',
-                    !hasError && 'focus:border-input-border-active focus:text-input-text-active',
+                    'peer w-full rounded-input px-3 [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:text-transparent focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
+                    getFieldStateClassName({ hasError, hasWarning }),
                     '[&:-internal-autofill-selected]:bg-input-bg-default! [&:-internal-autofill-selected]:shadow-inner! [&:-webkit-autofill]:bg-input-bg-default! [&:-webkit-autofill]:shadow-inner!',
-                    '[&:-webkit-autofill]:hover:bg-input-fill! [&:-webkit-autofill]:hover:shadow-inner!',
-                    '[&:-webkit-autofill]:focus:bg-input-fill! [&:-webkit-autofill]:focus:shadow-inner!',
-                    inputSize === 'small' ? 'h-12 pt-3.5 text-sm' : 'h-14 pt-5',
-                    hasError && 'border-input-border-error bg-input-bg-default shadow-none',
-                    hasWarning &&
-                        'border-input-border-warning bg-input-bg-default shadow-none hover:border-input-border-warning focus:border-input-border-warning',
+                    '[&:-webkit-autofill]:hover:bg-input-bg-hovered! [&:-webkit-autofill]:hover:shadow-inner!',
+                    '[&:-webkit-autofill]:focus:bg-input-bg-default! [&:-webkit-autofill]:focus:shadow-inner!',
+                    getFieldHeightClassName(inputSize),
+                    inputSize === 'small' ? 'pt-3.5 text-sm' : FIELD_VALUE_PADDING_CLASS_NAME,
                     type === 'password' && 'text-input-text-default',
                     className,
                 )}

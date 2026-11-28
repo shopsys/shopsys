@@ -56,7 +56,7 @@ export const ProductComparison: FC = () => {
                             <Button
                                 aria-label={t('Remove all products from comparison', { ns: 'accessibility' })}
                                 data-tid={TIDs.comparison_remove_all_button}
-                                variant="tertiary"
+                                variant="ghost"
                                 onClick={handleRemoveAll}
                             >
                                 <TrashCanIcon className="size-4" />

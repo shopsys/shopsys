@@ -60,7 +60,7 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
     return (
         <article
             className={twMergeCustom(
-                'group relative grid grid-cols-[minmax(0,1fr)_auto] grid-rows-[repeat(4,auto)_0_repeat(3,auto)] gap-x-5 vl:gap-x-8 rounded-2xl border border-transparent bg-background-more p-5 text-left transition hover:border-border-less hover:bg-background-default md:grid-cols-[240px_minmax(0,1fr)_auto] md:grid-rows-[repeat(3,auto)_0_repeat(3,auto)]',
+                'group relative grid grid-cols-[minmax(0,1fr)_auto] grid-rows-[repeat(4,auto)_0_repeat(3,auto)] gap-x-5 vl:gap-x-8 rounded-surface border border-transparent bg-background-more p-5 text-left transition hover:border-border-less hover:bg-background-default md:grid-cols-[240px_minmax(0,1fr)_auto] md:grid-rows-[repeat(3,auto)_0_repeat(3,auto)]',
                 product.__typename === 'MainVariant' && 'grid-rows-[repeat(8,auto)] md:grid-rows-[repeat(7,auto)]',
             )}
             data-product-catnum={product.catalogNumber}
@@ -111,14 +111,14 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
                         />
                     </div>
 
-                    <h3 className="wrap-break-word col-span-2 col-start-1 row-start-2 mb-2 overflow-hidden font-secondary font-semibold text-lg leading-tight group-hover:text-text-default group-hover:underline sm:text-xl">
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                    <h3 className="wrap-break-word col-span-2 col-start-1 row-start-2 mb-2 overflow-hidden font-default font-product-name text-lg leading-tight group-hover/product-link:text-text-default sm:text-xl">
+                        <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="col-span-2 col-start-1 row-start-4 mb-2 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="col-span-2 col-start-1 row-start-4 mb-2 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 text-xs group-hover:text-text-default">
                             <VariantIcon className="size-3 text-text-accent" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>
@@ -171,7 +171,12 @@ export const ArticleProductHero: FC<ArticleProductHeroProps> = ({ product }) => 
 
             <div className="relative z-above col-span-2 col-start-1 row-start-8 w-full max-w-60 md:col-start-2 md:row-start-7">
                 {shouldShowProductActionSkeleton ? (
-                    <ProductActionSkeleton className="w-full" isWithAddToCart isWithProductListButtons={false} />
+                    <ProductActionSkeleton
+                        buttonSize="large"
+                        className="w-full"
+                        isWithAddToCart
+                        isWithProductListButtons={false}
+                    />
                 ) : (
                     <ProductAction
                         currentCart={{ cart, isCartFetchingOrUnavailable }}

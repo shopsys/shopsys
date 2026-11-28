@@ -1,6 +1,8 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
+import { TabIndicator } from 'components/Basic/TabIndicator/TabIndicator';
+import { getSortingTabClassName } from 'components/Blocks/SortingBar/sortingBarUtils';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductReviewOrderingModeEnum } from 'graphql/types';
 import { useEffect, useId, useRef, useState } from 'react';
@@ -18,6 +20,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const mobileMenuId = useId();
     const mobileWrapperRef = useRef<HTMLDivElement>(null);
+    const tabsRef = useRef<HTMLDivElement>(null);
 
     const orderingOptions = [
         { value: TypeProductReviewOrderingModeEnum.Newest, label: t('From newest'), desktopLabel: t('Newest') },
@@ -68,7 +71,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
             <fieldset className="hidden lg:block">
                 <legend className="sr-only">{t('Sort reviews')}</legend>
 
-                <div className="flex flex-wrap gap-5">
+                <div className="relative -ml-1 flex flex-wrap gap-5" ref={tabsRef}>
                     {orderingOptions.map((option) => {
                         const isActive = option.value === activeOrderingMode;
 
@@ -76,12 +79,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                             <button
                                 key={option.value}
                                 aria-pressed={isActive}
-                                className={twJoin(
-                                    'relative min-h-11 cursor-pointer rounded-sm px-1 font-secondary text-sm transition-colors after:absolute after:right-1 after:bottom-0 after:left-1 after:h-0.5 after:rounded-full after:transition-colors',
-                                    isActive
-                                        ? 'font-bold text-text-default after:bg-link-default'
-                                        : 'font-semibold text-text-less after:bg-transparent hover:text-text-default',
-                                )}
+                                className={getSortingTabClassName({ isActive })}
                                 type="button"
                                 onClick={() => handleOrderingModeChange(option.value)}
                             >
@@ -89,6 +87,8 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                             </button>
                         );
                     })}
+
+                    <TabIndicator activeKey={activeOrderingMode} containerRef={tabsRef} />
                 </div>
             </fieldset>
 
@@ -98,7 +98,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                     aria-expanded={isMobileMenuOpen}
                     className="w-full justify-between"
                     size="large"
-                    variant="secondary"
+                    variant="outline"
                     onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
                 >
                     <span className="flex min-w-0 items-center gap-2">
@@ -117,8 +117,8 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                 <fieldset
                     id={mobileMenuId}
                     className={twJoin(
-                        'absolute top-full right-0 left-0 z-above mt-2 flex-col divide-y divide-border-less overflow-hidden rounded-md border border-border-less bg-background-default shadow-lg',
-                        isMobileMenuOpen ? 'flex' : 'hidden',
+                        'absolute top-full right-0 left-0 z-above mt-2 flex-col divide-y divide-border-less overflow-hidden rounded-control border border-border-less bg-background-default shadow-lg',
+                        isMobileMenuOpen ? 'flex motion-safe:animate-dropdown-in' : 'hidden',
                     )}
                 >
                     <legend className="sr-only">{t('Sort reviews')}</legend>
@@ -131,7 +131,7 @@ export const ProductReviewsSorting: FC<ProductReviewsSortingProps> = ({ activeOr
                                 key={option.value}
                                 aria-pressed={isActive}
                                 className={twJoin(
-                                    'flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-secondary font-semibold text-sm hover:bg-background-more',
+                                    'flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-sm hover:bg-background-more',
                                     isActive && 'bg-background-more text-text-default',
                                 )}
                                 type="button"

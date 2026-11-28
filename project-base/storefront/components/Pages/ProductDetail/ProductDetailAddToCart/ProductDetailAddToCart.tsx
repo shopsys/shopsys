@@ -97,11 +97,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
         return (
             <CartItemQuantityControls
                 cartItem={cartItem}
-                className={twJoin(
-                    'w-full',
-                    !isFullWidth && 'sm:max-w-60',
-                    buttonSize === 'xlarge' && '[&_button]:size-14',
-                )}
+                className={twJoin('w-full', !isFullWidth && 'sm:max-w-60')}
                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                 gtmProductListName={GtmProductListNameType.product_detail}
                 size={buttonSize}
@@ -115,18 +111,13 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({
     return (
         <div className={twJoin('relative flex w-full', !isFullWidth && 'sm:max-w-60')}>
             {isAddToCartPending && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-detail bg-background-more py-2 opacity-50" />
             )}
 
             <Button
                 aria-haspopup="dialog"
                 aria-label={addToCartAriaLabel}
-                className={twJoin(
-                    'h-auto w-full whitespace-normal text-balance',
-                    buttonSize !== 'xlarge' && 'min-h-9',
-                    buttonSize === 'large' && 'sm:min-h-10',
-                    buttonSize === 'xlarge' && 'min-h-14',
-                )}
+                className="h-auto w-full whitespace-normal text-balance"
                 disabled={isAddToCartPending}
                 hasDisabledLook={isAddToCartPending}
                 size={buttonSize}

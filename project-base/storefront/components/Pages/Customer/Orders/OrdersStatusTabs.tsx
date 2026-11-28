@@ -50,8 +50,8 @@ export const OrdersStatusTabs: FC<OrdersStatusTabsProps> = ({ orderStatusCounts 
                                 <CountBadge
                                     className={
                                         isActive
-                                            ? 'bg-background-default text-link-default'
-                                            : 'bg-fill-accent-less text-link-default'
+                                            ? 'bg-background-default text-text-accent'
+                                            : 'bg-fill-accent-less text-text-accent'
                                     }
                                 >
                                     {statusTab.count ?? 0}

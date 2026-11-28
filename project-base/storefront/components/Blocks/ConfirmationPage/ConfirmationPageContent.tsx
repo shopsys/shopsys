@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
@@ -88,10 +89,8 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
             )}
 
             {isContentExpiredError && (
-                <div className="mt-4 flex items-center gap-2 rounded-xl border-1 border-toast-border-warning bg-toast-bg-warning p-5">
-                    <InfoIcon className="size-5 text-icon-warning" />
-
-                    <p className="text-sm">
+                <Alert className="mt-4" icon={InfoIcon} variant="warning">
+                    <p>
                         {isLoggedIn && orderDetailUrl ? (
                             <Trans
                                 i18nKey="Order content has expired. <link>View order details</link>"
@@ -109,15 +108,13 @@ export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
                             t('Order content has expired. Check your email for order details.')
                         )}
                     </p>
-                </div>
+                </Alert>
             )}
 
             {applicationError && !isContentExpiredError && (
-                <div className="mt-4 flex items-center gap-2 rounded-xl border-1 border-toast-border-error bg-toast-bg-error p-5">
-                    <WarningIcon className="size-5 text-icon-error" />
-
-                    <p className="text-sm">{applicationError.message}</p>
-                </div>
+                <Alert className="mt-4" icon={WarningIcon} variant="error">
+                    {applicationError.message}
+                </Alert>
             )}
         </>
     );

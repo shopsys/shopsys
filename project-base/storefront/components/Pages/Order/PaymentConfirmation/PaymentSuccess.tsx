@@ -1,4 +1,4 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -13,7 +13,7 @@ export const PaymentSuccess: FC<PaymentSuccessProps> = ({ orderPaymentSuccessful
         <ConfirmationPageContent
             content={orderPaymentSuccessfulContent}
             heading={t('Your payment was successful')}
-            headingIcon={CheckmarkIcon}
+            headingIcon={CheckmarkRoundIcon}
             headingVariant="success"
         />
     );

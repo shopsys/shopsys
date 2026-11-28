@@ -1,3 +1,4 @@
+import { Alert } from 'components/Basic/Alert/Alert';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Link } from 'components/Basic/Link/Link';
 import { ProductReviewItem } from 'components/Blocks/ProductReviews/ProductReviewItem';
@@ -41,28 +42,24 @@ export const MyReviewItem: FC<MyReviewItemProps> = ({ productReview }) => {
             status={productReview.isVerifiedPurchase ? 'verifiedPurchase' : undefined}
         >
             {productReview.rejectedImagesCount > 0 && (
-                <div className="flex items-center gap-2 rounded-md border border-toast-border-warning bg-toast-bg-warning p-3">
-                    <InfoIcon className="size-5 shrink-0 text-icon-warning" />
-                    <p className="m-0 text-sm">
-                        {t('{{ count }} attached photos were rejected during moderation.', {
-                            count: productReview.rejectedImagesCount,
-                        })}
-                    </p>
-                </div>
+                <Alert icon={InfoIcon} variant="warning">
+                    {t('{{ count }} attached photos were rejected during moderation.', {
+                        count: productReview.rejectedImagesCount,
+                    })}
+                </Alert>
             )}
             {productReview.status === TypeProductReviewStatusEnum.Rejected && productReview.rejectionReason && (
-                <div className="flex flex-col gap-1 rounded-md border border-toast-border-error bg-toast-bg-error p-3">
-                    <p className="m-0 font-semibold text-sm text-toast-text-error">{t('Rejection reason')}</p>
-                    <p className="m-0 whitespace-pre-line text-sm">{productReview.rejectionReason}</p>
+                <Alert title={t('Rejection reason')} variant="error">
+                    <p className="m-0 whitespace-pre-line">{productReview.rejectionReason}</p>
 
                     <p className="m-0 text-text-less text-xs">
                         {t('If you have any comments or questions about reviews, contact us at')}{' '}
-                        <Link isExternal href={`mailto:${productReviewContactEmail}`} className="text-xs">
+                        <Link isExternal href={`mailto:${productReviewContactEmail}`}>
                             {productReviewContactEmail}
                         </Link>
                         .
                     </p>
-                </div>
+                </Alert>
             )}
         </ProductReviewItem>
     );

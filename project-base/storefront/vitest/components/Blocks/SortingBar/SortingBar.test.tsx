@@ -1,35 +1,25 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { useSessionStore } from 'store/useSessionStore';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
-import { testFocusManagement } from 'vitest/utils/accessibility/a11y-testing';
-import {
-    navigateWithArrows,
-    pressEndKey,
-    pressEnterKey,
-    pressEscapeKey,
-    pressHomeKey,
-    pressSpaceKey,
-} from 'vitest/utils/accessibility/keyboard-navigation';
+import { pressEnterKey, pressEscapeKey, pressSpaceKey } from 'vitest/utils/accessibility/keyboard-navigation';
 
 const { mockScrollToProductListControls } = vi.hoisted(() => ({
     mockScrollToProductListControls: vi.fn(),
 }));
 const mockUpdateSortQuery = vi.fn();
 const mockCanSeePrices = vi.fn().mockReturnValue(true);
+const mockRouterQuery = vi.fn().mockReturnValue({});
+const mockRouterLocale = vi.fn().mockReturnValue(undefined);
 
 vi.mock('components/Blocks/Product/Filter/filterElementIds', () => ({
     PRODUCT_LIST_CONTROLS_ELEMENT_ID: 'product-list-controls',
     scrollToProductListControls: mockScrollToProductListControls,
-}));
-
-vi.mock('utils/auth/useAuth', () => ({
-    useAuth: () => ({
-        canSeePrices: mockCanSeePrices(),
-    }),
 }));
 
 vi.mock('components/providers/AuthorizationProvider', () => ({
@@ -42,7 +32,8 @@ vi.mock('components/Blocks/Product/ProductsList/ProductListViewModeToggle', () =
     ProductListViewModeToggle: () => <div data-testid="product-list-view-mode-toggle" />,
 }));
 
-vi.mock('utils/queryParams/useUpdateSortQuery', () => ({
+vi.mock('utils/queryParams/useUpdateSortQuery', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('utils/queryParams/useUpdateSortQuery')>()),
     useUpdateSortQuery: () => mockUpdateSortQuery,
 }));
 
@@ -50,24 +41,19 @@ vi.mock('utils/queryParams/useCurrentSortQuery', () => ({
     useCurrentSortQuery: () => null,
 }));
 
-vi.mock('config/constants', () => ({
-    DEFAULT_SORT: 'priority',
+vi.mock('config/constants', async (importOriginal) => ({
+    ...(await importOriginal<typeof import('config/constants')>()),
+    DEFAULT_SORT: 'PRIORITY',
 }));
-
-vi.mock('utils/parsing/getUrlQueriesWithoutDynamicPageQueries', () => ({
-    getUrlQueriesWithoutDynamicPageQueries: () => ({}),
-}));
-
-const mockPush = vi.fn();
-const mockRouter = {
-    push: mockPush,
-    pathname: '/products',
-    query: {},
-    asPath: '/products',
-};
 
 vi.mock('next/router', () => ({
-    useRouter: () => mockRouter,
+    useRouter: () => ({
+        push: vi.fn(),
+        pathname: '/products',
+        query: mockRouterQuery(),
+        asPath: '/products',
+        locale: mockRouterLocale(),
+    }),
 }));
 
 vi.mock('next-translate/useTranslation', () => ({
@@ -75,788 +61,428 @@ vi.mock('next-translate/useTranslation', () => ({
     default: () => ({
         t: (key: string) => {
             const translations: { [key: string]: string } = {
-                Priority: 'Priority',
-                'Price ascending': 'Price ascending',
-                'Price descending': 'Price descending',
-                Relevance: 'Relevance',
-                'Name ascending': 'Name ascending',
-                'Name descending': 'Name descending',
-                Sort: 'Sort',
                 'products count': 'Products',
             };
+
             return translations[key] || key;
         },
     }),
 }));
 
+const ALL_SORT_OPTIONS = [
+    TypeProductOrderingModeEnum.Priority,
+    TypeProductOrderingModeEnum.PriceAsc,
+    TypeProductOrderingModeEnum.PriceDesc,
+    TypeProductOrderingModeEnum.Relevance,
+    TypeProductOrderingModeEnum.NameAsc,
+    TypeProductOrderingModeEnum.NameDesc,
+];
+
 const defaultProps = {
     totalCount: 125,
     sorting: TypeProductOrderingModeEnum.Priority,
-    customSortOptions: [
-        TypeProductOrderingModeEnum.Priority,
-        TypeProductOrderingModeEnum.PriceAsc,
-        TypeProductOrderingModeEnum.PriceDesc,
-        TypeProductOrderingModeEnum.Relevance,
-        TypeProductOrderingModeEnum.NameAsc,
-        TypeProductOrderingModeEnum.NameDesc,
-    ],
+    customSortOptions: ALL_SORT_OPTIONS,
 };
 
-const renderSortingBar = (props?: any) => {
-    const finalProps = { ...defaultProps, ...props };
-    return render(
+type RenderSortingBarProps = Omit<Partial<typeof defaultProps>, 'sorting'> & {
+    sorting?: TypeProductOrderingModeEnum | null;
+};
+
+const renderSortingBar = (props?: RenderSortingBarProps) =>
+    render(
         <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
-            <SortingBar {...finalProps} />
+            <SortingBar {...defaultProps} {...props} />
         </DomainConfigProvider>,
     );
-};
-
-const isDropdownOpen = () => {
-    const dropdownContainer = document.querySelector('#sort-dropdown');
-    return dropdownContainer && !dropdownContainer.classList.contains('hidden');
-};
-
-const getDropdownLinks = () => {
-    if (!isDropdownOpen()) {
-        return [];
-    }
-    try {
-        return screen.getAllByRole('option');
-    } catch {
-        return [];
-    }
-};
-
-const getDropdownLinkByText = (text: string) => {
-    const links = getDropdownLinks();
-    return links.find((link) => link.textContent === text);
-};
 
 const getSortButton = () => screen.getByRole('button', { name: /Sort products/ });
 
-const isTextInDropdown = (text: string) => {
-    const dropdownLinks = getDropdownLinks();
-    return dropdownLinks.some((link) => link.textContent === text);
+const getSortDropdown = () => document.getElementById('sort-dropdown')!;
+
+const isSortDropdownOpen = () => !getSortDropdown().classList.contains('hidden');
+
+const getSortDropdownLinks = () => within(getSortDropdown()).getAllByRole('link');
+
+const getSortDropdownLink = (name: string) => within(getSortDropdown()).getByText(name).closest('a')!;
+
+const getDesktopTabs = () =>
+    screen
+        .getAllByRole('navigation', { name: 'Sort options' })
+        .find((navigation) => navigation.id !== getSortButton().getAttribute('aria-controls'))!;
+
+const queryMoreButton = () => within(getDesktopTabs()).queryByRole('button', { name: 'More' });
+
+const getMoreButton = () => within(getDesktopTabs()).getByRole('button', { name: 'More' });
+
+const getMoreList = () => document.getElementById(getMoreButton().getAttribute('aria-controls')!)!;
+
+// The links listed under "More" are not tabs.
+const getDesktopTabLinks = () => {
+    const moreList = queryMoreButton() ? getMoreList() : null;
+
+    return within(getDesktopTabs())
+        .getAllByRole('link')
+        .filter((link) => !moreList?.contains(link));
 };
 
 describe('SortingBar', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
         mockCanSeePrices.mockReturnValue(true);
+        mockRouterQuery.mockReturnValue({});
+        mockRouterLocale.mockReturnValue(undefined);
+        useSessionStore.setState({ originalCategorySlug: undefined });
     });
 
-    describe('Basic Rendering', () => {
-        test('renders sorting button with current sort option', () => {
-            renderSortingBar();
+    describe('Mobile sort button', () => {
+        test.each([
+            [TypeProductOrderingModeEnum.PriceAsc, 'Sort: Cheapest'],
+            [TypeProductOrderingModeEnum.PriceDesc, 'Sort: Most expensive'],
+            [TypeProductOrderingModeEnum.Priority, 'Sort: Priority'],
+            [null, 'Sort: Priority'],
+        ])('shows the short label of the current sort option %s', (sorting, buttonText) => {
+            renderSortingBar({ sorting });
 
-            const sortButton = getSortButton();
-            expect(sortButton).toBeInTheDocument();
-            expect(sortButton).toHaveTextContent('Priority');
+            expect(getSortButton()).toHaveTextContent(buttonText);
         });
 
-        test('renders product count', () => {
-            renderSortingBar();
-
-            const productCountDiv = document.querySelector('.font-secondary.text-input-placeholder-default');
-            expect(productCountDiv).toBeInTheDocument();
-            expect(productCountDiv).toHaveTextContent('125');
-            expect(productCountDiv).toHaveTextContent('Products');
-        });
-
-        test('renders product list view mode toggle', () => {
-            renderSortingBar();
-
-            expect(screen.getByTestId('product-list-view-mode-toggle')).toBeInTheDocument();
-        });
-
-        test('renders sort button with proper accessibility', () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            expect(sortButton).toHaveAttribute('type', 'button');
-            expect(sortButton).toHaveAttribute('tabIndex', '0');
-        });
-
-        test('dropdown is closed by default', () => {
-            renderSortingBar();
-
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(getDropdownLinks()).toHaveLength(0);
-        });
-    });
-
-    describe('Dropdown Opening and Closing', () => {
-        test('opens dropdown when button is clicked', async () => {
+        test('keeps the full label in the list', async () => {
             const user = userEvent.setup();
+            renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
 
+            await user.click(getSortButton());
+
+            expect(getSortDropdownLink('Price ascending')).toHaveAttribute('aria-current', 'true');
+        });
+
+        test('exposes the sort list as a disclosure', () => {
             renderSortingBar();
 
             const sortButton = getSortButton();
-            await user.click(sortButton);
 
-            expect(isDropdownOpen()).toBeTruthy();
-            expect(getDropdownLinks()).toHaveLength(6);
+            expect(sortButton).toHaveAttribute('aria-controls', 'sort-dropdown');
+            expect(sortButton).toHaveAttribute('aria-expanded', 'false');
+            expect(sortButton).not.toHaveAttribute('aria-haspopup');
+            expect(getSortDropdown().tagName).toBe('NAV');
+            expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+            expect(isSortDropdownOpen()).toBe(false);
         });
 
-        test('opens dropdown with Enter key', async () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            sortButton.focus();
-
-            await pressEnterKey();
-
-            expect(isDropdownOpen()).toBeTruthy();
-            expect(getDropdownLinks()).toHaveLength(6);
-        });
-
-        test('opens dropdown with Space key', async () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            sortButton.focus();
-
-            await pressSpaceKey();
-
-            expect(isDropdownOpen()).toBeTruthy();
-            expect(getDropdownLinks()).toHaveLength(6);
-        });
-
-        test('uses menu semantics for mobile sort dropdown', async () => {
+        test('opens on click and moves focus to the active option', async () => {
             const user = userEvent.setup();
+            renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceDesc });
 
-            renderSortingBar();
+            await user.click(getSortButton());
 
-            const sortButton = screen.getByRole('button', { name: /Sort products/ });
-            await user.click(sortButton);
-
-            const sortMenu = screen.getByRole('menu', { name: 'Sort options' });
-            const sortMenuItems = within(sortMenu).getAllByRole('menuitem');
-
-            expect(sortButton.parentElement).toContainElement(sortMenu);
-            expect(sortMenuItems).toHaveLength(6);
-            expect(sortMenuItems[0]).not.toHaveAttribute('aria-selected');
+            expect(isSortDropdownOpen()).toBe(true);
+            expect(getSortButton()).toHaveAttribute('aria-expanded', 'true');
+            expect(getSortDropdownLinks()).toHaveLength(ALL_SORT_OPTIONS.length);
+            expect(getSortDropdownLink('Price descending')).toHaveFocus();
         });
 
-        test('closes dropdown when button is clicked again', async () => {
-            const user = userEvent.setup();
-
+        test.each([
+            ['Enter', pressEnterKey],
+            ['Space', pressSpaceKey],
+        ])('opens with the %s key', async (_key, pressKey) => {
             renderSortingBar();
 
-            const sortButton = getSortButton();
+            getSortButton().focus();
+            await pressKey();
 
-            await user.click(sortButton);
-            expect(isDropdownOpen()).toBeTruthy();
-
-            await user.click(sortButton);
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(getDropdownLinks()).toHaveLength(0);
+            expect(isSortDropdownOpen()).toBe(true);
         });
 
-        test('closes dropdown with Escape key', async () => {
+        test('closes when the button is clicked again', async () => {
             const user = userEvent.setup();
-
             renderSortingBar();
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
+            await user.click(getSortButton());
+            await user.click(getSortButton());
 
-            expect(isDropdownOpen()).toBeTruthy();
+            expect(isSortDropdownOpen()).toBe(false);
+        });
+
+        test('closes with Escape and returns focus to the button', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            await user.click(getSortButton());
+
+            expect(getSortDropdownLink('Priority')).toHaveFocus();
 
             await pressEscapeKey();
 
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(sortButton).toHaveAttribute('aria-expanded', 'false');
+            expect(isSortDropdownOpen()).toBe(false);
+            expect(getSortButton()).toHaveFocus();
         });
 
-        test('closes dropdown when overlay is clicked', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            expect(isDropdownOpen()).toBeTruthy();
-
-            const overlay = document.querySelector('.z-overlay');
-            if (overlay) {
-                await user.click(overlay);
-            }
-
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(getDropdownLinks()).toHaveLength(0);
-        });
-
-        test('closes dropdown when clicking outside', async () => {
-            const user = userEvent.setup();
-
+        test('Escape does not move focus while the lists are closed', async () => {
             render(
                 <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
-                    <div>
-                        <SortingBar {...defaultProps} />
-                        <div data-testid="outside-element">Outside</div>
-                    </div>
+                    <SortingBar {...defaultProps} />
+                    <button type="button">Outside</button>
                 </DomainConfigProvider>,
             );
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
+            const outsideButton = screen.getByRole('button', { name: 'Outside' });
+            outsideButton.focus();
+            await pressEscapeKey();
 
-            expect(isDropdownOpen()).toBeTruthy();
-
-            const outsideElement = screen.getByTestId('outside-element');
-            await user.click(outsideElement);
-
-            expect(isDropdownOpen()).toBeTruthy();
+            expect(outsideButton).toHaveFocus();
         });
-    });
 
-    describe('Sort Options Display', () => {
-        test('shows all sort options when user can see prices', async () => {
+        test('returns focus to the button after an option is chosen with the keyboard', async () => {
             const user = userEvent.setup();
-            mockCanSeePrices.mockReturnValue(true);
-
             renderSortingBar();
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks();
-            expect(sortLinks).toHaveLength(6);
-
-            expect(isTextInDropdown('Priority')).toBe(true);
-            expect(isTextInDropdown('Price ascending')).toBe(true);
-            expect(isTextInDropdown('Price descending')).toBe(true);
-            expect(isTextInDropdown('Relevance')).toBe(true);
-            expect(isTextInDropdown('Name ascending')).toBe(true);
-            expect(isTextInDropdown('Name descending')).toBe(true);
-        });
-
-        test('hides price options when user cannot see prices', async () => {
-            const user = userEvent.setup();
-            mockCanSeePrices.mockReturnValue(false);
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks();
-            expect(sortLinks).toHaveLength(4);
-
-            expect(isTextInDropdown('Priority')).toBe(true);
-            expect(isTextInDropdown('Price ascending')).toBe(false);
-            expect(isTextInDropdown('Price descending')).toBe(false);
-            expect(isTextInDropdown('Relevance')).toBe(true);
-            expect(isTextInDropdown('Name ascending')).toBe(true);
-            expect(isTextInDropdown('Name descending')).toBe(true);
-        });
-
-        test('uses custom sort options when provided', async () => {
-            const user = userEvent.setup();
-            const customOptions = [
-                TypeProductOrderingModeEnum.Priority,
-                TypeProductOrderingModeEnum.NameAsc,
-                TypeProductOrderingModeEnum.Relevance,
-            ];
-
-            renderSortingBar({ customSortOptions: customOptions });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks();
-            expect(sortLinks).toHaveLength(3);
-
-            expect(isTextInDropdown('Priority')).toBe(true);
-            expect(isTextInDropdown('Name ascending')).toBe(true);
-            expect(isTextInDropdown('Relevance')).toBe(true);
-            expect(isTextInDropdown('Name descending')).toBe(false);
-        });
-
-        test('shows active state for current sort option', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            expect(priceAscLink).toHaveAttribute('aria-selected', 'true');
-        });
-
-        test('shows inactive state for non-current sort options', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            expect(priceAscLink).toHaveAttribute('aria-selected', 'false');
-        });
-    });
-
-    describe('Sort Option Selection', () => {
-        test('calls updateSortQuery when option is clicked', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            await user.click(priceAscLink!);
-
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
-            expect(mockScrollToProductListControls).toHaveBeenCalledOnce();
-        });
-
-        test('closes dropdown after option selection', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            await user.click(priceAscLink!);
-
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(getDropdownLinks()).toHaveLength(0);
-        });
-
-        test('prevents default link behavior', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-
-            await user.click(priceAscLink!);
-
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
-        });
-
-        test('does not call updateSortQuery for current sort option', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const currentLink = getDropdownLinkByText('Priority');
-            await user.click(currentLink!);
-
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRIORITY');
-        });
-    });
-
-    describe('Keyboard Navigation', () => {
-        test('supports tab navigation to sort button', async () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            sortButton.focus();
-
-            expect(document.activeElement).toBe(sortButton);
-        });
-
-        test('supports arrow key navigation between sort options', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
-
-            if (sortLinks.length > 1) {
-                sortLinks[0].focus();
-                expect(document.activeElement).toBe(sortLinks[0]);
-
-                await navigateWithArrows('down');
-
-                expect(sortLinks.some((link) => document.activeElement === link)).toBeTruthy();
-            }
-        });
-
-        test('supports Home and End key navigation', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
-
-            if (sortLinks.length > 2) {
-                sortLinks[2].focus();
-
-                await pressHomeKey();
-
-                expect(sortLinks.some((link) => document.activeElement === link)).toBeTruthy();
-
-                await pressEndKey();
-
-                expect(sortLinks.some((link) => document.activeElement === link)).toBeTruthy();
-            }
-        });
-
-        test('supports Enter key to select sort option', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            priceAscLink?.focus();
-
+            await user.click(getSortButton());
+            getSortDropdownLink('Price ascending').focus();
             await pressEnterKey();
 
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
-            expect(isDropdownOpen()).toBeFalsy();
+            expect(mockUpdateSortQuery).toHaveBeenCalledWith(TypeProductOrderingModeEnum.PriceAsc);
+            expect(isSortDropdownOpen()).toBe(false);
+            expect(getSortButton()).toHaveFocus();
         });
 
-        test('supports Space key to select sort option', async () => {
+        test('closes when the overlay is clicked', async () => {
             const user = userEvent.setup();
-
             renderSortingBar();
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
+            await user.click(getSortButton());
+            await user.click(document.querySelector(`[data-tid="${TIDs.overlay}"]`)!);
 
-            const nameAscLink = getDropdownLinkByText('Name ascending');
-            nameAscLink?.focus();
-
-            await user.click(nameAscLink!);
-
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('NAME_ASC');
-            expect(isDropdownOpen()).toBeFalsy();
-        });
-
-        test('wraps around when navigating past boundaries', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
-
-            if (sortLinks.length > 1) {
-                sortLinks[sortLinks.length - 1].focus();
-
-                await navigateWithArrows('down');
-                expect(sortLinks.some((link) => document.activeElement === link)).toBeTruthy();
-
-                await navigateWithArrows('up');
-                expect(sortLinks.some((link) => document.activeElement === link)).toBeTruthy();
-            }
-        });
-
-        test('skips active option in keyboard navigation', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const activeLink = getDropdownLinks().find((link) => link.getAttribute('aria-selected') === 'true');
-            expect(activeLink).toBeTruthy();
-            expect(activeLink).toHaveAttribute('aria-selected', 'true');
-
-            if (activeLink) {
-                activeLink.focus();
-                expect(activeLink).toHaveAttribute('aria-selected', 'true');
-            }
+            expect(isSortDropdownOpen()).toBe(false);
         });
     });
 
-    describe('Focus Management', () => {
-        test('returns focus to button when dropdown closes with Escape', async () => {
+    describe('Sort options', () => {
+        test('marks only the active option with aria-current and keeps real links', async () => {
             const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortMenu = screen.getByRole('menu', { name: 'Sort options' });
-            const priceAscLink = within(sortMenu).getByText('Price ascending');
-            priceAscLink.focus();
-            expect(priceAscLink).toHaveFocus();
-
-            await pressEscapeKey();
-
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(sortButton).toHaveFocus();
-        });
-
-        test('does not move focus on Escape when the dropdown is closed', async () => {
-            const user = userEvent.setup();
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-            await user.click(sortButton);
-            sortButton.blur();
-
-            await pressEscapeKey();
-
-            expect(isDropdownOpen()).toBeFalsy();
-            expect(sortButton).not.toHaveFocus();
-        });
-
-        test('returns focus to button after option selection', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-            await user.click(priceAscLink!);
-
-            await waitFor(() => {
-                expect(isDropdownOpen()).toBeFalsy();
-            });
-        });
-
-        test('maintains focus within dropdown when open', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const focusableLinks = getDropdownLinks().filter((link) => link.getAttribute('aria-selected') === 'false');
-
-            if (focusableLinks.length > 0) {
-                focusableLinks[0].focus();
-                expect(document.activeElement).toBe(focusableLinks[0]);
-            }
-        });
-    });
-
-    describe('Accessibility Features', () => {
-        test('has proper ARIA attributes on sort button', () => {
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            expect(sortButton).toHaveAttribute('type', 'button');
-        });
-
-        test('has proper ARIA attributes on sort options', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const sortLinks = getDropdownLinks();
-            sortLinks.forEach((link) => {
-                expect(link).toHaveAttribute('href');
-                expect(link).toHaveAttribute('aria-selected');
-            });
-        });
-
-        test('provides proper tabindex values for navigation', async () => {
-            const user = userEvent.setup();
-
             renderSortingBar({ sorting: TypeProductOrderingModeEnum.Priority });
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
+            await user.click(getSortButton());
 
-            const activeLink = getDropdownLinks().find((link) => link.textContent === 'Priority');
-            const inactiveLinks = getDropdownLinks().filter((link) => link !== activeLink);
-
-            expect(activeLink).toHaveAttribute('aria-selected', 'true');
-            inactiveLinks.forEach((link) => {
-                expect(link).toHaveAttribute('aria-selected', 'false');
+            getSortDropdownLinks().forEach((link) => {
+                expect(link).toHaveAttribute('href', expect.stringMatching(/^\/products/));
+                expect(link).not.toHaveAttribute('aria-selected');
             });
+            const currentLinks = getSortDropdownLinks().filter((link) => link.getAttribute('aria-current') === 'true');
+
+            expect(currentLinks).toHaveLength(1);
         });
 
-        test('maintains semantic link structure for SEO', async () => {
-            const user = userEvent.setup();
+        test('link to the first page and leave out the default sort, like the sort change itself', () => {
+            mockRouterQuery.mockReturnValue({
+                q: 'tv',
+                page: '2',
+                lm: '3',
+                sort: TypeProductOrderingModeEnum.PriceAsc,
+            });
+            renderSortingBar({ sorting: TypeProductOrderingModeEnum.PriceAsc });
 
+            const [priorityLink, priceAscendingLink] = getDesktopTabLinks();
+
+            expect(priorityLink).toHaveAttribute('href', '/products?q=tv');
+            expect(priceAscendingLink).toHaveAttribute(
+                'href',
+                `/products?q=tv&sort=${TypeProductOrderingModeEnum.PriceAsc}`,
+            );
+        });
+
+        test('leave out empty values and the internal slug type, like the sort change itself', () => {
+            mockRouterQuery.mockReturnValue({ q: 'tv', utm_source: '', slugType: 'front_product_list' });
             renderSortingBar();
 
-            const sortButton = getSortButton();
-            await user.click(sortButton);
+            const [priorityLink, priceAscendingLink] = getDesktopTabLinks();
 
-            const sortLinks = getDropdownLinks();
-            sortLinks.forEach((link) => {
-                expect(link.tagName).toBe('A');
-                expect(link).toHaveAttribute('href');
+            expect(priorityLink).toHaveAttribute('href', '/products?q=tv');
+            expect(priceAscendingLink).toHaveAttribute(
+                'href',
+                `/products?q=tv&sort=${TypeProductOrderingModeEnum.PriceAsc}`,
+            );
+        });
+
+        test('link the default option to the plain URL when no other query is set', () => {
+            renderSortingBar();
+
+            expect(getDesktopTabLinks()[0]).toHaveAttribute('href', '/products');
+        });
+
+        test('keep the locale prefix of the domain, which the router path leaves out', () => {
+            mockRouterLocale.mockReturnValue('sk');
+            renderSortingBar();
+
+            const [priorityLink, priceAscendingLink] = getDesktopTabLinks();
+
+            expect(priorityLink).toHaveAttribute('href', '/sk/products');
+            expect(priceAscendingLink).toHaveAttribute(
+                'href',
+                `/sk/products?sort=${TypeProductOrderingModeEnum.PriceAsc}`,
+            );
+        });
+
+        test('link from an SEO category to its original category, like the sort change itself', () => {
+            useSessionStore.setState({ originalCategorySlug: '/electronics' });
+            renderSortingBar();
+
+            const [, priceAscendingLink] = getDesktopTabLinks();
+
+            expect(priceAscendingLink).toHaveAttribute(
+                'href',
+                `/electronics?sort=${TypeProductOrderingModeEnum.PriceAsc}`,
+            );
+        });
+
+        test('hides price options when the customer cannot see prices', async () => {
+            const user = userEvent.setup();
+            mockCanSeePrices.mockReturnValue(false);
+            renderSortingBar();
+
+            await user.click(getSortButton());
+
+            expect(getSortDropdownLinks()).toHaveLength(4);
+            expect(within(getSortDropdown()).queryByText('Price ascending')).not.toBeInTheDocument();
+            expect(within(getSortDropdown()).queryByText('Price descending')).not.toBeInTheDocument();
+        });
+
+        test('changes the sort, scrolls to the list and closes the dropdown', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            await user.click(getSortButton());
+            await user.click(getSortDropdownLink('Price ascending'));
+
+            expect(mockUpdateSortQuery).toHaveBeenCalledWith(TypeProductOrderingModeEnum.PriceAsc);
+            expect(mockScrollToProductListControls).toHaveBeenCalledOnce();
+            expect(isSortDropdownOpen()).toBe(false);
+        });
+
+        test.each(['ctrlKey', 'metaKey', 'shiftKey'])(
+            'keeps the browser behaviour for a click with %s',
+            async (modifierKey) => {
+                const user = userEvent.setup();
+                let isDefaultPreventedByComponent: boolean | undefined;
+                // jsdom cannot open a new tab, so stop the navigation after the component has handled the click.
+                const recordAndStopNavigation = (event: MouseEvent) => {
+                    isDefaultPreventedByComponent = event.defaultPrevented;
+                    event.preventDefault();
+                };
+
+                renderSortingBar();
+                await user.click(getSortButton());
+
+                document.addEventListener('click', recordAndStopNavigation);
+                fireEvent.click(getSortDropdownLink('Price ascending'), { [modifierKey]: true });
+                document.removeEventListener('click', recordAndStopNavigation);
+
+                expect(isDefaultPreventedByComponent).toBe(false);
+                expect(mockUpdateSortQuery).not.toHaveBeenCalled();
+            },
+        );
+    });
+
+    describe('Desktop tabs', () => {
+        test('show at most four options and the rest under "More"', () => {
+            renderSortingBar();
+
+            const tabLinks = getDesktopTabLinks();
+
+            expect(tabLinks.map((link) => link.textContent)).toEqual([
+                'Priority',
+                'Price ascending',
+                'Price descending',
+                'Relevance',
+            ]);
+            expect(getMoreButton()).toBeInTheDocument();
+        });
+
+        test('show every option without "More" when there are four or fewer', () => {
+            renderSortingBar({
+                customSortOptions: [TypeProductOrderingModeEnum.Priority, TypeProductOrderingModeEnum.PriceAsc],
             });
+
+            expect(getDesktopTabLinks()).toHaveLength(2);
+            expect(queryMoreButton()).not.toBeInTheDocument();
+        });
+
+        test('keep the selected option visible when it would be under "More"', () => {
+            renderSortingBar({ sorting: TypeProductOrderingModeEnum.NameDesc });
+
+            const tabLinks = getDesktopTabLinks();
+
+            expect(tabLinks).toHaveLength(4);
+            expect(tabLinks[3]).toHaveTextContent('Name descending');
+            expect(tabLinks[3]).toHaveAttribute('aria-current', 'true');
+        });
+
+        test('"More" opens the remaining options and closes after a selection', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            const moreButton = getMoreButton();
+            await user.click(moreButton);
+
+            expect(moreButton).toHaveAttribute('aria-expanded', 'true');
+
+            const moreList = getMoreList();
+            expect(
+                within(moreList)
+                    .getAllByRole('link')
+                    .map((link) => link.textContent),
+            ).toEqual(['Name ascending', 'Name descending']);
+
+            await user.click(within(moreList).getByText('Name ascending'));
+
+            expect(mockUpdateSortQuery).toHaveBeenCalledWith(TypeProductOrderingModeEnum.NameAsc);
+            expect(moreButton).toHaveAttribute('aria-expanded', 'false');
+        });
+
+        test('"More" returns focus to its button after an option is chosen with the keyboard', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            const moreButton = getMoreButton();
+            await user.click(moreButton);
+            within(getMoreList()).getByText('Name ascending').closest('a')!.focus();
+            await pressEnterKey();
+
+            expect(mockUpdateSortQuery).toHaveBeenCalledWith(TypeProductOrderingModeEnum.NameAsc);
+            expect(moreButton).toHaveAttribute('aria-expanded', 'false');
+            expect(moreButton).toHaveFocus();
+        });
+
+        test('"More" closes with Escape and returns focus to its button', async () => {
+            const user = userEvent.setup();
+            renderSortingBar();
+
+            const moreButton = getMoreButton();
+            await user.click(moreButton);
+
+            const moreListLink = within(getMoreList()).getByText('Name ascending').closest('a')!;
+            moreListLink.focus();
+            expect(moreListLink).toHaveFocus();
+
+            await pressEscapeKey();
+
+            expect(moreButton).toHaveAttribute('aria-expanded', 'false');
+            expect(moreButton).toHaveFocus();
         });
     });
 
-    describe('Edge Cases and Error Handling', () => {
-        test('handles zero product count', () => {
-            renderSortingBar({ totalCount: 0 });
-
-            const productCountDiv = document.querySelector('.font-secondary.text-input-placeholder-default');
-            expect(productCountDiv).toBeInTheDocument();
-            expect(productCountDiv).toHaveTextContent('0');
-        });
-
-        test('handles very large product count', () => {
-            renderSortingBar({ totalCount: 999999 });
-
-            const productCountDiv = document.querySelector('.font-secondary.text-input-placeholder-default');
-            expect(productCountDiv).toBeInTheDocument();
-            expect(productCountDiv).toHaveTextContent('999999');
-        });
-
-        test('handles null sorting option', () => {
-            renderSortingBar({ sorting: null });
-
-            const sortButton = getSortButton();
-            expect(sortButton).toBeInTheDocument();
-        });
-
-        test('handles empty custom sort options', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar({ customSortOptions: [] });
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            expect(getDropdownLinks()).toHaveLength(0);
-        });
-
-        test('repeatedly opens and closes the dropdown without changing sorting', async () => {
-            const user = userEvent.setup();
-
+    describe('Product count and view toggle', () => {
+        test('render the product count and the view mode toggle', () => {
             renderSortingBar();
 
-            const sortButton = getSortButton();
-
-            for (let i = 0; i < 5; i++) {
-                await user.click(sortButton);
-
-                expect(sortButton).toHaveAttribute('aria-expanded', 'true');
-                expect(isDropdownOpen()).toBeTruthy();
-                expect(within(screen.getByRole('menu')).getAllByRole('menuitem')).toHaveLength(
-                    defaultProps.customSortOptions.length,
-                );
-
-                await user.click(sortButton);
-
-                expect(sortButton).toHaveAttribute('aria-expanded', 'false');
-                expect(isDropdownOpen()).toBeFalsy();
-            }
-
-            expect(mockUpdateSortQuery).not.toHaveBeenCalled();
-            expect(mockScrollToProductListControls).not.toHaveBeenCalled();
+            expect(screen.getByText('125 Products')).toBeInTheDocument();
+            expect(screen.getByTestId('product-list-view-mode-toggle')).toBeInTheDocument();
         });
 
-        test('handles rapid option selection', async () => {
-            const user = userEvent.setup();
+        test('stay when there is a single sort option, the sorting itself is hidden', () => {
+            renderSortingBar({ customSortOptions: [TypeProductOrderingModeEnum.Priority] });
 
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const priceAscLink = getDropdownLinkByText('Price ascending');
-
-            await user.click(priceAscLink!);
-
-            expect(mockUpdateSortQuery).toHaveBeenCalledWith('PRICE_ASC');
-            expect(isDropdownOpen()).toBeFalsy();
-        });
-    });
-
-    describe('Integration with Test Utilities', () => {
-        test('works with keyboard navigation utilities', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await user.click(sortButton);
-
-            const dropdownItems = getDropdownLinks()
-                .filter((link) => link.getAttribute('aria-selected') === 'false')
-                .map((link) => ({ role: 'option', name: link.textContent || '' }));
-
-            if (dropdownItems.length > 0) {
-                const firstLink = getDropdownLinks().find((link) => link.getAttribute('aria-selected') === 'false');
-                if (firstLink) {
-                    firstLink.focus();
-                    expect(document.activeElement).toBe(firstLink);
-                }
-            }
-        });
-
-        test('works with accessibility testing utilities', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-
-            expect(sortButton).toHaveAttribute('type', 'button');
-            expect(sortButton).toHaveAttribute('tabindex', '0');
-
-            sortButton.focus();
-            expect(document.activeElement).toBe(sortButton);
-
-            await user.click(sortButton);
-
-            const dropdownLinks = getDropdownLinks();
-            if (dropdownLinks.length > 0) {
-                const firstFocusableLink = dropdownLinks.find((link) => link.getAttribute('aria-selected') === 'false');
-                if (firstFocusableLink) {
-                    expect(firstFocusableLink).toHaveAttribute('href');
-                    expect(firstFocusableLink).toHaveAttribute('aria-selected', 'false');
-
-                    firstFocusableLink.focus();
-                    expect(document.activeElement).toBe(firstFocusableLink);
-                }
-            }
-        });
-
-        test('works with focus management utilities', async () => {
-            const user = userEvent.setup();
-
-            renderSortingBar();
-
-            const sortButton = getSortButton();
-            await testFocusManagement(sortButton);
-
-            await user.click(sortButton);
-
-            const dropdownLinks = getDropdownLinks();
-            if (dropdownLinks.length > 0) {
-                const firstFocusableLink = dropdownLinks.find((link) => link.getAttribute('aria-selected') === 'false');
-                if (firstFocusableLink) {
-                    await testFocusManagement(firstFocusableLink);
-                }
-            }
+            expect(screen.queryByRole('button', { name: /Sort products/ })).not.toBeInTheDocument();
+            expect(screen.queryByRole('navigation')).not.toBeInTheDocument();
+            expect(screen.getByText('125 Products')).toBeInTheDocument();
+            expect(screen.getByTestId('product-list-view-mode-toggle')).toBeInTheDocument();
         });
     });
 });

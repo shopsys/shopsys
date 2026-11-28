@@ -7,8 +7,42 @@
     }
 }
 
+/*
+ * Hover of a checkbox/radio indicator: its own label (`group`), or a label outside the indicator
+ * (e.g. a stretched name label), within the element marked by `data-choice-hover-scope`.
+ */
+@custom-variant choice-hover {
+    @media (hover: hover) {
+        &:is(:where(.group):hover *, :where([data-choice-hover-scope]):has(label:hover) *) {
+            @slot;
+        }
+    }
+}
+
+/*
+ * Keyboard focus of a visually hidden choice input (`peer`) shown on an element inside its label,
+ * e.g. the color swatch, which gets a ring instead of the orange fill.
+ */
+@custom-variant choice-focus-visible (.peer:focus-visible ~ label &);
+
+/* Short feedback animations, used with `motion-safe:`: an icon pops when it is switched on and a dropdown fades in
+ * with a small slide. */
+@keyframes iconPop {
+    40% {
+        transform: scale(1.25);
+    }
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-0.25rem);
+    }
+}
+
 @theme {
-    --radius-sm: 0.1875rem;
+    --animate-icon-pop: iconPop 300ms ease-out;
+    --animate-dropdown-in: dropdownIn 150ms ease-out;
     --text-zero: [0, 0];
     --keyframes-fadeIn: fadeIn 0.2s ease-in-out;
     --animation-fadeIn: fadeIn 0.2s ease-in-out;

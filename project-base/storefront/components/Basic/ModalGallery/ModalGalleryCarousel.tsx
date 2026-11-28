@@ -53,8 +53,8 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                 aria-selected={index === selectedIndex}
                                 data-focus-style="ring"
                                 className={twJoin(
-                                    'flex size-20 snap-center items-center justify-center rounded-lg border-2 border-transparent bg-background-more p-1 transition-[border-color,opacity] hover:border-border-default hover:opacity-100',
-                                    index === selectedIndex ? 'border-border-accent' : 'cursor-pointer opacity-60',
+                                    'flex size-20 snap-center items-center justify-center rounded-control border-2 border-transparent bg-background-more p-1 transition-[border-color,opacity] hover:border-border-default hover:opacity-100',
+                                    index === selectedIndex ? 'border-border-active' : 'cursor-pointer opacity-60',
                                 )}
                                 role="tab"
                                 tabIndex={0}

@@ -15,7 +15,6 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getPriceRounded, isPriceVisible } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
-import { useMediaMin } from 'utils/ui/useMediaMin';
 import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';
@@ -33,20 +32,27 @@ export type FilterPanelProps = {
     categoryAutomatedFilters?: string[];
 };
 
+type FilterPanelLayoutProps = {
+    // the drawer on mobile, the sidebar otherwise; DeferredFilterPanel decides, because a media query of the panel
+    // itself is unknown on the first render of every newly opened drawer
+    isInDrawer: boolean;
+};
+
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
 const DEFAULT_NUMBER_OF_SHOWN_ITEMS = 5;
 
-export const FilterPanel: FC<FilterPanelProps> = ({
+export const FilterPanel: FC<FilterPanelProps & FilterPanelLayoutProps> = ({
     productFilterOptions: filterOptions,
     totalCount,
     categoryAutomatedFilters,
+    isInDrawer,
 }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const { resetAllFilterQueries } = useUpdateFilterQuery();
     const currentFilter = useCurrentFilterQuery();
-    const isDesktop = useMediaMin('vl') === true;
+    const isDesktop = !isInDrawer;
     const popupId = useId();
     const showResultsButtonId = useId();
     const isFilterPanelOpen = useSessionStore((s) => s.isFilterPanelOpen);
@@ -232,7 +238,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                     aria-label={t('Clear all active filters', { ns: 'accessibility' })}
                     size="large"
                     tid={TIDs.clear_all_filters_button}
-                    variant="tertiary"
+                    variant="ghost"
                     onClick={handleClearAllFiltersClick}
                 >
                     {t('Clear all')}
@@ -254,9 +260,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             >
                 <div className="grid grid-cols-[2.25rem_1fr_2.25rem] items-center p-5">
                     <span aria-hidden="true" />
-                    <span className="min-w-0 truncate text-center font-secondary font-semibold">
-                        {t('Product filter')}
-                    </span>
+                    <span className="min-w-0 truncate text-center font-semibold">{t('Product filter')}</span>
                     <DrawerCloseButton
                         aria-label={t('Close filter panel', { ns: 'accessibility' })}
                         title={t('Close filter panel')}
@@ -286,7 +290,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 id="filter-sidebar"
             >
                 <AccessibleLink
-                    className="rounded-md"
+                    className="rounded-card"
                     href="#product-list"
                     title={t('Skip filters', { ns: 'accessibility' })}
                 />

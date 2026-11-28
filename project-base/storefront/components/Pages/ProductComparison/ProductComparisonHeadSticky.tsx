@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import {
     PRODUCT_COMPARISON_END_TRIGGER_ID,
@@ -70,7 +71,10 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                                 style={{ '--product-column-width': `${productColumnWidth}px` } as React.CSSProperties}
                             >
                                 <ExtendedNextLink
-                                    className="flex items-center gap-2 text-text-default no-underline hover:underline"
+                                    className={twJoin(
+                                        getLinkClassName({ variant: 'navigation' }),
+                                        'flex items-center gap-2',
+                                    )}
                                     onFocus={() => onProductFocus?.(index)}
                                     href={product.slug}
                                     type="product"

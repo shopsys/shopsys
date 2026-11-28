@@ -74,7 +74,12 @@ export const ProductListItemAddToCart: FC<ProductListItemAddToCartProps> = ({
     skeletonClassName,
 }) =>
     shouldShowProductActionSkeleton ? (
-        <ProductActionSkeleton className={skeletonClassName} isWithAddToCart isWithProductListButtons={false} />
+        <ProductActionSkeleton
+            buttonSize={buttonSize}
+            className={skeletonClassName}
+            isWithAddToCart
+            isWithProductListButtons={false}
+        />
     ) : (
         <div className={productActionClassName}>
             <ProductAction

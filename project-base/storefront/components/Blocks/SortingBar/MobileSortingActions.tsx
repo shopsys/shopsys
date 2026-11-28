@@ -5,7 +5,7 @@ import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
-import { useRef } from 'react';
+import { MouseEvent, useEffect, useRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useKeypress } from 'utils/useKeyPress';
@@ -17,6 +17,7 @@ type MobileSortingActionsProps = {
     selectedSortOption: TypeProductOrderingModeEnum;
     sortOptions: TypeProductOrderingModeEnum[];
     sortOptionsLabels: SortOptionsLabels;
+    sortOptionsShortLabels: SortOptionsLabels;
     onChangeSort: (sortOption: TypeProductOrderingModeEnum) => void;
     onSortMenuClose: () => void;
     onSortMenuToggle: () => void;
@@ -27,34 +28,52 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
     selectedSortOption,
     sortOptions,
     sortOptionsLabels,
+    sortOptionsShortLabels,
     onChangeSort,
     onSortMenuClose,
     onSortMenuToggle,
 }) => {
     const { t } = useTranslation();
     const sortButtonRef = useRef<HTMLButtonElement | null>(null);
-    const selectedSortOptionLabel = sortOptionsLabels[selectedSortOption] || t('Sort');
+    const sortDropdownRef = useRef<HTMLElement>(null);
+    // The button shows a short label (e.g. "Cheapest"), so a long translation does not stretch it; the list shows the full one.
+    const selectedSortOptionShortLabel = sortOptionsShortLabels[selectedSortOption];
 
-    useKeypress('Escape', () => {
+    useEffect(() => {
+        if (isSortMenuOpen) {
+            sortDropdownRef.current?.querySelector<HTMLAnchorElement>('[aria-current="true"]')?.focus();
+        }
+    }, [isSortMenuOpen]);
+
+    const closeSortMenuAndReturnFocus = () => {
         if (isSortMenuOpen) {
             onSortMenuClose();
             sortButtonRef.current?.focus();
         }
-    });
+    };
+
+    useKeypress('Escape', closeSortMenuAndReturnFocus);
+
+    const handleSortButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+        sortButtonRef.current = event.currentTarget;
+        onSortMenuToggle();
+    };
+
+    // The chosen option is hidden together with the list, so focus would otherwise fall back to the page.
+    const changeSortAndReturnFocus = (sortOption: TypeProductOrderingModeEnum) => {
+        onChangeSort(sortOption);
+        sortButtonRef.current?.focus({ preventScroll: true });
+    };
 
     return (
         <>
             <div
-                className={twJoin(
-                    'relative vl:hidden w-full flex-1 sm:w-auto sm:max-w-80',
-                    isSortMenuOpen && 'z-aboveOverlay',
-                )}
+                className={twJoin('relative vl:hidden min-w-0 flex-1 sm:max-w-80', isSortMenuOpen && 'z-aboveOverlay')}
             >
                 <Button
                     aria-controls="sort-dropdown"
                     aria-expanded={isSortMenuOpen}
-                    aria-haspopup="menu"
-                    variant="secondary"
+                    variant="outline"
                     aria-label={t('Sort products by {{ currentSort }}. Click to change sort order.', {
                         ns: 'accessibility',
                         currentSort: sortOptionsLabels[selectedSortOption] || t('default order'),
@@ -62,19 +81,20 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     className={twJoin(
                         'w-full justify-between',
                         isSortMenuOpen &&
-                            'bg-button-secondary-bg-active text-button-secondary-text-active outline-button-secondary-border-active',
+                            'bg-button-outline-bg-active text-button-outline-text-active outline-button-outline-border-active',
                     )}
                     size="large"
                     title={t('Sort')}
-                    onClick={(event) => {
-                        sortButtonRef.current = event.currentTarget;
-                        onSortMenuToggle();
-                    }}
+                    onClick={handleSortButtonClick}
                 >
                     <span className="flex min-w-0 items-center gap-2">
                         <SortIcon aria-hidden="true" className="size-5 shrink-0" />
 
-                        <span className="truncate text-left">{selectedSortOptionLabel}</span>
+                        <span className="truncate text-left">
+                            {/* On the narrowest screens the prefix would truncate the chosen option, the icon stands for it. */}
+                            <span className="font-default font-normal max-xs:sr-only">{t('Sort')}:</span>{' '}
+                            <span>{selectedSortOptionShortLabel}</span>
+                        </span>
                     </span>
 
                     <ArrowIcon
@@ -83,23 +103,23 @@ export const MobileSortingActions: FC<MobileSortingActionsProps> = ({
                     />
                 </Button>
 
-                <div
+                <nav
                     aria-label={t('Sort options', { ns: 'accessibility' })}
                     id="sort-dropdown"
-                    role="menu"
+                    ref={sortDropdownRef}
                     className={twJoin(
-                        'absolute top-full left-0 mt-2 w-full flex-col divide-y divide-border-less overflow-hidden rounded-md border border-border-less bg-background-default shadow-lg',
-                        isSortMenuOpen ? 'flex' : 'hidden',
+                        'absolute top-full left-0 mt-1 w-full flex-col divide-y divide-border-less overflow-hidden rounded-input border border-border-less bg-background-default shadow-lg',
+                        isSortMenuOpen ? 'flex motion-safe:animate-dropdown-in' : 'hidden',
                     )}
                 >
                     <SortingBarOptions
-                        itemRole="menuitem"
+                        variant="dropdown"
                         selectedSortOption={selectedSortOption}
                         sortOptions={sortOptions}
                         sortOptionsLabels={sortOptionsLabels}
-                        onChangeSort={onChangeSort}
+                        onChangeSort={changeSortAndReturnFocus}
                     />
-                </div>
+                </nav>
             </div>
 
             <Overlay isActive={isSortMenuOpen} onClick={onSortMenuClose} />
@@ -125,14 +145,15 @@ export const MobileFilterAction: FC<MobileFilterActionProps> = ({
             aria-controls="filter-panel"
             aria-expanded={isFilterPanelOpen}
             aria-label={t('Open product filters', { ns: 'accessibility' })}
-            className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-floatingAction flex vl:hidden h-12 items-center gap-1 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
+            className="fixed right-4 bottom-[calc(5rem+env(safe-area-inset-bottom))] z-floatingAction flex vl:hidden min-h-12 items-center gap-1 rounded-full shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
+            size="large"
             title={t('Filter')}
-            variant="secondary"
+            variant="outline"
             onClick={onFilterPanelOpen}
         >
             <FilterIcon aria-hidden="true" className="size-5 shrink-0" />
 
-            <span className="font-secondary font-semibold text-sm">{t('Filter')}</span>
+            <span className="text-sm">{t('Filter')}</span>
 
             {activeFilterCount > 0 && (
                 <CountBadge

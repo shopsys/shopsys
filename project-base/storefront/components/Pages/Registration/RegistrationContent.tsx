@@ -88,7 +88,9 @@ export const RegistrationContent: FC = () => {
                             <RegistrationAgreements />
 
                             <FormButtonWrapper>
-                                <SubmitButton tid={TIDs.registration_submit_button}>{t('Sign up')}</SubmitButton>
+                                <SubmitButton size="large" tid={TIDs.registration_submit_button}>
+                                    {t('Sign up')}
+                                </SubmitButton>
                             </FormButtonWrapper>
                         </FormContentWrapper>
                     </Form>

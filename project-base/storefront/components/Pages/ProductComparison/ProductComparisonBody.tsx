@@ -74,7 +74,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({
                                     )}
                                 >
                                     <th
-                                        className="col-span-2 px-4 pt-3 text-left font-medium text-text-less text-xs md:sticky md:left-0 md:z-above md:bg-table-bg-default md:py-4 md:text-sm md:text-text-default"
+                                        className="col-span-2 px-4 pt-3 text-left font-semibold text-text-less text-xs md:sticky md:left-0 md:z-above md:bg-table-bg-default md:py-4 md:text-sm md:text-text-default"
                                         scope="row"
                                         id={`comparison-parameter-${parameter.uuid}`}
                                     >

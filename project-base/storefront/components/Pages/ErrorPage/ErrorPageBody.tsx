@@ -6,7 +6,7 @@ export type ErrorPageBodyProps = {
 
 export const ErrorPageBody: FC<ErrorPageBodyProps> = ({ children, heading, statusCode, text }) => (
     <section className="flex flex-col gap-4">
-        <span className="mx-auto select-none font-bold font-secondary text-7xl text-text-primary tracking-normal lg:text-9xl">
+        <span className="mx-auto select-none font-secondary font-semibold text-7xl text-text-primary tracking-normal lg:text-9xl">
             {statusCode}
         </span>
 

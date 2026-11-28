@@ -7,7 +7,7 @@ import { TypeParameterTypeEnum } from 'graphql/types';
 import { Fragment, RefObject } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { ProductDetailSectionHeading } from './ProductDetailSectionHeading';
-import { PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
+import { PRODUCT_DETAIL_SECTION_WIDTH_CLASS_NAME, PRODUCT_DETAIL_SECTIONS_IDS } from './productDetailSectionsConstants';
 
 type ProductDetailParametersSectionProps = {
     parameters: TypeParameterFragment[];
@@ -41,7 +41,7 @@ type ParameterTableProps = {
 
 const ParameterTable = ({ parameters }: ParameterTableProps) => (
     <Table
-        className="overflow-hidden rounded-xl border border-border-less bg-background-more"
+        className="overflow-hidden rounded-card border border-border-less bg-background-more"
         tableClassName="md:table-fixed"
     >
         {parameters.map((parameter) => (
@@ -95,12 +95,12 @@ export const ProductDetailParametersSection = ({ parameters, sectionRef }: Produ
             ref={sectionRef}
             tabIndex={-1}
         >
-            <Webline width="vl">
+            <Webline className={PRODUCT_DETAIL_SECTION_WIDTH_CLASS_NAME} width="vl">
                 <ProductDetailSectionHeading>{t('Parameters')}</ProductDetailSectionHeading>
 
                 {groupParameters.map(({ groupName, groupParameters }) => (
                     <Fragment key={groupName}>
-                        <h3 className="h4 pt-6 pb-4">{groupName}</h3>
+                        <h3 className="h4 pt-6 pb-4 first-of-type:pt-2">{groupName}</h3>
 
                         <ParameterTable parameters={groupParameters} />
                     </Fragment>

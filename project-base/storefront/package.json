@@ -8,6 +8,7 @@
         "check": "concurrently \"pnpm run typecheck\" \"pnpm run lint\"",
         "check--fix": "concurrently \"pnpm run typecheck\" \"pnpm run lint--fix\"",
         "compile-tailwind-for-admin": "tailwindcss -i styles/globals.css -o ./public/tailwind-for-admin/style.css --minify",
+        "generate-color-palette": "node scripts/generateColorPalette.mjs",
         "dev": "next dev --webpack",
         "dev:debug": "NODE_OPTIONS='--inspect=0.0.0.0:9229' next dev --webpack",
         "format": "biome format --write .",

@@ -3,7 +3,7 @@ import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isDateQueryValid } from 'utils/parsing/getDateTimeFromDateQuery';
 
 export const datePickerClassNames = {
-    root: 'font-secondary text-input-text-default',
+    root: 'text-input-text-default',
     months: 'flex',
     month: 'space-y-3',
     month_caption: 'flex items-center justify-center px-9',
@@ -11,7 +11,7 @@ export const datePickerClassNames = {
     dropdowns: 'flex items-center gap-2',
     dropdown_root: 'relative',
     dropdown:
-        'cursor-pointer rounded-md border border-input-border-default bg-input-bg-default px-2 py-1 pr-7 font-semibold text-sm outline-hidden focus:border-input-border-active',
+        'cursor-pointer rounded-detail border border-input-border-default bg-input-bg-default px-2 py-1 pr-7 font-semibold text-sm outline-hidden focus:border-input-border-active',
     nav: 'absolute inset-x-3 top-3 flex items-center justify-between',
     button_previous:
         'inline-flex size-8 cursor-pointer items-center justify-center rounded-button text-icon-default transition hover:bg-fill-accent-less hover:text-icon-accent disabled:pointer-events-none disabled:opacity-40',
@@ -27,7 +27,8 @@ export const datePickerClassNames = {
     selected:
         '[&_button]:bg-link-default [&_button]:text-text-inverted [&_button]:hover:bg-link-hovered [&_button]:hover:text-text-inverted',
     today: '[&_button]:ring-2 [&_button]:ring-link-default [&_button]:ring-inset',
-    outside: 'text-input-placeholder-default opacity-50',
+    // days of the neighbouring months are muted by color and weight, an opacity would drop them below the text contrast
+    outside: '[&_button]:font-normal [&_button]:text-text-less',
     disabled: 'pointer-events-none opacity-40',
 };
 

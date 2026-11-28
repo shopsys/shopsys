@@ -135,7 +135,7 @@ describe('ProductComparisonHeadItem', () => {
         expect(productName).toBeInTheDocument();
         expect(productNameWrapper).not.toHaveClass('text-link-default', 'underline');
         expect(productNameWrapper).not.toHaveClass('group-hover/product-link:text-link-hovered');
-        expect(productNameWrapper).toHaveClass('group-hover/product-link:underline');
+        expect(productNameWrapper).not.toHaveClass('group-hover/product-link:underline');
         expect(within(productLink).queryByText('Code: ABC123')).not.toBeInTheDocument();
         expect(within(productLink).queryByText('4.5')).not.toBeInTheDocument();
         expect(productNameWrapper).toHaveAttribute('id', PRODUCT_COMPARISON_STICKY_TRIGGER_ID);

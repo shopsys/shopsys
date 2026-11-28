@@ -74,9 +74,12 @@ export default defineConfig({
                     if (browser.isHeadless) {
                         // Leave room for browser/runner chrome around the 1600x720 application viewport.
                         // Matching the outer window to the viewport clips captures and introduces scrollbars.
+                        // Headless Linux Chromium reports (pointer: none) and (hover: none), so hover styles never apply.
+                        // Declare a desktop mouse: fine pointer (4) with hover (2).
                         launchOptions.args.push(
                             '--window-size=1920,1080',
                             '--force-device-scale-factor=1',
+                            '--blink-settings=primaryPointerType=4,availablePointerTypes=4,primaryHoverType=2,availableHoverTypes=2',
                         );
                     }
                     launchOptions.args.push(

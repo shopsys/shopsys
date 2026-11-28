@@ -1,7 +1,8 @@
 import { Inter, Raleway } from 'next/font/google';
 
+// Inter carries the interface and the text: 400 text, 500 interface (menu, tabs, chips, product names), 600 small headings, actions and badges, 700 prices
 const interFont = Inter({
-    weight: ['400', '600', '700'],
+    weight: ['400', '500', '600', '700'],
     subsets: ['latin-ext', 'latin'],
     variable: '--font-inter',
     display: 'swap',
@@ -17,8 +18,9 @@ const interFont = Inter({
     ],
 });
 
+// Raleway is the brand font for headings from 18px and buttons only
 const ralewayFont = Raleway({
-    weight: ['400', '600', '700'],
+    weight: ['600'],
     subsets: ['latin-ext', 'latin'],
     variable: '--font-raleway',
     display: 'swap',
@@ -34,21 +36,16 @@ const ralewayFont = Raleway({
     ],
 });
 
-export { ralewayFont };
-
 export const Fonts = () => {
     return (
         <style global jsx>{`
-            html {
-                font-family: ${interFont.style.fontFamily};
-            }
+            /* on the root, so font-default and font-secondary also work in portals */
             :root {
-                --font-inter-fallback:
-                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, system-ui,
-                    sans-serif;
-                --font-raleway-fallback:
-                    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, system-ui,
-                    sans-serif;
+                --font-inter: ${interFont.style.fontFamily};
+                --font-raleway: ${ralewayFont.style.fontFamily};
+            }
+            html {
+                font-family: var(--font-inter);
             }
         `}</style>
     );

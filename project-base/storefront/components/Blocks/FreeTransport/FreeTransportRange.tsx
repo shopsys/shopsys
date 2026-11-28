@@ -23,7 +23,7 @@ export const FreeTransportRange: FC = () => {
 
     return (
         <div className="flex w-full flex-col gap-2.5 lg:gap-1" data-tid={testIdentifier}>
-            <span className="font-secondary font-semibold text-sm">
+            <span className="text-sm">
                 {totalPriceRemaining > 0
                     ? t('Buy for {{ amount }} and get free shipping!', { amount: amountFormatted })
                     : t('Your delivery and payment is now free of charge!')}
@@ -32,7 +32,7 @@ export const FreeTransportRange: FC = () => {
             <div className="relative order-1 vl:order-0 h-1">
                 <div className="absolute top-1/2 left-0 h-1 w-full bg-border-less">
                     <div
-                        className="relative h-1 rounded-md bg-background-success transition-width duration-200 ease-defaultTransition"
+                        className="relative h-1 rounded-full bg-background-success transition-width duration-200 ease-defaultTransition"
                         style={{
                             width: totalPriceRemaining > 0 ? `${Math.min(totalPriceRemainingPercents, 100)}%` : '100%',
                         }}

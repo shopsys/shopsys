@@ -74,7 +74,7 @@ export const CartInHeaderList: FC<CartInHeaderListProps> = ({ hideFocusTrap, isD
 
     return (
         <div className={twJoin(isDrawer && 'flex min-h-0 flex-1 flex-col')} ref={contentRef}>
-            {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-xl" />}
+            {isRemovingFromCart && <LoaderWithOverlay className="w-16" overlayClassName="rounded-card" />}
             <div
                 ref={scrollContainerRef}
                 className={twJoin(

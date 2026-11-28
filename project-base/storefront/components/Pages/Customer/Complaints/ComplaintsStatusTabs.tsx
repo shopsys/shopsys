@@ -45,8 +45,8 @@ export const ComplaintsStatusTabs: FC<ComplaintsStatusTabsProps> = ({ complaintS
                                 <CountBadge
                                     className={
                                         isActive
-                                            ? 'bg-background-default text-link-default'
-                                            : 'bg-fill-accent-less text-link-default'
+                                            ? 'bg-background-default text-text-accent'
+                                            : 'bg-fill-accent-less text-text-accent'
                                     }
                                 >
                                     {statusTab.count}

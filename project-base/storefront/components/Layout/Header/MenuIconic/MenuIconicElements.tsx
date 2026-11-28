@@ -1,5 +1,6 @@
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { AnimatePresence } from 'framer-motion';
 import { forwardRef, type MouseEventHandler, TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -39,8 +40,10 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
     ariaLabel,
     disabled,
 }) => {
-    const menuIconicSubItemLinkTwClass = twJoin(
-        'flex w-full cursor-pointer items-center gap-5 rounded-md px-3 py-4 font-semibold text-sm text-text-default no-underline hover:text-text-default hover:no-underline',
+    const menuIconicSubItemLinkTwClass = twMergeCustom(
+        getLinkClassName({ variant: 'navigation' }),
+        // the whole row is the card, its list item reacts to hover by the surface, so the label is not underlined
+        'flex w-full items-center gap-5 rounded-control px-3 py-4 font-semibold text-sm hover:no-underline',
         isActive && 'text-text-accent!',
     );
 
@@ -96,7 +99,7 @@ export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
         _,
     ) => {
         const menuIconicItemLinkTwClass =
-            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-sm font-semibold text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-secondary';
+            'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 text-xs rounded-detail text-link-inverted-default no-underline transition-colors hover:text-link-inverted-hovered hover:no-underline font-ui';
 
         if (href) {
             return (
@@ -149,7 +152,7 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, className, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'h-14 rounded-xl border border-background-default bg-background-more',
+            'h-14 rounded-control border border-background-default bg-background-more',
             'hover:border-border-less hover:bg-background-default',
             isActive && 'border-border-less bg-background-default',
             className,
@@ -183,7 +186,7 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
                 <AnimateAppearDiv
                     id={id}
                     className={twMergeCustom(
-                        'pointer-events-auto absolute right-0 z-cart max-h-[70dvh] w-89 origin-top-right overflow-y-auto rounded-xl border border-border-less bg-background-default p-4 shadow-xl',
+                        'pointer-events-auto absolute right-0 z-cart max-h-[70dvh] w-89 origin-top-right overflow-y-auto rounded-card border border-border-less bg-background-default p-4 shadow-xl',
                         topClassName,
                     )}
                 >

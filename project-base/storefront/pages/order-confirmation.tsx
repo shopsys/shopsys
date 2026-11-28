@@ -70,7 +70,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                 pageTypeOverride="order-confirmation"
                 defaultTitle={t('Order confirmation')}
             >
-                <Webline>
+                <Webline width="xl">
                     <ConfirmationPageContent
                         content={t(
                             'It took a while, so for security reasons this page no longer shows the order details. If you have completed the payment, it will be processed automatically. You will find all the details in the order confirmation e-mail, or after signing in to your account.',
@@ -107,7 +107,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             pageTypeOverride="order-confirmation"
             defaultTitle={t('Thank you for your order')}
         >
-            <Webline tid={TIDs.pages_orderconfirmation}>
+            <Webline tid={TIDs.pages_orderconfirmation} width="xl">
                 {hasPaymentStatusUpdateError ? (
                     <ConfirmationPageContent
                         content={t(
@@ -211,7 +211,7 @@ export default OrderConfirmationPage;
 
 const OrderConfirmationLoadingState: FC<{ title: string }> = ({ title }) => (
     <CommonLayout defaultMetaRobots="noindex" isFetchingData pageTypeOverride="order-confirmation" defaultTitle={title}>
-        <Webline tid={TIDs.pages_orderconfirmation} />
+        <Webline tid={TIDs.pages_orderconfirmation} width="xl" />
     </CommonLayout>
 );
 

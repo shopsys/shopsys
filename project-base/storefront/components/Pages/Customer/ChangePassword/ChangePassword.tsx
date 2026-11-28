@@ -26,7 +26,6 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
         ...currentCustomerUser,
     });
     const formMeta = useChangePasswordFormMeta();
-    const isSubmitting = formProviderMethods.formState.isSubmitting;
 
     const handleError = useErrorHandler({
         form: formProviderMethods,
@@ -125,7 +124,7 @@ export const ChangePassword: FC<ChangePasswordProps> = ({ currentCustomerUser })
                         </FormBlockWrapper>
 
                         <FormButtonWrapper className="mt-0 pb-6">
-                            <SubmitButton hasDisabledLook={isSubmitting}>{t('Change password')}</SubmitButton>
+                            <SubmitButton size="large">{t('Change password')}</SubmitButton>
                         </FormButtonWrapper>
                     </FormContentWrapper>
                 </Form>

@@ -308,7 +308,6 @@ generate-icons-for-styleguide: ## Generates StyleguideIcons component from all i
 	@echo " * To regenerate this file, run: make generate-icons-for-styleguide" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@echo " */" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@echo "" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
-	@echo "import { StyleguideSection } from './StyleguideElements';" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@for file in project-base/storefront/components/Basic/Icon/*.tsx; do \
 		name=$$(basename "$$file" .tsx); \
 		if [ "$$name" != "iconsListGeneratorScript" ]; then \
@@ -317,19 +316,17 @@ generate-icons-for-styleguide: ## Generates StyleguideIcons component from all i
 	done
 	@echo "" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@echo "export const StyleguideIcons = () => (" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
-	@echo "    <StyleguideSection title=\"Icons\">" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
-	@echo "        <div className=\"grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6\">" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "    <div className=\"grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6\">" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@for file in project-base/storefront/components/Basic/Icon/*.tsx; do \
 		name=$$(basename "$$file" .tsx); \
 		if [ "$$name" != "iconsListGeneratorScript" ]; then \
-			echo "            <div className=\"border-border-less flex flex-col items-center gap-2 rounded-lg border p-4 transition-shadow hover:shadow-md\">" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
-			echo "                <$$name className=\"size-10\" />" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
-			echo "                <span className=\"text-center text-xs break-all\">$$name</span>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
-			echo "            </div>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "        <div className=\"flex flex-col items-center gap-3 rounded-lg border border-border-less p-4\">" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "            <$$name className=\"size-8\" />" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "            <code className=\"text-center text-xs break-all\">$$name</code>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
+			echo "        </div>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx; \
 		fi \
 	done
-	@echo "        </div>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
-	@echo "    </StyleguideSection>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
+	@echo "    </div>" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@echo ");" >> project-base/storefront/components/Pages/Styleguide/StyleguideIcons.generated.tsx
 	@echo "✅ Generated $$(ls -1 project-base/storefront/components/Basic/Icon/*.tsx | grep -v Script | wc -l | xargs) icons"
 	@echo ""

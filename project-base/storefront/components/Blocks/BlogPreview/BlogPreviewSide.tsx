@@ -32,7 +32,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                     key={article.uuid}
                     title={t('Blog article')}
                 >
-                    <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-xl xl:h-24 xl:w-36">
+                    <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-card xl:h-24 xl:w-36">
                         <Image
                             fill
                             alt={getImageAlt(article.mainImage?.name, article.name)}
@@ -53,7 +53,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <ArticleDate
-                                        className="mr-3.5 text-secondary-300!"
+                                        className="mr-3.5 text-neutral-300!"
                                         date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
                                     />
@@ -73,8 +73,8 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h3 className="h5 text-text-inverted group-hover:underline">
-                            <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible:bg-orange-500 group-focus-visible:text-text-default!">
+                        <h3 className="h5 text-text-inverted">
+                            <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible:bg-focus-background group-focus-visible:text-text-default!">
                                 {article.name}
                             </span>
                         </h3>

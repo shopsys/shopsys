@@ -11,8 +11,8 @@ import {
 import { getAccessTokenFromCookies, hasRefreshTokenInCookies } from 'utils/auth/getTokensFromCookies';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
+import { showWarningMessage } from 'utils/toasts/showWarningMessage';
 
 export const AuthNotificationLoader = () => {
     const { t } = useTranslation();
@@ -58,7 +58,7 @@ export const AuthNotificationLoader = () => {
             authNotification === 'registration-with-cart-modifications' ||
             authNotification === 'login-with-cart-modifications'
         ) {
-            showInfoMessage(t('Your cart has been modified. Please check the changes.'));
+            showWarningMessage(t('Your cart has been modified. Please check the changes.'));
         }
     });
 

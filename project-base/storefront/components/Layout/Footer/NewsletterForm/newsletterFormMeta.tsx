@@ -11,8 +11,6 @@ import { yupResolver } from 'utils/forms/yupResolver';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
-const newsletterAgreementLinkTwClass =
-    'text-link-inverted-default text-sm underline hover:text-link-inverted-default hover:underline';
 const newsletterAgreementTextTwClass = 'text-text-inverted text-sm';
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
@@ -43,7 +41,6 @@ export const useNewsletterFormMeta = (): FormMeta<NewsletterFormType, { error: s
 };
 
 export const useNewsletterSubscriptionAgreement = () => {
-    const { t } = useTranslation();
     const [{ data: settingsData }] = useSettingsQuery();
     const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
 
@@ -53,12 +50,7 @@ export const useNewsletterSubscriptionAgreement = () => {
             i18nKey="NewsletterSubscriptionAgreement"
             components={{
                 lnk1: privacyPolicyArticleUrl ? (
-                    <Link
-                        aria-label={t('Go to privacy policy article', { ns: 'accessibility' })}
-                        className={newsletterAgreementLinkTwClass}
-                        href={privacyPolicyArticleUrl}
-                        target="_blank"
-                    />
+                    <Link className="text-sm" tone="inverted" href={privacyPolicyArticleUrl} target="_blank" />
                 ) : (
                     <span className={newsletterAgreementTextTwClass} />
                 ),

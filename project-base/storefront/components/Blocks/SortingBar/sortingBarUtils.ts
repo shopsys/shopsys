@@ -1,6 +1,49 @@
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
+import { twJoin } from 'tailwind-merge';
 import { FilterOptionsUrlQueryType } from 'types/productFilter';
+
+/**
+ * A fixed limit instead of measuring the available width, so the bar does not shift after hydration.
+ */
+const MAX_VISIBLE_SORT_TABS = 4;
+
+/**
+ * Tabs shared by the product list sorting, the review sorting and the product detail section navigation, so they
+ * look the same: the active option has a darker text and the row's TabIndicator under it, hover only darkens the text.
+ * Both states keep one weight, so switching the active tab never changes the width of the row.
+ */
+export const getSortingTabClassName = ({ isActive }: { isActive: boolean }) =>
+    twJoin(
+        'relative inline-flex min-h-11 cursor-pointer items-center rounded-detail px-1 font-ui text-md no-underline transition-colors hover:no-underline',
+        isActive ? 'text-text-default' : 'text-text-less hover:text-text-default',
+    );
+
+/**
+ * Splits the options into the visible tabs and the rest shown under "More".
+ * The selected option always stays visible, it takes the place of the last visible tab.
+ */
+export const splitSortOptions = (
+    sortOptions: TypeProductOrderingModeEnum[],
+    selectedSortOption: TypeProductOrderingModeEnum,
+) => {
+    if (sortOptions.length <= MAX_VISIBLE_SORT_TABS) {
+        return { visibleSortOptions: sortOptions, moreSortOptions: [] };
+    }
+
+    const visibleSortOptions = sortOptions.slice(0, MAX_VISIBLE_SORT_TABS);
+    const isSelectedSortOptionHidden =
+        sortOptions.includes(selectedSortOption) && !visibleSortOptions.includes(selectedSortOption);
+
+    if (isSelectedSortOptionHidden) {
+        visibleSortOptions[MAX_VISIBLE_SORT_TABS - 1] = selectedSortOption;
+    }
+
+    return {
+        visibleSortOptions,
+        moreSortOptions: sortOptions.filter((sortOption) => !visibleSortOptions.includes(sortOption)),
+    };
+};
 
 export const getIsPriceRelatedSortOption = (sortOption: TypeProductOrderingModeEnum) =>
     sortOption === TypeProductOrderingModeEnum.PriceAsc || sortOption === TypeProductOrderingModeEnum.PriceDesc;

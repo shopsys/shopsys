@@ -2,6 +2,7 @@ import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseD
 import { ColorPreview } from 'components/Basic/ColorPreview/ColorPreview';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
@@ -262,16 +263,14 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                 })}
                             </AnimatePresence>
 
-                            <button
+                            <TextButton
                                 aria-label={t('Clear all active filters', { ns: 'accessibility' })}
-                                className="cursor-pointer rounded-sm font-secondary font-semibold text-link-default text-sm underline hover:text-link-hovered"
-                                data-tid={TIDs.clear_all_filters_button}
+                                tid={TIDs.clear_all_filters_button}
                                 tabIndex={0}
-                                type="button"
                                 onClick={resetAllFilterQueries}
                             >
                                 {t('Clear all')}
-                            </button>
+                            </TextButton>
                         </div>
                     </div>
                 </AnimateCollapseDiv>

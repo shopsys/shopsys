@@ -93,8 +93,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({
                             ariaLabel={t('Select product {{ number }}', { number: index + 1 })}
                             label={t('Product {{ number }}', { number: index + 1 })}
                             options={getMobileProductOptions(product.uuid)}
-                            selectClassName="rounded-b-md"
-                            listClassName={`mt-2 w-[calc(200%+0.75rem)] max-h-64 rounded-md border-t-2 [&_[role=option]>div]:grid [&_[role=option]>div]:grid-cols-[minmax(0,1fr)_1rem] [&_[role=option]>div]:gap-3 [&_[role=option]>div]:py-4 ${index === 0 ? 'right-auto' : 'left-auto'}`}
+                            listClassName={`mt-2 w-[calc(200%+0.75rem)] max-h-64 [&_[role=option]>div]:grid [&_[role=option]>div]:grid-cols-[minmax(0,1fr)_1rem] [&_[role=option]>div]:gap-3 [&_[role=option]>div]:py-4 ${index === 0 ? 'right-auto' : 'left-auto'}`}
                             renderOption={(option) => (
                                 <div className="flex min-w-0 items-center gap-3">
                                     <Image
@@ -131,7 +130,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({
                 <m.section
                     layoutScroll
                     aria-label={t('Compared products and parameters')}
-                    className="relative overflow-x-auto overscroll-x-contain rounded-lg border border-border-less"
+                    className="thin-scrollbar relative overflow-x-auto overscroll-x-contain rounded-card border border-border-less"
                     ref={table.scrollRef}
                     onScroll={table.calcMaxMarginLeft}
                 >

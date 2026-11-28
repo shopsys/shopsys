@@ -1,6 +1,5 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { Button } from 'components/Forms/Button/Button';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { AnimatePresence } from 'framer-motion';
 import { TypeCategoryBestsellerFragment } from 'graphql/requests/categories/fragments/CategoryBestsellerFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -69,7 +68,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     return (
-        <div className="relative rounded-xl bg-background-more p-5">
+        <div className="relative rounded-surface bg-background-more p-5">
             <h2 className="sr-only">{t('Bestsellers')}</h2>
 
             <div className="wrap-break-word mb-3 text-center font-secondary font-semibold text-lg">
@@ -92,24 +91,16 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
             </div>
 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
-                <Button
-                    aria-controls="bestsellers-list"
-                    aria-expanded={!isCollapsed}
-                    className="group mx-auto flex"
+                <ShowMoreButton
                     aria-label={ariaLabel}
-                    variant="tertiary"
+                    className="mx-auto"
+                    controlsId="bestsellers-list"
+                    isExpanded={!isCollapsed}
                     title={t('Toggle bestseller list')}
                     onClick={handleShowMoreClick}
                 >
                     {isCollapsed ? showMoreLabel : showLessLabel}
-                    <ArrowSecondaryIcon
-                        aria-hidden="true"
-                        className={twJoin(
-                            'size-3 transition-transform',
-                            isCollapsed ? 'group-hover:translate-y-0.5' : 'rotate-180 group-hover:-translate-y-0.5',
-                        )}
-                    />
-                </Button>
+                </ShowMoreButton>
             )}
         </div>
     );

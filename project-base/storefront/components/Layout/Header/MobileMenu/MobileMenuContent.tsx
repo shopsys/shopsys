@@ -1,6 +1,7 @@
 import { DrawerCloseButton } from 'components/Basic/Drawer/DrawerCloseButton';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { AnimationSequence, useAnimate, useReducedMotion } from 'framer-motion';
@@ -118,7 +119,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                     <span aria-hidden="true" />
                 )}
 
-                <span className="min-w-0 truncate text-center font-secondary font-semibold">{t('Menu')}</span>
+                <span className="min-w-0 truncate text-center font-semibold">{t('Menu')}</span>
 
                 <DrawerCloseButton onClick={onMenuToggleHandler} />
             </div>
@@ -167,7 +168,7 @@ const MenuItems: FC<{
                 <p
                     aria-hidden={!title}
                     className={twJoin(
-                        'min-w-0 truncate font-secondary font-semibold text-text-less text-xs uppercase',
+                        'min-w-0 truncate font-semibold text-text-less text-xs uppercase',
                         !title && 'invisible',
                     )}
                 >
@@ -177,7 +178,10 @@ const MenuItems: FC<{
                 {viewAllItem?.link && (
                     <ExtendedNextLink
                         aria-label={viewAllItem.name}
-                        className="inline-flex shrink-0 items-center gap-1 rounded-md py-1 font-secondary font-semibold text-link-default text-xs no-underline hover:underline"
+                        className={twJoin(
+                            getLinkClassName({ variant: 'navigation', tone: 'accent' }),
+                            'inline-flex shrink-0 items-center gap-1 rounded-detail py-1 font-semibold text-xs',
+                        )}
                         href={viewAllItem.link}
                         skeletonType={DEFAULT_SKELETON_TYPE}
                         tabIndex={isHidden ? -1 : undefined}

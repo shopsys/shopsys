@@ -122,7 +122,7 @@ export const OpeningHours: FC<{
                             aria-current={isToday ? 'date' : undefined}
                             aria-label={dayAriaText}
                             className={twMergeCustom(
-                                'flex list-none flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg sm:flex-row sm:items-center',
+                                'flex list-none flex-col flex-wrap gap-x-5 gap-y-2 rounded-card sm:flex-row sm:items-center',
                                 isCompact ? 'px-3 py-2' : 'p-2',
                                 isHighlighted && !isCompact && 'bg-background-accent-less',
                                 isHighlighted && isCompact && 'bg-background-default',
@@ -131,10 +131,7 @@ export const OpeningHours: FC<{
                         >
                             <span
                                 aria-hidden="true"
-                                className={twMergeCustom(
-                                    'font-secondary font-semibold',
-                                    isCompact ? 'w-36 text-xs' : 'h6 w-44',
-                                )}
+                                className={twMergeCustom('font-semibold', isCompact ? 'w-36 text-xs' : 'h6 w-44')}
                             >
                                 {dayLabel}
                             </span>

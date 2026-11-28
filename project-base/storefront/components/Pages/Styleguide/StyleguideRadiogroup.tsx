@@ -4,7 +4,7 @@ import { FormProvider } from 'react-hook-form';
 import { useFormWrapper } from 'utils/forms/useFormWrapper';
 import { yupResolver } from 'utils/forms/yupResolver';
 import * as Yup from 'yup';
-import { StyleguideSection } from './StyleguideElements';
+import { StyleguidePreview } from './StyleguideElements';
 
 const getStyleguideExampleFormResolver = () =>
     yupResolver<{ country: 'cz' | 'de' | 'pl' }>(
@@ -32,7 +32,7 @@ export const StyleguideRadiogroup: FC = () => {
     };
 
     return (
-        <StyleguideSection className="flex flex-col gap-3" title="RadioGroup">
+        <StyleguidePreview className="flex max-w-xl flex-col gap-3">
             <FormProvider {...formProviderMethods}>
                 <RadiobuttonGroup
                     control={formProviderMethods.control}
@@ -60,6 +60,6 @@ export const StyleguideRadiogroup: FC = () => {
                     )}
                 />
             </FormProvider>
-        </StyleguideSection>
+        </StyleguidePreview>
     );
 };

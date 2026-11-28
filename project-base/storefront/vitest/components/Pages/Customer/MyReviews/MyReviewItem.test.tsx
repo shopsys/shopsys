@@ -118,7 +118,7 @@ describe('MyReviewItem', () => {
         expect(container.firstElementChild).toHaveAttribute('id', 'product-review-review-uuid');
     });
 
-    test('wraps a visible product image and name in one link with hover styles only on the name', () => {
+    test('wraps a visible product image and name in one link that underlines only the name on hover', () => {
         const { container } = render(
             <MyReviewItem
                 productReview={{
@@ -139,9 +139,10 @@ describe('MyReviewItem', () => {
         expect(productLink).toContainElement(screen.getByAltText('Linked Product'));
         expect(container.querySelectorAll('a[href="/product"]')).toHaveLength(1);
         expect(productLink?.querySelector('a')).not.toBeInTheDocument();
-        expect(screen.getByText('Linked Product').parentElement).toHaveClass(
+        // the name keeps its color and is underlined on hover like the product name in the cart
+        expect(screen.getByText('Linked Product')).toHaveClass('group-hover/product-link:underline');
+        expect(screen.getByText('Linked Product').parentElement).not.toHaveClass(
             'group-hover/product-link:text-link-hovered',
-            'group-hover/product-link:underline',
         );
         expect(screen.getByAltText('Linked Product').parentElement).not.toHaveClass('hover:border-border-less');
     });

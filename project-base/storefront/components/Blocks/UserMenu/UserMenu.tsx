@@ -83,7 +83,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className, hideFocusTrap, onMenuCl
             className={twMergeCustom('flex flex-col gap-3', className)}
             ref={contentRef}
         >
-            <div className="flex flex-col gap-1 rounded-xl bg-background-accent-less px-3 py-4">
+            <div className="flex flex-col gap-1 rounded-card bg-background-accent-less px-3 py-4">
                 <span className="h5">
                     {user?.firstName} {user?.lastName}
                 </span>

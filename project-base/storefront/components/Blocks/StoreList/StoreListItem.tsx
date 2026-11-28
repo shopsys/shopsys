@@ -17,6 +17,9 @@ type StoreListItemProps = {
     onSelectStoreCallback?: (storeUuid: string | null) => void;
 };
 
+// the default duration of the framer-motion tween used by AnimateCollapseDiv
+const STORE_DETAILS_EXPAND_DURATION = 300;
+
 export const StoreListItem: FC<StoreListItemProps> = ({
     store,
     isSelected,
@@ -39,6 +42,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
         }
     }, [isSelected, isSelectionMode]);
 
+    // scrolls the expanded store into view once its details finished expanding, so the page does not move mid-animation
     useEffect(() => {
         if (isExpanded && itemRef.current) {
             const timeoutId = setTimeout(() => {
@@ -47,7 +51,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
                     block: 'nearest',
                     inline: 'end',
                 });
-            }, 100);
+            }, STORE_DETAILS_EXPAND_DURATION);
             return () => clearTimeout(timeoutId);
         }
 
@@ -88,7 +92,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({
             data-tid={`${TIDs.store_list_item_}${store.identifier}`}
             ref={itemRef}
             className={twMergeCustom(
-                'rounded-xl border border-transparent bg-background-more px-5 py-2.5 text-left transition-colors hover:border-border-brand hover:bg-background-default has-focus-visible:border-border-brand has-focus-visible:bg-background-default',
+                'rounded-card border border-transparent bg-background-more px-5 py-2.5 text-left transition-colors hover:border-border-brand hover:bg-background-default has-focus-visible:border-border-brand has-focus-visible:bg-background-default',
                 isSelected && 'border-border-brand bg-background-default',
                 !isSelected && isExpanded && 'border-border-less',
             )}

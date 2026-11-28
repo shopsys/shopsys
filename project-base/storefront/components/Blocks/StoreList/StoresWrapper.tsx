@@ -169,7 +169,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                 >
                     <div
                         className={twMergeCustom(
-                            'vl:sticky flex rounded-xl bg-background-more p-5',
+                            'vl:sticky flex rounded-card bg-background-more p-5',
                             isPickupSelectionVariant
                                 ? 'vl:top-0 h-72 vl:h-[min(520px,calc(80dvh-180px))]'
                                 : 'vl:top-[calc(var(--sticky-navigation-offset,0px)+var(--spacing-5))] aspect-square',
@@ -188,7 +188,7 @@ export const StoresWrapper: FC<StoresWrapperProps> = ({
                                 userCoordinates={resolvedUserCoordinates}
                             />
                         ) : (
-                            <Skeleton className="size-full rounded-lg bg-skeleton-less" />
+                            <Skeleton className="size-full rounded-card bg-skeleton-less" />
                         )}
                     </div>
                 </div>

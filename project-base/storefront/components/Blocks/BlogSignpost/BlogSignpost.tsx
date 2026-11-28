@@ -70,7 +70,7 @@ export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeI
                     <Button
                         aria-controls="blog-signpost-navigation"
                         aria-expanded={isBlogSignpostOpen}
-                        variant="secondary"
+                        variant="outline"
                         className={twJoin(
                             'relative w-full justify-between text-md!',
                             'xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:text-text-default xl:outline-hidden',
@@ -90,9 +90,9 @@ export const BlogSignpost: FC<BlogSignpostProps> = ({ blogCategoryItems, activeI
                     aria-label={t('Browse articles by topic')}
                     id="blog-signpost-navigation"
                     className={twJoin(
-                        'w-full rounded-xl p-4 shadow-[inset_0_0_0_1px] shadow-border-less',
+                        'w-full rounded-card p-4 shadow-[inset_0_0_0_1px] shadow-border-less',
                         isBlogSignpostOpen
-                            ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:max-h-[70dvh] max-xl:overflow-y-auto max-xl:rounded-2xl max-xl:bg-background-default max-xl:p-5'
+                            ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:max-h-[70dvh] max-xl:overflow-y-auto max-xl:rounded-surface max-xl:bg-background-default max-xl:p-5'
                             : 'max-xl:hidden',
                     )}
                 >

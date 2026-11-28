@@ -62,10 +62,10 @@ export const AddressCard: FC<AddressCardProps> = ({
                     : undefined
             }
             className={twMergeCustom(
-                'relative flex w-full justify-between rounded-md border-2 p-4 text-left',
+                'relative flex w-full justify-between rounded-card border-2 p-4 text-left',
                 'border-border-less bg-background-default',
                 orderSelectedAddress && 'border-border-brand',
-                orderSelectionMode && 'cursor-pointer hover:border-link-hovered focus-visible:bg-orange-500',
+                orderSelectionMode && 'cursor-pointer hover:border-link-hovered focus-visible:bg-focus-background',
             )}
             onClick={handleSelectDeliveryAddress}
             onKeyDown={handleSelectDeliveryAddressKeyDown}

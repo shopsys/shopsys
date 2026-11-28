@@ -60,7 +60,7 @@ type TransportGroupIconProps = {
 
 const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackground }) => {
     const wrapperClassName = twJoin(
-        'flex h-10 w-14 min-w-14 items-center justify-center rounded-xl text-icon-accent',
+        'flex h-12 w-20 min-w-20 items-center justify-center rounded-control text-icon-accent',
         isOnGreyBackground ? 'bg-background-default' : 'bg-background-more',
     );
 
@@ -72,10 +72,10 @@ const TransportGroupIcon: FC<TransportGroupIconProps> = ({ group, isOnGreyBackgr
         <span className={wrapperClassName}>
             <Image
                 alt={getImageAlt(group.mainImage.name, group.name)}
-                className="h-6 object-contain object-center mix-blend-multiply"
-                height={24}
+                className="h-8 object-contain object-center mix-blend-multiply"
+                height={32}
                 src={group.mainImage.url}
-                width={40}
+                width={56}
             />
         </span>
     );
@@ -100,7 +100,7 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
         <li
             key={group.uuid}
             className={twJoin(
-                'group mb-4 overflow-hidden rounded-xl border transition last:mb-0',
+                'group mb-4 overflow-hidden rounded-card border transition last:mb-0',
                 isSelected
                     ? 'border-border-less bg-background-default'
                     : 'border-transparent bg-background-more hover:border-border-less hover:bg-background-default',
@@ -120,10 +120,10 @@ export const TransportGroupListItem: FC<TransportGroupListItemProps> = ({
                     <TransportGroupIcon group={group} isOnGreyBackground={!isSelected} />
 
                     <span className="flex min-w-0 flex-col text-left">
-                        <span className="font-secondary font-semibold text-base text-text-default">{group.name}</span>
+                        <span className="font-semibold text-base text-text-default">{group.name}</span>
 
                         {groupPrice !== null && (
-                            <span className="font-secondary font-semibold text-sm text-text-less">
+                            <span className="text-sm text-text-less">
                                 {groupPrice.shouldDisplayFromPrefix && `${t('from')} `}
                                 {formatPrice(groupPrice.price, { explicitZero: groupPrice.shouldDisplayFromPrefix })}
                             </span>

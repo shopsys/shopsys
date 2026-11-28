@@ -23,7 +23,7 @@ export const IgnoredErrorsManager: FC = () => {
 
     if (ignoredErrors.length === 0) {
         return (
-            <div className="rounded border border-border-default bg-background-accent p-4">
+            <div className="rounded-detail border border-border-default bg-background-accent p-4">
                 <p className="text-text-inverted">
                     {t('No ignored errors. Click "Ignore this error type" on any error to add it here.')}
                 </p>
@@ -34,10 +34,10 @@ export const IgnoredErrorsManager: FC = () => {
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <p className="text-text-secondary">
+                <p className="text-text-less">
                     {t('{{ count }} error type(s) being ignored', { count: ignoredErrors.length })}
                 </p>
-                <Button size="small" variant="tertiary" onClick={handleClearAll}>
+                <Button size="small" variant="ghost" onClick={handleClearAll}>
                     {t('Clear all')}
                 </Button>
             </div>
@@ -46,7 +46,7 @@ export const IgnoredErrorsManager: FC = () => {
                 {ignoredErrors.map((entry) => (
                     <div
                         key={entry.identifier}
-                        className="flex items-center justify-between gap-4 rounded border border-border-default bg-background-accent p-3"
+                        className="flex items-center justify-between gap-4 rounded-detail border border-border-default bg-background-accent p-3"
                     >
                         <div className="min-w-0 flex-1">
                             <p className="truncate font-mono font-semibold text-sm text-text-inverted">

@@ -86,7 +86,7 @@ export const Wishlist: FC = () => {
                                     aria-label={t('Remove all product from wishlist', { ns: 'accessibility' })}
                                     size="small"
                                     title={t('Remove all from wishlist')}
-                                    variant="tertiary"
+                                    variant="ghost"
                                     onClick={handleRemoveAllClick}
                                 >
                                     <TrashCanIcon className="size-4" />
@@ -95,7 +95,7 @@ export const Wishlist: FC = () => {
                             </div>
 
                             <div className="flex items-center justify-between gap-2 sm:justify-end">
-                                <div className="font-secondary text-input-placeholder-default text-xs">
+                                <div className="text-input-placeholder-default text-xs">
                                     {totalCount} {t('products count', { count: totalCount })}
                                 </div>
 

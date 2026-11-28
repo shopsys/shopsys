@@ -61,8 +61,8 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                             })}
                             data-focus-style="ring"
                             className={twJoin(
-                                'relative flex size-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-lg border-2 border-transparent bg-background-more outline-hidden transition-colors hover:border-border-default focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2 sm:size-16',
-                                isSelected && 'border-border-accent',
+                                'relative flex size-12 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-control border-2 border-transparent bg-background-more outline-hidden transition-colors hover:border-border-default focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2 sm:size-16',
+                                isSelected && 'border-border-active',
                             )}
                             ref={(element) => {
                                 thumbnailRefs.current[index] = element;
@@ -111,7 +111,7 @@ export const ProductDetailGalleryThumbnails: FC<ProductDetailGalleryThumbnailsPr
                             count: hiddenGalleryItemsCount,
                         })}
                         data-focus-style="ring"
-                        className="flex size-12 cursor-pointer items-center justify-center rounded-lg bg-background-more px-1 font-semibold text-link-default outline-hidden transition-colors hover:text-link-hovered focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2 sm:size-16"
+                        className="flex size-12 cursor-pointer items-center justify-center rounded-control bg-background-more px-1 font-semibold text-text-accent outline-hidden transition-colors hover:text-link-hovered focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2 sm:size-16"
                         title={t('More')}
                         type="button"
                         onClick={() => onOpenGallery(VISIBLE_THUMBNAIL_COUNT)}

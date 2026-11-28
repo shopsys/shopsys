@@ -97,7 +97,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     <Loader
                         className={twJoin(
                             'absolute inset-0 z-overlay flex h-full w-full items-center',
-                            'justify-center rounded-lg bg-background-more py-2 opacity-50',
+                            'justify-center rounded-control bg-background-more py-2 opacity-50',
                         )}
                     />
                 )}
@@ -108,8 +108,8 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     tabIndex={-1}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'vl:flex hidden cursor-pointer items-center justify-center gap-x-3 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
-                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
+                        'vl:flex hidden cursor-pointer items-center justify-center gap-x-3 rounded-control border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg',
+                        'group-focus-visible:bg-focus-background group-focus-visible:text-text-default',
                         isCompact ? 'h-10' : 'h-11',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
@@ -123,7 +123,7 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     </span>
 
                     {isPriceVisibleOrEmtpyCart && (
-                        <span className={twJoin('vl:block hidden font-bold font-secondary text-sm')}>
+                        <span className={twJoin('vl:block hidden font-secondary font-semibold text-sm')}>
                             {cart?.items.length
                                 ? formatPrice(cart.totalItemsPrice.priceWithVat, {
                                       explicitZero: true,
@@ -140,12 +140,12 @@ export const CartInHeader: FC<CartInHeaderProps> = ({ className, isCompact }) =>
                     tabIndex={-1}
                     title={t('Cart')}
                     className={twJoin(
-                        'flex vl:hidden h-full w-full cursor-pointer items-center justify-center rounded-md border p-3 text-lg no-underline transition-colors hover:no-underline',
+                        'flex vl:hidden h-full w-full cursor-pointer items-center justify-center rounded-control border p-3 text-lg no-underline transition-colors hover:no-underline',
                         'border-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
                         isActiveDelayed &&
                             'hover:border-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
                         'active:border-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
-                        'group-focus-visible:bg-orange-500 group-focus-visible:text-text-default',
+                        'group-focus-visible:bg-focus-background group-focus-visible:text-text-default',
                     )}
                     type="button"
                     onClick={() => setIsActive(!isActive)}

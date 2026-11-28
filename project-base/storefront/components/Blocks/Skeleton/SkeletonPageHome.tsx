@@ -11,7 +11,7 @@ export const SkeletonPageHome: FC = () => (
         <SkeletonModuleBanners />
 
         <Webline>
-            <Skeleton className="h-32 rounded-xl" />
+            <Skeleton className="h-32 rounded-card" />
         </Webline>
 
         <SkeletonModulePromotedCategories />

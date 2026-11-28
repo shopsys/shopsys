@@ -59,8 +59,8 @@ vi.mock('utils/i18n/useTranslationWrapper', () => ({
     default: () => ({ t: (key: string) => key }),
 }));
 
-vi.mock('utils/toasts/showInfoMessage', () => ({
-    showInfoMessage: vi.fn(),
+vi.mock('utils/toasts/showWarningMessage', () => ({
+    showWarningMessage: vi.fn(),
 }));
 
 vi.mock('utils/useBroadcastChannel', () => ({

@@ -17,18 +17,18 @@ const ErrorPageNavigationLink: FC<{ item: ErrorPageNavigationItem }> = ({ item }
             href={item.href}
             skeletonType={item.skeletonType}
             className={twMergeCustom(
-                'group flex h-full items-center gap-4 rounded-lg border border-background-more bg-background-more p-4 text-text-default no-underline transition-[transform,box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
+                'group flex h-full items-center gap-4 rounded-card border border-background-more bg-background-more p-4 text-text-default no-underline transition-[transform,box-shadow,border-color,background-color,color] duration-200 ease-out hover:no-underline',
                 'hover:border-border-less hover:bg-background-default hover:text-text-default',
                 'pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0 motion-reduce:pointer-fine:hover:translate-y-0',
                 'focus-visible:outline-2 focus-visible:outline-border-default focus-visible:-outline-offset-2',
             )}
         >
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-md bg-background-default text-text-accent">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-detail bg-background-default text-text-accent">
                 <Icon className="size-5" />
             </span>
 
             <span className="min-w-0 flex-1">
-                <span className="block font-secondary font-semibold text-sm">{item.title}</span>
+                <span className="block font-semibold text-sm">{item.title}</span>
                 <span className="mt-1 block text-sm text-text-less leading-relaxed">{item.description}</span>
             </span>
         </ExtendedNextLink>

@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { TypeColumnCategoriesFragment } from 'graphql/requests/navigation/fragments/ColumnCategoriesFragment.generated';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
@@ -34,7 +35,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                     return (
                         <li
                             key={columnCategory.uuid}
-                            className="group/main-category min-w-0 rounded-lg p-2 transition-colors hover:bg-background-more"
+                            className="group/main-category min-w-0 rounded-control p-2 transition-colors hover:bg-background-more"
                             style={{
                                 gridColumn: columnCategories.columnNumber,
                                 gridRow: columnCategoryIndex + 1,
@@ -42,18 +43,19 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                         >
                             <ExtendedNextLink
                                 className={twJoin(
-                                    'grid min-h-10 max-w-full items-center gap-3 rounded-sm font-bold font-secondary text-text-default no-underline hover:underline',
+                                    getLinkClassName({ variant: 'navigation' }),
+                                    'grid min-h-10 max-w-full items-center gap-3 font-semibold',
                                     hasMainImage ? 'grid-cols-[40px_1fr]' : 'ml-13 w-fit',
                                 )}
                                 href={columnCategory.slug}
                                 skeletonType={skeletonType}
-                                onClick={onLinkClick}
+                                onNavigate={onLinkClick}
                             >
                                 {hasMainImage && (
                                     <div className="flex size-12 w-auto items-center justify-center" aria-hidden="true">
                                         <Image
                                             alt=""
-                                            className="h-auto max-h-full w-auto max-w-full rounded-md object-contain mix-blend-multiply"
+                                            className="h-auto max-h-full w-auto max-w-full rounded-detail object-contain mix-blend-multiply"
                                             height={40}
                                             width={40}
                                             src={mainImageUrl}
@@ -69,10 +71,13 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                     {columnCategory.children.map((columnCategoryChild) => (
                                         <li key={columnCategoryChild.name} className="group/child-category">
                                             <ExtendedNextLink
-                                                className="inline-block max-w-full self-start rounded-sm font-secondary font-semibold text-sm text-text-default no-underline hover:underline"
+                                                className={twJoin(
+                                                    getLinkClassName({ variant: 'navigation' }),
+                                                    'inline-block max-w-full self-start font-ui text-sm',
+                                                )}
                                                 href={columnCategoryChild.slug}
                                                 skeletonType={skeletonType}
-                                                onClick={onLinkClick}
+                                                onNavigate={onLinkClick}
                                             >
                                                 {columnCategoryChild.name}
                                             </ExtendedNextLink>

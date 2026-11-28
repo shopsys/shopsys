@@ -2,6 +2,14 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { IconButton } from 'components/Forms/Button/IconButton';
+import {
+    FIELD_FLOATING_LABEL_CLASS_NAME,
+    FIELD_KEYBOARD_FOCUS_WITHIN_CLASS_NAME,
+    FIELD_OPEN_CLASS_NAME,
+    FIELD_VALUE_PADDING_CLASS_NAME,
+    getFieldHeightClassName,
+    getFieldStateClassName,
+} from 'components/Forms/Lib/fieldUtils';
 import { AnimatePresence } from 'framer-motion';
 import { KeyboardEvent, ReactElement, ReactNode, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -118,13 +126,18 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
               )
         : options;
 
+    const isLabelRaised = isOpen || !!comboBoxConfig?.searchValue || !!activeOption || !!placeholder;
+
     return (
         <>
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
-                        'group flex h-14 rounded-md border-2 border-input-border-default bg-input-bg-default pr-1 text-input-text-default hover:border-input-border-hovered',
-                        isOpen && 'rounded-b-none border-input-border-active',
+                        'group flex rounded-input pr-1',
+                        getFieldStateClassName(),
+                        getFieldHeightClassName(),
+                        FIELD_KEYBOARD_FOCUS_WITHIN_CLASS_NAME,
+                        isOpen && FIELD_OPEN_CLASS_NAME,
                         (isDisabled || isLoading) &&
                             'pointer-events-none cursor-no-drop border-input-border-disabled bg-input-bg-disabled text-input-text-disabled',
                         selectClassName,
@@ -158,9 +171,9 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 role="combobox"
                                 value={comboBoxConfig.searchValue}
                                 className={twMergeCustom(
-                                    'h-full w-full min-w-0 bg-transparent px-3 font-secondary font-semibold text-md! outline-hidden',
-                                    label && 'pt-5',
-                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active placeholder:disabled:text-input-placeholder-disabled',
+                                    'h-full w-full min-w-0 bg-transparent px-3 text-md! outline-hidden',
+                                    label && FIELD_VALUE_PADDING_CLASS_NAME,
+                                    'placeholder:text-input-placeholder-default placeholder:hover:text-input-placeholder-hovered placeholder:focus:text-input-placeholder-active disabled:placeholder:text-input-placeholder-disabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
                                 onChange={(e) => handleSearchValueChange(e)}
@@ -170,15 +183,15 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             {label && (
                                 <span
                                     className={twJoin(
-                                        'pointer-events-none absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
-                                        isOpen || comboBoxConfig.searchValue || activeOption || placeholder
-                                            ? 'top-2.25 left-3 text-sm'
+                                        'pointer-events-none absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                        isLabelRaised
+                                            ? twJoin(FIELD_FLOATING_LABEL_CLASS_NAME, 'left-3')
                                             : 'top-1/2 left-3 -translate-y-1/2 font-semibold text-md',
                                     )}
                                 >
                                     {label}
 
-                                    {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                    {isRequired && <span className="ml-1 text-input-required-star">*</span>}
                                 </span>
                             )}
 
@@ -202,7 +215,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             type="button"
                             className={twJoin(
                                 'w-full min-w-0 cursor-pointer px-3 text-left outline-hidden',
-                                renderValue ? 'py-1' : 'pt-5',
+                                renderValue ? 'py-1' : FIELD_VALUE_PADDING_CLASS_NAME,
                             )}
                             onClick={() => onSelectToggleOpenHandler(!isOpen)}
                             onKeyDown={toggleButtonKeyDownHandler}
@@ -217,21 +230,21 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 <>
                                     <span
                                         className={twJoin(
-                                            'absolute font-secondary text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
+                                            'absolute text-input-placeholder-default transition-all group-hover:text-input-placeholder-hovered',
                                             isOpen || activeOption
-                                                ? 'top-2.25 text-sm'
+                                                ? FIELD_FLOATING_LABEL_CLASS_NAME
                                                 : 'top-1/2 -translate-y-1/2 font-semibold text-md',
                                         )}
                                     >
                                         {label}
 
-                                        {isRequired && <span className="ml-1 text-text-error">*</span>}
+                                        {isRequired && <span className="ml-1 text-input-required-star">*</span>}
                                     </span>
 
                                     {activeOption?.label && (
                                         <span
                                             className={twJoin(
-                                                'block truncate font-secondary font-semibold',
+                                                'block truncate',
                                                 isDisabled ? 'text-input-text-disabled' : 'text-input-text-default',
                                             )}
                                         >
@@ -257,7 +270,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             Icon={CloseIcon}
                             ariaLabel={t('Clear selected option', { ns: 'accessibility' })}
                             className="self-center"
-                            shape="rounded"
+                            shape="inset"
                             size="compact"
                             title={t('Clear selected option', { ns: 'accessibility' })}
                             tooltipLabel={t('Clear selected option', { ns: 'accessibility' })}
@@ -278,7 +291,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         className="self-center"
                         disabled={isDisabled}
                         iconClassName={twJoin('transition-transform', isOpen ? 'rotate-180' : 'rotate-0')}
-                        shape="rounded"
+                        shape="inset"
                         title={ariaLabel}
                         variant="ghost"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}

@@ -1,14 +1,13 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FilterPanel, FilterPanelProps } from 'components/Blocks/Product/Filter/FilterPanel';
+import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { TypeCategoryAutomatedFilterEnum } from 'graphql/types';
 import Router from 'next/router';
-import type { ComponentType } from 'react';
+import type { ComponentProps, ComponentType } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import { getEmptyDefaultProductFiltersMap } from 'utils/seoCategories/getEmptyDefaultProductFiltersMap';
-import { useMediaMin } from 'utils/ui/useMediaMin';
 import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -36,7 +35,6 @@ vi.mock('next/dynamic', async () => {
 
 vi.mock('utils/queryParams/useCurrentFilterQuery', () => ({ useCurrentFilterQuery: vi.fn() }));
 vi.mock('utils/queryParams/useUpdateFilterQuery', () => ({ useUpdateFilterQuery: vi.fn() }));
-vi.mock('utils/ui/useMediaMin', () => ({ useMediaMin: vi.fn() }));
 vi.mock('components/Blocks/Product/Filter/filterElementIds', () => ({ scrollToProductListControls: vi.fn() }));
 vi.mock('components/Blocks/Product/Filter/FilterGroupInStock', () => ({
     FilterGroupInStock: () => <div>In stock</div>,
@@ -51,7 +49,8 @@ vi.mock('components/Blocks/Product/Filter/FilterGroupParameters', () => ({
     FilterGroupParameters: ({ title }: { title: string }) => <button type="button">{title}</button>,
 }));
 
-const props: FilterPanelProps = {
+const props: ComponentProps<typeof FilterPanel> = {
+    isInDrawer: false,
     orderingMode: null,
     originalSlug: null,
     slug: 'category',
@@ -97,7 +96,6 @@ beforeEach(() => {
         defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
         originalCategorySlug: undefined,
     });
-    vi.mocked(useMediaMin).mockReturnValue(true);
     vi.mocked(useCurrentFilterQuery).mockReturnValue({ onlyInStock: true });
     vi.mocked(useUpdateFilterQuery).mockReturnValue({
         updateFilterInStockQuery: vi.fn(),
@@ -560,10 +558,9 @@ describe('Desktop filter popup', () => {
     });
 
     test('keeps all groups in the existing mobile panel', () => {
-        vi.mocked(useMediaMin).mockReturnValue(false);
         act(() => useSessionStore.setState({ isFilterPanelOpen: true }));
 
-        render(<FilterPanel {...props} />);
+        render(<FilterPanel {...props} isInDrawer />);
 
         expect(screen.queryByRole('button', { name: /^All filters/ })).not.toBeInTheDocument();
         expect(screen.getByRole('button', { name: 'Parameter 6' })).toBeInTheDocument();

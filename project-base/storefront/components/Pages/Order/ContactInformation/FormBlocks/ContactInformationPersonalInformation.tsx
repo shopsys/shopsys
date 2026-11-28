@@ -1,3 +1,4 @@
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
@@ -75,18 +76,16 @@ export const ContactInformationPersonalInformation: FC = () => {
                 />
 
                 {isEmailAlreadyRegistered && (
-                    <div className="-mt-2 rounded-b-md bg-input-warning-message-bg px-2.5 pt-3 pb-1.5 text-sm">
+                    <div className="-mt-2 rounded-b-control bg-input-warning-message-bg px-2.5 pt-3 pb-1.5 text-sm">
                         <span>{t('This email is already registered')}</span>{' '}
-                        <button
+                        <TextButton
                             aria-haspopup="dialog"
-                            className="cursor-pointer text-sm underline hover:no-underline"
-                            data-tid={TIDs.login_in_order_button}
-                            tabIndex={0}
-                            type="button"
+                            variant="text"
+                            tid={TIDs.login_in_order_button}
                             onClick={openLoginPopup}
                         >
                             {t('Log in')}
-                        </button>
+                        </TextButton>
                     </div>
                 )}
             </div>

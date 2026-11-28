@@ -6,7 +6,7 @@ export const SkeletonPageBrandsOverview: FC = () => (
     <Webline>
         <div className="grid gap-3 md:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]">
             {createEmptyArray(23).map((_, index) => (
-                <Skeleton key={index} className="h-20" />
+                <Skeleton key={index} className="h-20 rounded-card" />
             ))}
         </div>
     </Webline>

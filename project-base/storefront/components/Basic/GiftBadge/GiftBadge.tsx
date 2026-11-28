@@ -11,7 +11,7 @@ export const GiftBadge: FC<GiftBadgeProps> = ({ className }) => {
     return (
         <div
             className={twMergeCustom(
-                'absolute top-0 left-0 z-10 rounded-tl-xl rounded-br-md bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md',
+                'absolute top-0 left-0 z-10 rounded-tl-card rounded-br-detail bg-linear-to-r from-purple-600 to-pink-600 px-2 py-0.5 font-semibold text-white text-xs shadow-md',
                 className,
             )}
         >

@@ -1,7 +1,9 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { removeSpaces } from 'utils/removeSpaces';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -25,7 +27,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                         <div className="flex flex-1 flex-col gap-1.5 lg:flex-row lg:gap-6">
                             {footerArticles.map((item) => (
                                 <div key={item.title} className="hidden lg:flex lg:flex-1 lg:flex-col lg:gap-6">
-                                    <h3 className="font-secondary font-semibold text-xs uppercase tracking-wider">
+                                    <h3 className="font-default font-semibold text-xs uppercase tracking-wider">
                                         {item.title}
                                     </h3>
 
@@ -33,7 +35,10 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                         {item.items.map((article) => (
                                             <li key={article.uuid}>
                                                 <ExtendedNextLink
-                                                    className="block font-secondary font-semibold text-sm text-text-default tracking-wider no-underline hover:text-text-default hover:underline"
+                                                    className={twJoin(
+                                                        getLinkClassName({ variant: 'navigation' }),
+                                                        'block text-sm tracking-wider',
+                                                    )}
                                                     rel={article.external ? 'nofollow noreferrer noopener' : undefined}
                                                     target={article.external ? '_blank' : undefined}
                                                     href={
@@ -53,7 +58,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
 
                         {/* Contacts skeleton with data for crawlers */}
                         <div className="flex flex-col gap-4">
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-card bg-background-default p-4">
                                 <a
                                     aria-label={t('Call us at {{ phone }}. {{ openingHours }}', {
                                         ns: 'accessibility',
@@ -72,7 +77,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                 </div>
                             </div>
 
-                            <div className="relative flex gap-4 rounded-lg bg-background-default p-4">
+                            <div className="relative flex gap-4 rounded-card bg-background-default p-4">
                                 <a
                                     aria-label={t('Write to us at {{ email }}. {{ emailSubtitle }}', {
                                         ns: 'accessibility',
@@ -98,7 +103,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
             {!simpleFooter && (
                 <FooterContainer>
                     <div className="flex flex-col items-center justify-between gap-5 lg:flex-row">
-                        <Skeleton className="h-16 w-64 rounded-lg" />
+                        <Skeleton className="h-16 w-64 rounded-card" />
 
                         <div data-tid={TIDs.footer_social_links}>
                             <span className="sr-only">
@@ -112,7 +117,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                                     Youtube
                                 </a>
                             </span>
-                            <Skeleton className="h-10 w-32 rounded-lg" />
+                            <Skeleton className="h-10 w-32 rounded-button" />
                         </div>
                     </div>
                 </FooterContainer>

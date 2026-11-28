@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { Navigation } from 'components/Layout/Header/Navigation/Navigation';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import type { NextRouter } from 'next/router';
 import type { ReactNode } from 'react';
 import { describe, expect, test, vi } from 'vitest';
 import { defaultTestDomainConfig } from 'vitest/helpers/mockPublicConfig';
@@ -110,6 +112,30 @@ const renderNavigation = () =>
         </DomainConfigProvider>,
     );
 
+// next/link navigates only with a router in its context
+const renderNavigationWithRouter = () => {
+    const router = {
+        push: vi.fn().mockResolvedValue(true),
+        replace: vi.fn().mockResolvedValue(true),
+        prefetch: vi.fn().mockResolvedValue(undefined),
+        beforePopState: vi.fn(),
+        pathname: '/',
+        query: {},
+        asPath: '/',
+        isLocaleDomain: false,
+    } as unknown as NextRouter;
+
+    render(
+        <RouterContext.Provider value={router}>
+            <DomainConfigProvider domainConfig={defaultTestDomainConfig}>
+                <Navigation navigation={[navigationItemWithChildren, visibleNavigationItem, overflowNavigationItem]} />
+            </DomainConfigProvider>
+        </RouterContext.Provider>,
+    );
+
+    return router;
+};
+
 describe('Navigation', () => {
     test('keeps a category submenu open after an immediate pointer click following hover', () => {
         vi.useFakeTimers();
@@ -164,6 +190,26 @@ describe('Navigation', () => {
         await waitFor(() => {
             expect(document.querySelector('.fixed.bg-overlay-default')).toHaveClass('z-overlay');
         });
+    });
+
+    test('keeps a category submenu open when a category opens in a new tab and closes it on navigation', async () => {
+        const user = userEvent.setup();
+        const router = renderNavigationWithRouter();
+
+        await user.tab();
+        await user.keyboard('{ArrowDown}');
+        const categoryButton = screen.getByRole('button', { name: 'Electronics' });
+        const categoryLink = await screen.findByRole('link', { name: 'Televisions' });
+
+        fireEvent.click(categoryLink, { metaKey: true });
+
+        expect(router.push).not.toHaveBeenCalled();
+        expect(categoryButton).toHaveAttribute('aria-expanded', 'true');
+
+        fireEvent.click(categoryLink);
+
+        expect(router.push).toHaveBeenCalledOnce();
+        await waitFor(() => expect(categoryButton).toHaveAttribute('aria-expanded', 'false'));
     });
 
     test('keeps a category submenu closed on focus and opens it with ArrowDown', async () => {

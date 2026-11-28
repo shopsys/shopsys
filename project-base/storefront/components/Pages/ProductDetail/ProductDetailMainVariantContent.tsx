@@ -108,11 +108,11 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                         />
 
                         {product.variants.length > 0 && (
-                            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-4 sm:p-5">
+                            <div className="flex flex-col gap-4 rounded-surface bg-background-more p-4 sm:p-5">
                                 <a
                                     href={`#${PRODUCT_VARIANTS_ID}`}
                                     className={twMergeCustom(
-                                        getButtonClassName('primary', 'large', false, false),
+                                        getButtonClassName('primary', 'xlarge', false),
                                         'w-full no-underline hover:no-underline sm:max-w-60',
                                     )}
                                     onClick={scrollToVariants}

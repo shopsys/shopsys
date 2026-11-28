@@ -59,7 +59,7 @@ const ImageComponent = ({ mainImage, mainImageMobile, altBackup, positionName }:
     return (
         <div
             className={twJoin(
-                "relative mx-auto w-full max-w-192.5 overflow-hidden rounded-xl after:pointer-events-none after:absolute after:inset-0 after:z-above after:rounded-xl after:content-[''] group-focus-visible:after:outline-2 group-focus-visible:after:outline-orange-500 group-focus-visible:after:-outline-offset-2",
+                "relative mx-auto w-full max-w-192.5 overflow-hidden rounded-surface after:pointer-events-none after:absolute after:inset-0 after:z-above after:rounded-surface after:content-[''] group-focus-visible:after:outline-2 group-focus-visible:after:outline-focus-ring group-focus-visible:after:-outline-offset-2",
                 mobileImageClassName,
                 desktopImageClassName,
             )}

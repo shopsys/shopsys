@@ -53,7 +53,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
             <ul className="mt-7 mb-9 flex flex-col gap-5" id={listId}>
                 {registrationBenefits.map(({ Icon, text }) => (
                     <li key={text} className="flex items-center gap-3 text-md text-text-default leading-6">
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-background-default/80 text-icon-accent">
+                        <span className="flex size-9 shrink-0 items-center justify-center rounded-control bg-background-default/80 text-icon-accent">
                             <Icon aria-hidden="true" className="size-5" focusable="false" />
                         </span>
                         <span>{text}</span>
@@ -69,7 +69,7 @@ const RegistrationBenefits: FC<RegistrationBenefitsProps> = ({ idPrefix, registr
                 skeletonType="registration"
                 tid={TIDs.login_popup_register_button}
                 variant="secondary"
-                onClick={onMenuClose}
+                onNavigate={onMenuClose}
             >
                 {t('Create account')}
             </LinkButton>
@@ -110,7 +110,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuIconicItemUserUnau
                     href={registrationUrl}
                     skeletonType="registration"
                     tid={TIDs.login_popup_register_link}
-                    onClick={onMenuClose}
+                    onNavigate={onMenuClose}
                 >
                     {t('Register')}
                 </ExtendedNextLink>

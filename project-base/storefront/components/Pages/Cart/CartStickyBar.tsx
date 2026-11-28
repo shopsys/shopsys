@@ -47,7 +47,7 @@ export const CartStickyBar: FC<CartStickyBarProps> = ({ originalButtonRef }) => 
 
                     <div className="ml-auto flex w-full items-center justify-between gap-4 lg:justify-end">
                         {isPriceVisible(cart.totalItemsPrice.priceWithVat) && (
-                            <div className="flex flex-col font-secondary font-semibold">
+                            <div className="flex flex-col font-semibold tabular-nums">
                                 <p className="text-sm">{t('Total price')}</p>
 
                                 <span className="whitespace-nowrap text-price-default">

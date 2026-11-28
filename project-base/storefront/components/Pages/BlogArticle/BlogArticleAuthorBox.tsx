@@ -13,7 +13,10 @@ export const BlogArticleAuthorBox: FC<BlogArticleAuthorBoxProps> = ({ author }) 
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-4 rounded bg-background-more p-5" data-tid={TIDs.blog_article_author_box}>
+        <div
+            className="flex flex-col gap-4 rounded-card bg-background-more p-5"
+            data-tid={TIDs.blog_article_author_box}
+        >
             <span className="h5">{t('Author of the article')}</span>
 
             <div className="flex items-start gap-4">
@@ -26,7 +29,7 @@ export const BlogArticleAuthorBox: FC<BlogArticleAuthorBoxProps> = ({ author }) 
                         width={64}
                     />
                 ) : (
-                    <UserIcon className="size-16 shrink-0 rounded-full bg-background p-3 text-text-less" />
+                    <UserIcon className="size-16 shrink-0 rounded-full bg-background-more p-3 text-text-less" />
                 )}
 
                 <div className="flex flex-col gap-1">

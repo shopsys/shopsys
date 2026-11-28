@@ -1,6 +1,6 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { ClockIcon } from 'components/Basic/Icon/ClockIcon';
-import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
+import { CloseRoundIcon } from 'components/Basic/Icon/CloseRoundIcon';
 import { StatusBadge, StatusBadgeVariant } from 'components/Basic/StatusBadge/StatusBadge';
 import { type ElementType } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -23,12 +23,12 @@ export const OrderPaymentStatusBadge: FC<OrderPaymentStatusBadgeProps> = ({
         return null;
     }
 
-    let icon: ElementType = CloseIcon;
+    let icon: ElementType = CloseRoundIcon;
     let label = t('Not paid');
     let variant: StatusBadgeVariant = 'error';
 
     if (orderIsPaid) {
-        icon = CheckmarkIcon;
+        icon = CheckmarkRoundIcon;
         label = t('Paid');
         variant = 'success';
     } else if (orderHasPaymentInProcess) {

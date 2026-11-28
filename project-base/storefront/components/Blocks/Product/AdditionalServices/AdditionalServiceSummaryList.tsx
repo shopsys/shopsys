@@ -39,7 +39,7 @@ export const AdditionalServiceSummaryList: FC<AdditionalServiceSummaryListProps>
     return (
         <div className={twMergeCustom('flex flex-col gap-2', className)}>
             {showHeading && (
-                <span className="flex items-center gap-2 font-secondary font-semibold text-sm text-text-less">
+                <span className="flex items-center gap-2 font-semibold text-sm text-text-less">
                     <WrenchIcon aria-hidden="true" className="size-4 shrink-0 text-text-less" />
                     {t('Additional services')}
                 </span>

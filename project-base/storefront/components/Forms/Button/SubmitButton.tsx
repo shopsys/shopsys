@@ -16,7 +16,7 @@ export const SubmitButton: FC<ButtonProps & { wrapperClassName?: string }> = for
         return (
             <div className={twMergeCustom('relative w-fit', wrapperClassName)}>
                 {(isFormSubmitting || shouldShowSpinner) && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-sm bg-background-more py-2 opacity-50" />
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-detail bg-background-more py-2 opacity-50" />
                 )}
 
                 <Button {...props} disabled={isDisabled} hasDisabledLook={hasDisabledLook} type="submit">

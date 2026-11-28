@@ -190,8 +190,8 @@ export const checkAndHideErrorToast = (text?: string) => {
     checkAndHideToast(TIDs.toast_error, text);
 };
 
-export const checkAndHideInfoToast = (text?: string) => {
-    checkAndHideToast(TIDs.toast_info, text);
+export const checkAndHideWarningToast = (text?: string) => {
+    checkAndHideToast(TIDs.toast_warning, text);
 };
 
 export const checkUrl = (url: string) => {

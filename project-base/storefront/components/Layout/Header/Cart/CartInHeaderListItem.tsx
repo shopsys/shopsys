@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CartItemQuantityControls } from 'components/Blocks/Product/CartItemQuantityControls';
@@ -54,14 +55,13 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     const [areAdditionalServicesShown, setAreAdditionalServicesShown] = useState(false);
 
     const additionalServicesToggle = hasAdditionalServices ? (
-        <button
-            aria-expanded={areAdditionalServicesShown}
-            className="w-fit cursor-pointer text-left font-secondary text-link-default text-xs outline-hidden hover:text-link-hovered hover:underline"
-            type="button"
+        <ShowMoreButton
+            className="text-left"
+            isExpanded={areAdditionalServicesShown}
             onClick={() => setAreAdditionalServicesShown((isShown) => !isShown)}
         >
             {t('+ {{ count }} additional services', { count: cartItem.additionalServices.length })}
-        </button>
+        </ShowMoreButton>
     ) : null;
 
     const renderGift = (gift: TypeCartItemFragment, relatedProductNames?: string[], isNested = false) => (
@@ -130,7 +130,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                                 />
                             </div>
 
-                            <span className="min-w-0 flex-1 font-secondary font-semibold text-sm group-hover/product-link:underline group-focus-visible/product-link:underline">
+                            <span className="min-w-0 flex-1 font-product-name text-sm group-hover/product-link:underline group-focus-visible/product-link:underline">
                                 {product.fullName}
                             </span>
                         </ExtendedNextLink>
@@ -154,9 +154,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         </div>
 
                         <div className="flex flex-1 flex-col items-start gap-1">
-                            <span className="font-secondary font-semibold text-sm text-text-default">
-                                {product.fullName}
-                            </span>
+                            <span className="font-product-name text-sm text-text-default">{product.fullName}</span>
 
                             {additionalServicesToggle}
                         </div>
@@ -212,11 +210,11 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                         />
                     </div>
                 ) : (
-                    <div className="font-secondary font-semibold text-sm">{`${quantity} ${product.unit.name}`}</div>
+                    <div className="text-sm">{`${quantity} ${product.unit.name}`}</div>
                 )}
 
                 {isProduct && isPriceVisible(product.price.priceWithVat) && (
-                    <div className="wrap-break-word w-28 text-right font-bold font-secondary text-price-default">
+                    <div className="wrap-break-word w-28 text-right font-price text-price-default tabular-nums">
                         {formatPrice(productLinePrice)}
                     </div>
                 )}

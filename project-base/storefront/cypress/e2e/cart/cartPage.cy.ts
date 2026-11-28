@@ -18,15 +18,18 @@ import {
 import { checkEmptyCartTextIsVisible, checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import {
     changeExpectedDeliveryDateMessagesToStaticDemodata,
+    changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
+    checkSelectedPayment,
     checkSelectedTransport,
     checkTransportPrice,
+    chooseTransportPersonalCollectionAndStore,
     openTransportGroupByName,
     waitForTransportAndPaymentToBeInteractive,
 } from 'e2e/transportAndPayment/transportAndPaymentSupport';
 import { staticData, url } from 'fixtures/demodata';
 import {
-    checkAndHideInfoToast,
+    checkAndHideWarningToast,
     checkAndHideSuccessToast,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
@@ -42,6 +45,27 @@ import { TIDs } from 'tids';
 
 const SUBGROUP_INDEX = 2;
 const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
+
+const assertMissingTransportMessage = (missingTransportMessage: string) => {
+    cy.getByTID([TIDs.layout_popup, TIDs.error_popup_message])
+        .should('have.length', 1)
+        .and('be.visible')
+        .and('have.text', missingTransportMessage);
+};
+
+const clickContinueWithoutTransportAndCheckValidation = () => {
+    checkSelectedTransport(null);
+    cy.getByTID([TIDs.blocks_orderaction_next]).click();
+
+    cy.getByTID([TIDs.layout_popup]).should('be.visible').and('have.attr', 'role', 'alertdialog');
+    t('Please select transport').then(assertMissingTransportMessage);
+    checkUrl(url.order.transportAndPayment);
+
+    cy.realPress('{esc}');
+    cy.getByTID([TIDs.layout_popup]).should('not.exist');
+    checkUrl(url.order.transportAndPayment);
+};
+
 type DataLayerWindow = Cypress.AUTWindow & {
     dataLayer?: Array<{ ecommerce?: { products?: Array<{ quantity?: number }> }; event?: string }>;
 };
@@ -241,7 +265,7 @@ describe('Cart Page Tests', () => {
                 });
             });
         checkSelectedTransport(null);
-        cy.getByTID([TIDs.blocks_orderaction_next]).should('be.disabled');
+        cy.getByTID([TIDs.blocks_orderaction_next]).should('not.be.disabled');
         changeExpectedDeliveryDateMessagesToStaticDemodata();
         takeSnapshotAndCompare(
             getSnapshotFullIndexAsString(7),
@@ -281,6 +305,23 @@ describe('Cart Page Tests', () => {
                 { tid: TIDs.footer_copyright },
             ],
         });
+
+        // The transport is selected only after the cart snapshots, because the cart summary shows the selected transport.
+        goToNextOrderStep();
+        checkUrl(url.order.transportAndPayment);
+        clickContinueWithoutTransportAndCheckValidation();
+        chooseTransportPersonalCollectionAndStore(
+            staticData.transport.personalCollection.storeOstrava.uuid,
+            translations.transport.personalCollection,
+            translations.transportGroup.pickupPoint,
+        );
+        waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedTransport(staticData.transport.personalCollection.uuid);
+        changeSelectionOfPaymentByName(translations.payment.cash);
+        waitForTransportAndPaymentToBeInteractive('available');
+        checkSelectedPayment(staticData.payment.cash.uuid);
+        goToNextOrderStep();
+        checkUrl(url.order.contactInformation);
     });
 
     it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', () => {
@@ -291,7 +332,7 @@ describe('Cart Page Tests', () => {
         cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('contain.text', 'test');
 
         removeProductFromCartPage(staticData.products.helloKitty.catnum);
-        checkAndHideInfoToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
+        checkAndHideWarningToast(translations.toast.info.promoCodeNotApplicable.replace('{{ promoCode }}', 'test'));
         cy.getByTID([TIDs.blocks_promocode_promocodeinfo_code]).should('not.exist');
         checkCartContents([{ product: staticData.products.philips32PFL4308, quantity: 1 }]);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(11), 'after removing product that allows promocode', {

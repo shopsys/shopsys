@@ -1,4 +1,5 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { IconButton } from 'components/Forms/Button/IconButton';
 import { TIDs } from 'cypress/tids';
 import { type MouseEvent, useEffect, useState } from 'react';
@@ -24,12 +25,13 @@ const ArticleAnchorNavigationLink: FC<ArticleAnchorNavigationLinkProps> = ({ hre
             data-tid={`${TIDs.blog_article_anchor_navigation_link_}${href.slice(1)}`}
             href={href}
             className={twMergeCustom(
-                'flex items-center gap-1 rounded-sm font-secondary font-semibold text-sm text-text-default no-underline hover:text-link-hovered',
-                isActive && 'text-link-default no-underline',
+                getLinkClassName({ variant: 'navigation' }),
+                'flex items-center gap-1 text-sm',
+                isActive && 'font-semibold text-text-accent hover:text-text-accent active:text-text-accent',
             )}
             onClick={onClick}
         >
-            {isActive && <ArrowIcon className="rotate-90 text-link-default transition" />}
+            {isActive && <ArrowIcon className="rotate-90 text-icon-accent transition" />}
             {title}
         </a>
     </li>
@@ -99,9 +101,9 @@ export const ArticleAnchorNavigation: FC<ArticleAnchorNavigationProps> = ({ head
                 className="flex flex-col gap-2.5"
                 data-tid={TIDs.blog_article_anchor_navigation}
             >
-                <p className="font-secondary font-semibold">{t('Article content')}</p>
+                <p className="font-semibold">{t('Article content')}</p>
 
-                <ul className="flex flex-col gap-2.5 rounded-xl bg-background-more p-5">
+                <ul className="flex flex-col gap-2.5 rounded-card bg-background-more p-5">
                     <ArticleAnchorNavigationLink
                         href={`#${ARTICLE_INTRODUCTION_ANCHOR_ID}`}
                         isActive={activeHeadingId === ARTICLE_INTRODUCTION_ANCHOR_ID}

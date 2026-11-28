@@ -94,7 +94,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {product.usps.length > 0 && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="flex min-w-0 flex-col gap-6 rounded-xl bg-background-more p-4 sm:p-5">
+                        <div className="flex min-w-0 flex-col gap-6 rounded-surface bg-background-more p-4 sm:p-5">
                             <div className="flex flex-col gap-2">
                                 <ProductDetailPrice productPrice={product.price} />
                                 <ProductDetailAvailability product={product} />
@@ -103,10 +103,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             {(isWatchdogButtonVisible || isPurchaseActionVisible) && (
                                 <div className="flex w-full min-w-0 max-w-80 flex-col gap-3">
                                     {isWatchdogButtonVisible && (
-                                        <WatchDogButton
-                                            className="h-auto min-h-14 w-full text-balance"
-                                            product={product}
-                                        />
+                                        <WatchDogButton className="w-full text-balance" product={product} />
                                     )}
 
                                     {isPurchaseActionVisible && (
@@ -127,7 +124,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         </div>
 
                         {product.promotionBuyQuantity !== null && product.promotionFreeQuantity !== null && (
-                            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-3 sm:p-6">
+                            <div className="flex flex-col gap-4 rounded-surface bg-background-more p-3 sm:p-6">
                                 <div className="font-semibold text-sm text-text-accent">
                                     {t('Buy {{ count }} pieces', { count: product.promotionBuyQuantity })}{' '}
                                     {t('and receive {{ count }} pieces for free.', {

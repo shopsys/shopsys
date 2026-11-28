@@ -65,8 +65,8 @@ export const ProductQuestionButton: FC<ProductQuestionButtonProps> = ({
             tabIndex={tabIndex}
             title={title}
             className={twMergeCustom(
-                'flex cursor-pointer items-center gap-2 text-icon-less hover:text-icon-accent',
-                'rounded-sm outline-hidden',
+                'flex cursor-pointer items-center gap-2 text-icon-less hover:text-icon-accent hover:underline',
+                'rounded-detail outline-hidden',
                 className,
             )}
             onClick={openProductQuestionPopup}

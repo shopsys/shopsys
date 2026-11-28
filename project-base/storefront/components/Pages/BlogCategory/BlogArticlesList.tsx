@@ -24,12 +24,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         href={blogArticle.link}
                         type="blogArticle"
                         className={twJoin(
-                            'group flex w-full flex-col gap-y-6 rounded-xl border border-background-more p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
+                            'group flex w-full flex-col gap-y-6 rounded-card border border-background-more p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
                             'bg-background-more no-underline',
                             'hover:border-border-less hover:bg-background-default hover:no-underline',
                         )}
                     >
-                        <div className="w-full overflow-hidden rounded-xl text-center md:w-62.5 lg:w-80">
+                        <div className="w-full overflow-hidden rounded-card text-center md:w-62.5 lg:w-80">
                             <Image
                                 alt={getImageAlt(blogArticle.mainImage?.name, blogArticle.name)}
                                 className="transition-transform duration-300 ease-out group-hover:scale-105"
@@ -60,13 +60,9 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 </div>
                             </div>
 
-                            <h2 className="h5 mb-0 font-bold! text-text-default group-hover:underline max-md:text-md">
-                                {blogArticle.name}
-                            </h2>
+                            <h2 className="h5 mb-0 text-text-default max-md:text-md">{blogArticle.name}</h2>
 
-                            {!!blogArticle.perex && (
-                                <p className="mb-0 font-secondary text-md max-md:text-sm">{blogArticle.perex}</p>
-                            )}
+                            {!!blogArticle.perex && <p className="mb-0 text-md max-md:text-sm">{blogArticle.perex}</p>}
                         </div>
                     </ExtendedNextLink>
                 </li>

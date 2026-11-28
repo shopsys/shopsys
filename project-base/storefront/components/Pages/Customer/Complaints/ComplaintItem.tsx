@@ -33,7 +33,6 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                 <div className="flex vl:flex-row flex-col gap-x-8 gap-y-2">
                     <CustomerRecordColumnInfo tid={TIDs.complaint_list_item_number} title={t('Complaint number')}>
                         <ExtendedNextLink
-                            className="font-semibold text-sm"
                             type="complaintDetail"
                             aria-label={t('Go to complaint number {{complaintNumber}}', {
                                 ns: 'accessibility',
@@ -72,7 +71,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         ns: 'accessibility',
                         complaintNumber: complaintItem.number,
                     })}
-                    variant="secondary"
+                    variant="outline"
                     href={complaintDetailLink}
                 >
                     {t('Detail')}

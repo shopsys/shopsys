@@ -197,7 +197,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
                 <footer
                     aria-label={t('Site information and navigation', { ns: 'accessibility' })}
-                    className="mt-auto h-fit bg-secondary-50"
+                    className="mt-auto h-fit bg-neutral-50"
                 >
                     <DeferredNewsletterForm />
 

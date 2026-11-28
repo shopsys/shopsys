@@ -29,7 +29,6 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
         <ProductAvailability
             availability={product.availability}
             availableStoresCount={product.availableStoresCount}
-            className={isInteractive ? 'transition-colors group-hover/availability:text-link-hovered' : undefined}
             isPersonalPickupOnly={product.isPersonalPickupOnly}
             displayMode="detail"
             isInquiryType={product.isInquiryType}
@@ -47,7 +46,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
             {isInteractive ? (
                 <button
                     aria-haspopup="dialog"
-                    className="group/availability w-fit cursor-pointer rounded-md"
+                    className="group/availability w-fit cursor-pointer rounded-detail"
                     type="button"
                     onClick={() => openDeliveryOptionsPopup([product], product.uuid)}
                 >
@@ -57,7 +56,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 productAvailability
             )}
             {canOrderUnavailableProduct && (
-                <p className="font-secondary text-sm text-text-less">
+                <p className="text-sm text-text-less">
                     {product.availability.status === TypeAvailabilityStatusEnum.ExpectedRestock
                         ? t("You can order this item now. We'll ship it once it's back in stock.")
                         : t('You can order this item now. The restock date is not yet known.')}

@@ -12,7 +12,7 @@ export const OrderConfirmationStepper: FC<OrderConfirmationStepperProps> = ({ fl
     const steps = flowSteps[flow];
 
     return (
-        <ul className="mx-auto my-4 flex justify-between gap-1 rounded-xl bg-background-more p-2.5 sm:gap-2.5 sm:p-4 lg:my-10 lg:gap-6 lg:px-8 lg:py-4">
+        <ul className="mx-auto my-4 flex justify-between gap-1 rounded-card bg-background-more p-2.5 sm:gap-2.5 sm:p-4 lg:my-10 lg:gap-6 lg:px-8 lg:py-4">
             {steps.map((step, index) => (
                 <Fragment key={step.label}>
                     <OrderConfirmationStep step={step} />

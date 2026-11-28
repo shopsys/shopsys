@@ -1,6 +1,7 @@
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
+import { getButtonHeightClassName } from 'components/Forms/Button/buttonUtils';
 import { VALIDATION_CONSTANTS } from 'components/Forms/validationConstants';
 import { TIDs } from 'cypress/tids';
 import {
@@ -15,7 +16,7 @@ import {
 } from 'react';
 import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
+import { showWarningMessage } from 'utils/toasts/showWarningMessage';
 import { twMergeCustom } from 'utils/twMerge';
 import { useForwardedRef } from 'utils/typescript/useForwardedRef';
 import { useDebounce } from 'utils/useDebounce';
@@ -142,7 +143,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                 setValue(resolvedMax);
                 setLastValidValue(resolvedMax);
 
-                showInfoMessage(
+                showWarningMessage(
                     t('Maximum available quantity is {{ quantity }}. The quantity was adjusted.', {
                         quantity: resolvedMax,
                     }),
@@ -297,7 +298,11 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
             <div
                 aria-busy={hasPendingLook}
                 className={twMergeCustom(
-                    'inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-background-default outline outline-gray-400 -outline-offset-1',
+                    'relative inline-flex h-fit w-full shrink-0 items-center justify-between overflow-hidden rounded-counter bg-input-bg-default',
+                    // The border is an overlay above the buttons, so a hovered button never covers it. Like the other
+                    // fields: hover darkens the border and typing into the value thickens it to 2px inside.
+                    'after:pointer-events-none after:absolute after:inset-0 after:z-above after:rounded-counter after:border after:border-input-border-default after:transition after:content-[""]',
+                    'hover:after:border-input-border-hovered has-[input:focus]:after:border-2 has-[input:focus]:after:border-input-border-hovered',
                     className,
                 )}
             >
@@ -307,7 +312,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                             ? minValueDecreaseAriaLabel
                             : (decreaseAriaLabel ?? t('Decrease quantity', { ns: 'accessibility' }))
                     }
-                    className="bg-gray-300 hover:bg-gray-500"
+                    className="text-button-ghost-text-default hover:bg-button-ghost-bg-hovered hover:text-button-ghost-text-hovered"
                     disabled={isDecreaseDisabled}
                     size={size}
                     tid={TIDs.forms_spinbox_decrease}
@@ -346,7 +351,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'w-13 text-center font-secondary font-semibold text-input-text-default text-lg outline-hidden',
+                        'w-13 self-stretch text-center text-input-text-default text-lg outline-hidden focus-keyboard:bg-focus-background',
                     )}
                     onBlur={handleBlur}
                     onInput={handleInput}
@@ -427,10 +432,9 @@ const SpinboxButton: FC<SpinboxButtonProps> = ({
             tabIndex={disabled ? -1 : 0}
             className={twMergeCustom([
                 'relative flex cursor-pointer items-center justify-center rounded-input border-none',
-                size === 'small' && 'size-9',
-                size === 'medium' && 'size-9',
-                size === 'large' && 'size-9 sm:size-10',
-                size === 'xlarge' && 'size-10 sm:size-14',
+                // Same heights as buttons of the same size, so the controls replace the add-to-cart button without a jump.
+                getButtonHeightClassName(size),
+                'aspect-square shrink-0',
                 className,
                 hasPendingLook && 'opacity-70',
                 disabled && 'pointer-events-none',

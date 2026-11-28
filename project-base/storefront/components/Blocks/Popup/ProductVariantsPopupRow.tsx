@@ -100,7 +100,7 @@ const ProductVariantsPopupRowLayout: FC<ProductVariantsPopupRowLayoutProps> = ({
             </div>
 
             <div className="flex min-w-0 flex-1 flex-col gap-2">
-                <h3 className="wrap-break-word font-secondary font-semibold text-sm">{variant.fullName}</h3>
+                <h3 className="wrap-break-word font-product-name text-sm">{variant.fullName}</h3>
                 <ProductAvailability
                     availability={variant.availability}
                     availableStoresCount={variant.availableStoresCount}

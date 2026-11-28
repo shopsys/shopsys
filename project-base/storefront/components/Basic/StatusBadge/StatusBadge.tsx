@@ -20,12 +20,12 @@ export const StatusBadge: FC<StatusBadgeProps> = ({ children, className, icon: I
     return (
         <span
             className={twMergeCustom(
-                'inline-flex w-fit items-center gap-1 text-nowrap rounded-lg px-2 py-1 font-bold font-secondary text-xs',
+                'inline-flex w-fit items-center gap-1 text-nowrap rounded-detail px-2 py-1 font-semibold text-xs',
                 variantClasses[variant],
                 className,
             )}
         >
-            {Icon && <Icon aria-hidden="true" className="size-3 **:stroke-[2.5]" focusable="false" />}
+            {Icon && <Icon aria-hidden="true" className="size-4 **:stroke-[2.5]" focusable="false" />}
             {children}
         </span>
     );

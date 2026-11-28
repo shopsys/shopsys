@@ -1,4 +1,4 @@
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
+import { Link } from 'components/Basic/Link/Link';
 import { validatePassword, validatePasswordConfirm, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
@@ -43,11 +43,7 @@ export const useRegistrationAfterOrderFormMeta = (): FormMeta<RegistrationAfterO
                     defaultTrans="I agree with <lnk1>terms and conditions</lnk1> and privacy policy"
                     i18nKey="I agree with terms and conditions and privacy policy"
                     components={{
-                        lnk1: termsAndConditionUrl ? (
-                            <Link className="inline text-sm" href={termsAndConditionUrl} target="_blank" />
-                        ) : (
-                            <span className={linkPlaceholderTwClass} />
-                        ),
+                        lnk1: termsAndConditionUrl ? <Link href={termsAndConditionUrl} target="_blank" /> : <span />,
                     }}
                 />
             ),

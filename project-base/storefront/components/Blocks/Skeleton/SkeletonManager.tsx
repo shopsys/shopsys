@@ -1,8 +1,8 @@
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { ComponentType, useEffect } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { SkeletonEnum } from 'types/skeletons';
+import { SkeletonCrossfade } from './SkeletonCrossfade';
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogArticle } from './SkeletonPageBlogArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
@@ -98,7 +98,6 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
 }) => {
     const redirectPageType = useSessionStore((s) => s.redirectPageType);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
-    const shouldReduceMotion = useReducedMotion();
     const pageType = redirectPageType ?? pageTypeOverride;
 
     useEffect(() => {
@@ -117,24 +116,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
     const isSkeletonVisible = !!SkeletonComponent && (isPageLoading || !!isFetchingData);
 
     return (
-        <div aria-busy={isSkeletonVisible} className="relative isolate">
-            <AnimatePresence initial={false} mode="popLayout">
-                {isSkeletonVisible && (
-                    <m.div
-                        key="skeleton"
-                        animate={{ opacity: 1 }}
-                        aria-hidden="true"
-                        className="pointer-events-none relative z-above bg-background-default"
-                        exit={{ opacity: 0 }}
-                        inert
-                        transition={{ duration: shouldReduceMotion ? 0 : 0.2, ease: 'easeOut' }}
-                    >
-                        <SkeletonComponent />
-                    </m.div>
-                )}
-            </AnimatePresence>
-
-            {!isSkeletonVisible && <div>{children}</div>}
-        </div>
+        <SkeletonCrossfade isSkeletonVisible={isSkeletonVisible} skeleton={SkeletonComponent && <SkeletonComponent />}>
+            {children}
+        </SkeletonCrossfade>
     );
 };

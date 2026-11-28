@@ -1,4 +1,4 @@
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
 import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
 import { ProductReviewDisplayStatus } from 'components/Blocks/ProductReviews/productReviewTypes';
@@ -20,7 +20,7 @@ export const ProductReviewStatus: FC<ProductReviewStatusProps> = ({ status }) =>
                 label={t('Your review is awaiting approval. Until it is approved, only you can see it.')}
                 placement="top"
             >
-                <button className="cursor-help rounded-lg" type="button">
+                <button className="cursor-help rounded-detail" type="button">
                     <ReviewStatus status={TypeProductReviewStatusEnum.Pending} />
                 </button>
             </Tooltip>
@@ -28,7 +28,7 @@ export const ProductReviewStatus: FC<ProductReviewStatusProps> = ({ status }) =>
     }
 
     return (
-        <StatusBadge icon={CheckmarkIcon} variant="success">
+        <StatusBadge icon={CheckmarkRoundIcon} variant="success">
             {t('Verified purchase')}
         </StatusBadge>
     );

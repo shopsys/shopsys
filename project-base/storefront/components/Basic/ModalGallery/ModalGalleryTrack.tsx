@@ -57,14 +57,14 @@ export const ModalGalleryTrack = forwardRef<MediaCarouselTrackHandle, ModalGalle
                             {!isLoaded && (
                                 <span
                                     aria-hidden="true"
-                                    className="size-full max-h-[80dvh] max-w-375 rounded-lg bg-skeleton-default motion-safe:animate-pulse"
+                                    className="size-full max-h-[80dvh] max-w-375 rounded-card bg-skeleton-default motion-safe:animate-pulse"
                                 />
                             )}
 
                             {isLoaded && !isMediaLoaded && (
                                 <SpinnerIcon
                                     aria-hidden="true"
-                                    className="absolute z-above size-12 text-icon opacity-50"
+                                    className="absolute z-above size-12 text-icon-default opacity-50"
                                 />
                             )}
 

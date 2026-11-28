@@ -52,12 +52,12 @@ describe('useNewsletterSubscriptionAgreement', () => {
         expect(agreementText).not.toHaveAttribute('href');
     });
 
-    test('renders an available privacy policy as a link', () => {
+    test('renders an available privacy policy as a link named by its text', () => {
         settingsState.privacyPolicyArticleUrl = '/privacy-policy';
 
         render(<NewsletterAgreement />);
 
-        const agreementLink = screen.getByRole('link', { name: 'Go to privacy policy article' });
+        const agreementLink = screen.getByRole('link', { name: 'Personal data processing' });
         expect(agreementLink).toHaveAttribute('href', '/privacy-policy');
     });
 });

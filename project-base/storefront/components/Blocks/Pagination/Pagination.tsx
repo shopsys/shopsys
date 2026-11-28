@@ -137,11 +137,11 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
                 href={href}
                 tabIndex={isActive ? -1 : 0}
                 className={twMergeCustom(
-                    'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
+                    'flex size-8 items-center justify-center rounded-control border-2 font-bold no-underline hover:no-underline md:size-12',
                     (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive
-                        ? 'border-button-secondary-border-active bg-button-secondary-bg-active text-button-secondary-text-active'
-                        : 'border-button-secondary-border-default bg-button-secondary-bg-default text-button-secondary-text-default hover:border-button-secondary-border-hovered hover:bg-button-secondary-bg-hovered hover:text-button-secondary-text-hovered',
+                        ? 'border-button-outline-border-active bg-button-outline-bg-active text-button-outline-text-active'
+                        : 'border-button-outline-border-default bg-button-outline-bg-default text-button-outline-text-default hover:border-button-outline-border-hovered hover:bg-button-outline-bg-hovered hover:text-button-outline-text-hovered',
                 )}
                 onClick={handleOnClick}
             >

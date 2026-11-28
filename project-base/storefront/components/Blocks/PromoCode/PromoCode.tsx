@@ -27,26 +27,26 @@ export const PromoCode: FC = () => {
     };
 
     return (
-        <div className="flex w-full flex-col overflow-hidden rounded-xl bg-background-more transition-colors hover:bg-background-most">
+        <div className="flex w-full flex-col overflow-hidden rounded-card bg-background-more transition-colors hover:bg-background-most">
             <button
                 aria-expanded={isContentVisible}
                 aria-controls="apply-code-form"
                 aria-label={t('Toggle promo code', { ns: 'accessibility' })}
                 className={twJoin(
-                    'flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-secondary font-semibold text-sm text-text-default outline-hidden transition-colors hover:text-link-default focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:-outline-offset-2',
-                    isContentVisible ? 'rounded-t-xl' : 'rounded-xl',
+                    'flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-ui text-sm text-text-default outline-hidden transition-colors hover:text-link-default focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:-outline-offset-2',
+                    isContentVisible ? 'rounded-t-card' : 'rounded-card',
                 )}
                 data-tid={TIDs.blocks_promocode_add_button}
                 type="button"
                 onClick={toggleContentVisibility}
             >
                 <span className="flex min-w-0 items-center gap-2">
-                    <TagIcon aria-hidden className="size-4 shrink-0 text-link-default" />
+                    <TagIcon aria-hidden className="size-4 shrink-0 text-icon-accent" />
                     <span>{t('Discount coupon or gift voucher')}</span>
                 </span>
                 <PlusIcon
                     className={twJoin(
-                        'size-3.5 shrink-0 text-link-default transition-transform duration-200',
+                        'size-3.5 shrink-0 text-icon-accent transition-transform duration-200',
                         isContentVisible && 'rotate-45',
                     )}
                 />

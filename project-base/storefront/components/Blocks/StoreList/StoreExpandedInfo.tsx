@@ -26,8 +26,10 @@ export const StoreExpandedInfo: FC<StoreExpandedInfoProps> = ({
     const { t } = useTranslation();
 
     return (
-        <AnimateCollapseDiv className="block! pt-5" keyName={keyName}>
-            <div className="flex flex-col items-start gap-5">
+        // the spacing sits inside the collapsing box, so its height animates from 0 without a jump at the start and end;
+        // the bottom padding adds up with the card one to match its side padding
+        <AnimateCollapseDiv className="block!" keyName={keyName}>
+            <div className="flex flex-col items-start gap-5 pt-5 pb-2.5">
                 {!!store.specialMessage && <Infobox message={store.specialMessage} />}
 
                 {store.description && <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />}
@@ -35,9 +37,7 @@ export const StoreExpandedInfo: FC<StoreExpandedInfoProps> = ({
                 {store.phone || store.email ? <StoreContact email={store.email} phone={store.phone} /> : null}
 
                 <div className="flex flex-col gap-2">
-                    <p className="font-secondary font-semibold text-text-default">
-                        {t('Opening hours', { ns: 'accessibility' })}
-                    </p>
+                    <p className="font-semibold text-text-default">{t('Opening hours', { ns: 'accessibility' })}</p>
 
                     <OpeningHours
                         openingHours={store.openingHours}

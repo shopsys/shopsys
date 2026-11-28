@@ -3,6 +3,7 @@ import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
 import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
@@ -23,7 +24,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const isEmailDeliveryOrder = isEmailTransport(orderTransport?.transport?.transportTypeCode);
 
     return (
-        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-card bg-background-more p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<ContactInformationsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
@@ -32,7 +33,8 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     aria-label={t('Send email to {{ email }}', { ns: 'accessibility', email: order.email })}
                     href={`mailto:${order.email}`}
                     className={twJoin(
-                        'overflow-x-auto whitespace-nowrap text-sm text-text-default underline hover:no-underline',
+                        getLinkClassName(),
+                        'overflow-x-auto whitespace-nowrap',
                         '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >

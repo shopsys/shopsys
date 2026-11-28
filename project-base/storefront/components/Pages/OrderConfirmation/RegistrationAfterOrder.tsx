@@ -8,7 +8,6 @@ import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInpu
 import { TIDs } from 'cypress/tids';
 import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/queries/CouldBeCustomerRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -36,7 +35,6 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta();
     const { registerByOrder } = useRegistration();
-    const [isInvalidRegistration, setIsInvalidRegistration] = useState(false);
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const [{ data: couldBeCustomerRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
@@ -69,7 +67,6 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
                         showErrorMessage(errorMessage, GtmMessageOriginType.order_confirmation_page);
                     }
                 } else {
-                    setIsInvalidRegistration(true);
                     showErrorMessage(t('There was an error with your registration. Please try again later.'));
                     break;
                 }
@@ -95,7 +92,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
     ];
 
     return (
-        <div className="flex flex-col rounded-xl bg-background-more p-5">
+        <div className="flex flex-col rounded-surface bg-background-more p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
             <p className="sr-only" id="registration-after-order-password-label">
@@ -161,13 +158,7 @@ export const RegistrationAfterOrder: FC<RegistrationAfterOrderProps> = ({
                         />
                     </fieldset>
 
-                    <SubmitButton
-                        className="self-start"
-                        hasDisabledCursor={!formProviderMethods.formState.isValid}
-                        hasDisabledLook={isInvalidRegistration}
-                        size="large"
-                        tid={TIDs.registration_after_order_submit_button}
-                    >
+                    <SubmitButton className="self-start" size="large" tid={TIDs.registration_after_order_submit_button}>
                         {t('Create account')}
                     </SubmitButton>
                 </Form>

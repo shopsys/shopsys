@@ -1,11 +1,13 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
 import { Button } from 'components/Forms/Button/Button';
 import { FooterContainer } from 'components/Layout/Footer/FooterContainer';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
+import { twJoin } from 'tailwind-merge';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import logo from '/public/images/shopsys-logo.svg';
@@ -48,7 +50,7 @@ export const FooterCopyright: FC = () => {
                 {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
                     <ExtendedNextLink
                         aria-label={t('Update your consent. Go to user consent update page', { ns: 'accessibility' })}
-                        className="text-sm leading-6"
+                        className={twJoin(getLinkClassName({ tone: 'subtle' }), 'text-sm')}
                         href={userConsentUrl}
                         skeletonType="user-consent"
                         title={t('User consent page')}
@@ -60,7 +62,7 @@ export const FooterCopyright: FC = () => {
                 <Button
                     aria-label={t('Go to top of the page', { ns: 'accessibility' })}
                     className="vl:hidden w-auto"
-                    variant="tertiary"
+                    variant="ghost"
                     onClick={handleBackToTop}
                 >
                     {t('Back to top')}

@@ -17,10 +17,10 @@ export const ProductReviewsSummaryPanel: FC<ProductReviewsSummaryPanelProps> = (
     const formattedAverageRating = formatAverageRating(averageRating, defaultLocale);
 
     return (
-        <div className="rounded-xl bg-background-more px-5 py-5 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-10">
+        <div className="rounded-card bg-background-more px-5 py-5 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-10 lg:px-10">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10 lg:contents">
                 <div className="flex flex-col items-center gap-1">
-                    <span className="font-bold font-secondary text-5xl">{formattedAverageRating}</span>
+                    <span className="font-bold text-5xl tabular-nums">{formattedAverageRating}</span>
 
                     <ReviewStars
                         starClassName="size-5"
@@ -41,12 +41,16 @@ export const ProductReviewsSummaryPanel: FC<ProductReviewsSummaryPanelProps> = (
                         <li key={ratingCount.rating} className="flex items-center gap-3 text-sm">
                             <span className="flex w-8 shrink-0 items-center justify-end gap-1 whitespace-nowrap">
                                 {ratingCount.rating}
-                                <StarIcon aria-hidden="true" className="size-3.5 text-orange-500" fill="currentColor" />
+                                <StarIcon
+                                    aria-hidden="true"
+                                    className="size-3.5 text-rating-fill"
+                                    fill="currentColor"
+                                />
                             </span>
 
                             <span className="h-2 flex-1 overflow-hidden rounded-full bg-background-most">
                                 <span
-                                    className="block h-full rounded-full bg-orange-500"
+                                    className="block h-full rounded-full bg-rating-fill"
                                     style={{
                                         width:
                                             summary.totalCount > 0

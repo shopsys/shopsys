@@ -10,12 +10,16 @@ vi.mock('components/Blocks/Login/LoginForm', () => ({
 }));
 
 vi.mock('components/Basic/ExtendedNextLink/ExtendedNextLink', () => ({
-    ExtendedNextLink: ({ children, href, onClick }: React.PropsWithChildren<{ href: string; onClick: () => void }>) => (
+    ExtendedNextLink: ({
+        children,
+        href,
+        onNavigate,
+    }: React.PropsWithChildren<{ href: string; onNavigate: () => void }>) => (
         <a
             href={href}
             onClick={(event) => {
                 event.preventDefault();
-                onClick();
+                onNavigate();
             }}
         >
             {children}

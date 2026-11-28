@@ -200,7 +200,7 @@ export const PhoneNumberInputControlled: FC<PhoneNumberInputControlledProps> = (
 
                 {activeError?.message !== undefined && (
                     <span
-                        className="mt-1 block font-secondary text-sm text-text-error"
+                        className="mt-1 block text-sm text-text-error"
                         data-tid={TIDs.form_line_error}
                         id={phoneInputErrorMessageId}
                     >

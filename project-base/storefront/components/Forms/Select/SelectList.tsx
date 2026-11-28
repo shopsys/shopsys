@@ -140,7 +140,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 'list-none font-semibold outline-hidden hover:bg-input-bg-hovered',
                 option.value === activeOption?.value && 'bg-fill-accent-less',
                 option.isDisabled && 'pointer-events-none cursor-no-drop bg-input-bg-disabled text-input-text-disabled',
-                'focus-visible:bg-orange-500 focus-visible:text-text-default',
+                'focus-visible:bg-focus-background focus-visible:text-text-default',
             )}
             onClick={!option.isDisabled ? (e) => onSelectOption(option, e) : undefined}
             onFocus={() => setFocusedIndex(index)}
@@ -148,7 +148,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
         >
             <div
                 className={twJoin(
-                    'flex w-full cursor-pointer items-center justify-between gap-2 p-3 font-secondary hover:bg-fill-accent-less hover:text-input-text-hovered',
+                    'flex w-full cursor-pointer items-center justify-between gap-2 p-3 hover:bg-fill-accent-less hover:text-input-text-hovered',
                     option.value === activeOption?.value && 'text-input-text-active',
                     option.isDisabled && 'text-input-text-disabled',
                 )}
@@ -158,9 +158,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {renderOption ? renderOption(option) : option.label}
 
                 {option.count !== undefined && (
-                    <span className="whitespace-nowrap font-secondary text-input-placeholder-default">
-                        ({option.count})
-                    </span>
+                    <span className="whitespace-nowrap text-input-placeholder-default">({option.count})</span>
                 )}
 
                 {option.value === activeOption?.value && (
@@ -190,8 +188,8 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 'overflow-y-auto!',
-                'block! absolute right-0 left-0 z-above max-h-36 rounded-b-md bg-background-default lg:max-h-50',
-                'border-2 border-input-border-default border-t-0 hover:border-input-border-hovered',
+                'block! absolute right-0 left-0 z-above mt-1 max-h-36 rounded-input bg-background-default shadow-lg lg:max-h-50',
+                'border border-input-border-default',
                 '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-input-placeholder-default [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar]:w-2',
                 listClassName,
             )}

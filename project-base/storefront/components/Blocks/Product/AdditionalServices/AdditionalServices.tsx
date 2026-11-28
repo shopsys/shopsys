@@ -1,8 +1,7 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
-import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { WrenchIcon } from 'components/Basic/Icon/WrenchIcon';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { AdditionalServiceItem } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceItem';
-import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence } from 'framer-motion';
 import { TypeAdditionalServiceFragment } from 'graphql/requests/additionalServices/fragments/AdditionalServiceFragment.generated';
@@ -141,7 +140,7 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
         >
             <span
                 className={twMergeCustom(
-                    'flex items-center gap-2 font-secondary font-semibold text-sm text-text-less',
+                    'flex items-center gap-2 font-semibold text-sm text-text-less',
                     isInCartList && 'vl:col-span-full vl:mb-3 vl:pl-22.5',
                     isInCartList && (hasTopBorder ? 'vl:mt-4 border-border-less border-t pt-4' : 'vl:mt-6'),
                 )}
@@ -179,32 +178,21 @@ export const AdditionalServices: FC<AdditionalServicesProps> = ({
             </div>
 
             {hasHiddenServices && (
-                <Button
-                    aria-controls={hiddenServicesContainerId}
-                    aria-expanded={areAllServicesShown}
-                    className={twMergeCustom(
-                        'gap-1 self-start px-2',
-                        isInCartList && 'vl:col-start-1 vl:ml-22.5 vl:justify-self-start',
-                    )}
-                    size="small"
+                <ShowMoreButton
+                    className={isInCartList ? 'vl:col-start-1 vl:ml-22.5 vl:justify-self-start' : undefined}
+                    controlsId={hiddenServicesContainerId}
+                    isExpanded={areAllServicesShown}
                     tid={
                         tidDiscriminator
                             ? `${TIDs.additional_services_expand_button}_${tidDiscriminator}`
                             : TIDs.additional_services_expand_button
                     }
-                    variant="tertiary"
                     onClick={() => setAreAllServicesShown((previousValue) => !previousValue)}
                 >
-                    <span>
-                        {areAllServicesShown
-                            ? t('Show less')
-                            : t('+ {{ count }} additional services', { count: hiddenServices.length })}
-                    </span>
-                    <ArrowIcon
-                        aria-hidden="true"
-                        className={twMergeCustom('size-4 transition-transform', areAllServicesShown && 'rotate-180')}
-                    />
-                </Button>
+                    {areAllServicesShown
+                        ? t('Show less')
+                        : t('+ {{ count }} additional services', { count: hiddenServices.length })}
+                </ShowMoreButton>
             )}
 
             {descriptionPopupAdditionalService?.description && (

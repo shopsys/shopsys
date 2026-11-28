@@ -1,6 +1,8 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
+import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { NavigationItemContent } from './NavigationItemContent';
 import {
@@ -48,12 +50,15 @@ export const NavigationMoreMenu: FC<NavigationMoreMenuProps> = ({
                     <li key={getNavigationItemKey(navigationItem)}>
                         {isLink && link !== null ? (
                             <ExtendedNextLink
-                                className="mb-2 flex items-center font-bold text-text-default no-underline hover:underline"
+                                className={twJoin(
+                                    getLinkClassName({ variant: 'navigation' }),
+                                    'mb-2 flex items-center font-bold',
+                                )}
                                 href={link}
                                 rel={isExternalLink ? 'nofollow noreferrer noopener' : undefined}
                                 skeletonType={getNavigationItemSkeletonType(navigationItem, catalogUrl)}
                                 target={isExternalLink ? '_blank' : undefined}
-                                onClick={onLinkClick}
+                                onNavigate={onLinkClick}
                             >
                                 {content}
                             </ExtendedNextLink>
@@ -66,7 +71,10 @@ export const NavigationMoreMenu: FC<NavigationMoreMenuProps> = ({
                                 }
                                 aria-expanded={false}
                                 aria-haspopup={isDropdownTrigger ? 'true' : undefined}
-                                className="mb-2 flex cursor-pointer items-center border-0 bg-transparent p-0 font-bold text-text-default hover:underline disabled:cursor-default"
+                                className={twJoin(
+                                    getLinkClassName({ variant: 'navigation' }),
+                                    'mb-2 flex items-center border-0 bg-transparent p-0 font-bold disabled:cursor-default',
+                                )}
                                 disabled={!isDropdownTrigger}
                                 type="button"
                                 onClick={() => onNavigationItemOpen(navigationItem)}

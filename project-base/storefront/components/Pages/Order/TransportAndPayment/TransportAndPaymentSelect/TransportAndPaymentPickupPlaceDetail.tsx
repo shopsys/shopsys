@@ -1,5 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { ExpectedDeliveryDateInfo } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateInfo';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { AnimatePresence } from 'framer-motion';
@@ -34,7 +35,8 @@ const TransportAndPaymentPickupPlaceDetailActionButton: FC<TransportAndPaymentPi
 }) => (
     <button
         className={twJoin(
-            'group flex cursor-pointer items-center gap-1 rounded-sm text-left text-sm underline hover:no-underline disabled:pointer-events-none disabled:opacity-50',
+            getLinkClassName({ variant: 'action' }),
+            'group flex text-left disabled:pointer-events-none disabled:opacity-50',
             className,
         )}
         type={type}
@@ -102,7 +104,7 @@ export const TransportAndPaymentPickupPlaceDetail: FC<TransportAndPaymentPickupP
                             <ArrowIcon
                                 aria-hidden="true"
                                 className={twJoin(
-                                    'size-4 min-w-4 text-link-default transition group-hover:text-link-hovered motion-reduce:transition-none',
+                                    'size-4 min-w-4 transition motion-reduce:transition-none',
                                     areOpeningHoursExpanded && 'rotate-180',
                                 )}
                             />

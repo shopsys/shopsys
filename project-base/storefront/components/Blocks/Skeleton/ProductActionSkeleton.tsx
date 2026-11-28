@@ -1,16 +1,20 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
+import { ButtonBaseProps } from 'components/Forms/Button/Button';
+import { getButtonHeightClassName } from 'components/Forms/Button/buttonUtils';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
 
 type ProductActionSkeletonProps = {
     isWithAddToCart?: boolean;
     isWithProductListButtons?: boolean;
+    buttonSize?: ButtonBaseProps['size'];
 } & FunctionComponentProps;
 
 export const ProductActionSkeleton: FC<ProductActionSkeletonProps> = ({
     className,
     isWithAddToCart = true,
     isWithProductListButtons = true,
+    buttonSize = 'medium',
 }) => (
     <div
         className={twMergeCustom(
@@ -21,7 +25,7 @@ export const ProductActionSkeleton: FC<ProductActionSkeletonProps> = ({
             className,
         )}
     >
-        {isWithAddToCart && <Skeleton className="h-9 w-full" />}
+        {isWithAddToCart && <Skeleton className={twMergeCustom('w-full', getButtonHeightClassName(buttonSize))} />}
 
         {isWithProductListButtons && (
             <>

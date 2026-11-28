@@ -3,7 +3,7 @@ import { AdditionalServiceSummaryList } from 'components/Blocks/Product/Addition
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { DropzoneControlled } from 'components/Forms/Dropzone/DropzoneControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -13,6 +13,7 @@ import { Select } from 'components/Forms/Select/Select';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Customer/Complaints/complaintFormMeta';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -24,6 +25,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
+import { useSessionStore } from 'store/useSessionStore';
 import { ComplaintFormType } from 'types/form';
 import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComplaintResolutionsAsSelectOptions';
@@ -45,6 +47,7 @@ type CreateComplaintPopupProps = {
 export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid = null, orderItem = null }) => {
     const router = useRouter();
     const { t } = useTranslation();
+    const closePortalContent = useSessionStore((s) => s.closePortalContent);
     const { url } = useDomainConfig();
     const [customerComplaintsUrl] = getInternationalizedStaticUrls(['/customer/complaints'], url);
     const [, createComplaint] = useCreateComplaint();
@@ -176,11 +179,11 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     };
 
     return (
-        <Popup contentClassName="overflow-y-auto" title={t('Create complaint')}>
+        <Popup size="small" contentClassName="-mx-1 overflow-y-auto px-1" title={t('Create complaint')}>
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        <FormBlockWrapper variant="plain">
                             {isCreationWithoutOrder && (
                                 <TextInputControlled
                                     control={formProviderMethods.control}
@@ -253,8 +256,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             />
                         </FormBlockWrapper>
 
-                        <FormBlockWrapper>
-                            <FormHeading>{t('Attachments')}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{t('Attachments')}</FormHeading>
 
                             <DropzoneControlled
                                 required
@@ -268,8 +271,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             />
                         </FormBlockWrapper>
 
-                        <FormBlockWrapper>
-                            <FormHeading>{t('Email')}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{t('Email')}</FormHeading>
 
                             <TextInputControlled
                                 control={formProviderMethods.control}
@@ -284,8 +287,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             />
                         </FormBlockWrapper>
 
-                        <FormBlockWrapper>
-                            <FormHeading>{t('Resolution')}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{t('Resolution')}</FormHeading>
 
                             <Controller
                                 name={formMeta.fields.preferredResolution.name}
@@ -323,8 +326,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             )}
                         </FormBlockWrapper>
 
-                        <FormBlockWrapper>
-                            <FormHeading>{t('Delivery address')}</FormHeading>
+                        <FormBlockWrapper variant="plain">
+                            <FormHeading className="h5">{t('Delivery address')}</FormHeading>
 
                             {user && user.deliveryAddresses.length > 0 && !showNewAddressForm && (
                                 <>
@@ -339,7 +342,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     <Button
                                         className="self-start"
                                         size="small"
-                                        variant="secondary"
+                                        variant="outline"
                                         onClick={handleShowNewAddressForm}
                                     >
                                         {t('Add different delivery address')}
@@ -353,7 +356,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                         <Button
                                             className="self-start"
                                             size="small"
-                                            variant="secondary"
+                                            variant="outline"
                                             onClick={() => {
                                                 setShowNewAddressForm(false);
                                                 setValue(
@@ -475,11 +478,19 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                             )}
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton data-tid={TIDs.complaint_create_submit_button}>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton
+                                className="w-full sm:w-auto"
+                                wrapperClassName="w-full sm:w-fit"
+                                data-tid={TIDs.complaint_create_submit_button}
+                            >
                                 {t('Send complaint')}
                             </SubmitButton>
-                        </FormButtonWrapper>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

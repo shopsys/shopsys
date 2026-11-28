@@ -7,6 +7,7 @@ import { twMergeCustom } from 'utils/twMerge';
 type AdditionalServiceLabelProps = {
     additionalService: TypeAdditionalServiceFragment;
     checkboxId: string;
+    deliveryExtensionId: string;
     descriptionButton?: React.ReactNode;
     desktopPrice?: React.ReactNode;
     isDisabled?: boolean;
@@ -14,21 +15,14 @@ type AdditionalServiceLabelProps = {
     tidPrefix: string;
 };
 
-type AdditionalServiceImageLabelProps = Pick<
-    AdditionalServiceLabelProps,
-    'additionalService' | 'checkboxId' | 'isDisabled'
->;
+export const hasDeliveryExtension = (additionalService: TypeAdditionalServiceFragment): boolean =>
+    additionalService.deliveryDaysExtension !== null && additionalService.deliveryDaysExtension > 0;
 
-export const AdditionalServiceImageLabel: FC<AdditionalServiceImageLabelProps> = ({
-    additionalService,
-    checkboxId,
-    isDisabled,
-}) =>
+type AdditionalServiceImageProps = Pick<AdditionalServiceLabelProps, 'additionalService' | 'isDisabled'>;
+
+export const AdditionalServiceImage: FC<AdditionalServiceImageProps> = ({ additionalService, isDisabled }) =>
     additionalService.mainImage ? (
-        <label
-            className={twMergeCustom('flex cursor-pointer items-center', isDisabled && 'cursor-no-drop opacity-50')}
-            htmlFor={checkboxId}
-        >
+        <div className={twMergeCustom('flex items-center', isDisabled && 'opacity-50')}>
             <Image
                 alt=""
                 className="size-8 shrink-0 object-contain mix-blend-multiply"
@@ -36,12 +30,13 @@ export const AdditionalServiceImageLabel: FC<AdditionalServiceImageLabelProps> =
                 src={additionalService.mainImage.url}
                 width={32}
             />
-        </label>
+        </div>
     ) : null;
 
 export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
     additionalService,
     checkboxId,
+    deliveryExtensionId,
     descriptionButton,
     desktopPrice,
     isDisabled,
@@ -51,11 +46,14 @@ export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
     const { t } = useTranslation();
 
     return (
-        <span className="col-start-3 flex min-w-0 flex-1 flex-col items-start justify-center font-secondary text-sm md:col-auto">
+        <span className="col-start-3 flex min-w-0 flex-1 flex-col items-start justify-center text-sm md:col-auto">
             <span className="flex w-fit min-w-0 max-w-full items-center gap-2">
                 <label
                     className={twMergeCustom(
-                        'wrap-break-words w-fit max-w-full cursor-pointer font-semibold',
+                        'wrap-break-words w-fit max-w-full cursor-pointer font-ui',
+                        // the only label of the checkbox, stretched over the whole item, so the checkbox and the image toggle it too
+                        'after:absolute after:inset-0',
+                        !isDisabled && 'choice-hover:underline',
                         isDisabled && 'cursor-no-drop opacity-50',
                     )}
                     data-tid={TIDs.additional_services_checkbox_ + tidPrefix + additionalService.catnum}
@@ -68,18 +66,15 @@ export const AdditionalServiceLabel: FC<AdditionalServiceLabelProps> = ({
                 {descriptionButton}
             </span>
 
-            {additionalService.deliveryDaysExtension !== null && additionalService.deliveryDaysExtension > 0 && (
-                <label
-                    className={twMergeCustom(
-                        'w-fit max-w-full cursor-pointer text-text-less text-xs',
-                        isDisabled && 'cursor-no-drop opacity-50',
-                    )}
-                    htmlFor={checkboxId}
+            {hasDeliveryExtension(additionalService) && (
+                <span
+                    className={twMergeCustom('w-fit max-w-full text-text-less text-xs', isDisabled && 'opacity-50')}
+                    id={deliveryExtensionId}
                 >
                     {t('Extends delivery by {{ count }} working days', {
                         count: additionalService.deliveryDaysExtension,
                     })}
-                </label>
+                </span>
             )}
 
             {mobilePrice && (

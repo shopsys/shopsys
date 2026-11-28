@@ -49,7 +49,6 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     >
                         {complaintOrder && hasAccessToOrder ? (
                             <ExtendedNextLink
-                                className="text-sm"
                                 type="orderDetail"
                                 href={{
                                     pathname: customerOrderDetailUrl,
@@ -79,7 +78,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                 )}
             </CustomerRecordCard>
 
-            <div className="flex flex-col gap-4 rounded-xl bg-background-more p-5">
+            <div className="flex flex-col gap-4 rounded-card bg-background-more p-5">
                 <h2 className="h4">{t('Products')}</h2>
 
                 {complaint.items.map((complaintItem) => (

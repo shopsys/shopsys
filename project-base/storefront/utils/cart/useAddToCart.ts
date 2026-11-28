@@ -13,7 +13,7 @@ import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
+import { showWarningMessage } from 'utils/toasts/showWarningMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export type OnProductAddedToCart = (addedCartItem: TypeCartItemWithGiftsFragment) => Promise<TypeCartFragment | null>;
@@ -78,7 +78,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
                 const requestedQuantity = isAbsoluteQuantity ? quantity : initialQuantity + quantity;
 
                 if (actualQuantity < requestedQuantity) {
-                    showInfoMessage(
+                    showWarningMessage(
                         t('Product quantity was adjusted to available stock ({{ quantity }})', {
                             quantity: actualQuantity,
                         }),

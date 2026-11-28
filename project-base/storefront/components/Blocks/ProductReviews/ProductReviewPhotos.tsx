@@ -65,7 +65,7 @@ export const ProductReviewPhotos: FC<ProductReviewPhotosProps> = ({
                             title={t('Open gallery')}
                             type="button"
                             className={twJoin(
-                                'flex size-16 cursor-pointer items-center justify-center rounded-xl border border-transparent p-2 transition-all hover:border-border-less',
+                                'flex size-16 cursor-pointer items-center justify-center rounded-control border border-transparent p-2 transition-all hover:border-border-less',
                                 isOnGreyBackground
                                     ? 'bg-background-default'
                                     : 'bg-background-more hover:bg-background-default',
@@ -83,7 +83,7 @@ export const ProductReviewPhotos: FC<ProductReviewPhotosProps> = ({
                             />
 
                             {isWithAdditionalImages && (
-                                <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-image-overlay font-bold text-lg">
+                                <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-control bg-white-alpha-100 font-bold text-lg">
                                     +{galleryAdditionalItemsCount}
                                 </span>
                             )}

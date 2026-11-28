@@ -5,7 +5,11 @@ import { ComponentProps, ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { afterEach, expect, test, vi } from 'vitest';
 
-vi.mock('next/dynamic', () => ({ default: () => () => null }));
+vi.mock('next/dynamic', () => ({
+    default: () => (props: { isInDrawer: boolean }) => (
+        <div data-in-drawer={String(props.isInDrawer)} data-testid="filter-panel" />
+    ),
+}));
 vi.mock('utils/i18n/useTranslationWrapper', () => ({ default: () => ({ t: (key: string) => key }) }));
 vi.mock('utils/ui/useMediaMin', () => ({ useMediaMin: () => false }));
 vi.mock('utils/useDeferredRender', () => ({ useDeferredRender: () => true }));
@@ -46,4 +50,11 @@ test('opens and closes the filter drawer with the real session store', async () 
     await user.click(screen.getByRole('button', { name: 'Close filters' }));
     expect(screen.queryByRole('region', { name: 'Product filters' })).not.toBeInTheDocument();
     expect(useSessionStore.getState().isFilterPanelOpen).toBe(false);
+});
+
+test('renders the panel in the drawer as the mobile panel from its first render', () => {
+    act(() => useSessionStore.getState().setIsFilterPanelOpen(true));
+    render(<DeferredFilterPanel {...({} as ComponentProps<typeof DeferredFilterPanel>)} />);
+
+    expect(screen.getByTestId('filter-panel')).toHaveAttribute('data-in-drawer', 'true');
 });

@@ -4,24 +4,35 @@ import type { ButtonBaseProps } from './Button';
 export const getButtonIconClassName = (size: ButtonBaseProps['size']) =>
     twJoin(
         size === 'small' && 'size-4',
-        size === 'medium' && 'size-4 md:size-5',
+        size === 'medium' && 'size-4',
         size === 'large' && 'size-5',
         size === 'xlarge' && 'size-6',
+    );
+
+/**
+ * Rendered height of a single-line button of the given size, for placeholders and controls that stand in for it.
+ */
+export const getButtonHeightClassName = (size: ButtonBaseProps['size']) =>
+    twJoin(
+        size === 'small' && 'h-9',
+        size === 'medium' && 'h-10',
+        size === 'large' && 'h-11 vl:h-12',
+        size === 'xlarge' && 'h-11 vl:h-14',
     );
 
 export const getButtonClassName = (
     variant: ButtonBaseProps['variant'],
     size: ButtonBaseProps['size'],
     hasDisabledLook: ButtonBaseProps['hasDisabledLook'],
-    hasDisabledCursor: ButtonBaseProps['hasDisabledCursor'],
 ) => {
     return twJoin(
-        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-secondary font-semibold transition-all hover:no-underline',
-        'outline-2 -outline-offset-2',
-        size === 'small' && 'px-3 py-2.5 text-xs',
-        size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
-        size === 'large' && 'px-4 py-2 text-sm sm:py-2.5',
-        size === 'xlarge' && 'px-4 py-2.5 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
+        'inline-flex h-fit w-auto cursor-pointer items-center justify-center gap-2 rounded-button text-center font-action font-secondary transition-all hover:no-underline',
+        // the neutral outline button is framed by a 1px line, the other variants keep their 2px outline
+        variant === 'outline' ? 'outline-1 -outline-offset-1' : 'outline-2 -outline-offset-2',
+        size === 'small' && 'px-3 py-2 text-sm',
+        size === 'medium' && 'px-4 py-2.5 text-sm',
+        size === 'large' && 'px-4 py-2.5 vl:py-3 text-base',
+        size === 'xlarge' && 'px-4 vl:px-5 py-2.5 vl:py-3.5 text-base vl:text-lg',
         variant === 'primary' && [
             'bg-button-primary-bg-default text-button-primary-text-default outline-button-primary-border-default',
             !hasDisabledLook &&
@@ -40,14 +51,23 @@ export const getButtonClassName = (
             hasDisabledLook &&
                 'bg-button-secondary-bg-disabled text-button-secondary-text-disabled outline-button-secondary-border-disabled',
         ],
-        variant === 'tertiary' && [
-            'bg-button-tertiary-bg-default text-button-tertiary-text-default outline-button-tertiary-border-default',
+        variant === 'outline' && [
+            'bg-button-outline-bg-default text-button-outline-text-default outline-button-outline-border-default',
             !hasDisabledLook &&
-                'hover:bg-button-tertiary-bg-hovered hover:text-button-tertiary-text-hovered hover:outline-button-tertiary-border-hovered',
+                'hover:bg-button-outline-bg-hovered hover:text-button-outline-text-hovered hover:outline-button-outline-border-hovered',
             !hasDisabledLook &&
-                'active:bg-button-tertiary-bg-active active:text-button-tertiary-text-active active:outline-button-tertiary-border-active',
+                'active:bg-button-outline-bg-active active:text-button-outline-text-active active:outline-button-outline-border-active',
             hasDisabledLook &&
-                'bg-button-tertiary-bg-disabled text-button-tertiary-text-disabled outline-button-tertiary-border-disabled',
+                'bg-button-outline-bg-disabled text-button-outline-text-disabled outline-button-outline-border-disabled',
+        ],
+        variant === 'ghost' && [
+            'bg-button-ghost-bg-default text-button-ghost-text-default outline-button-ghost-border-default',
+            !hasDisabledLook &&
+                'hover:bg-button-ghost-bg-hovered hover:text-button-ghost-text-hovered hover:outline-button-ghost-border-hovered',
+            !hasDisabledLook &&
+                'active:bg-button-ghost-bg-active active:text-button-ghost-text-active active:outline-button-ghost-border-active',
+            hasDisabledLook &&
+                'bg-button-ghost-bg-disabled text-button-ghost-text-disabled outline-button-ghost-border-disabled',
         ],
         variant === 'danger' && [
             'bg-button-danger-bg-default text-button-danger-text-default outline-button-danger-border-default',
@@ -67,6 +87,7 @@ export const getButtonClassName = (
             hasDisabledLook &&
                 'bg-button-inverted-bg-disabled text-button-inverted-text-disabled outline-button-inverted-border-disabled',
         ],
-        (hasDisabledLook || hasDisabledCursor) && 'cursor-no-drop',
+        // The disabled cursor belongs only to controls that cannot be used; a clickable button keeps the pointer.
+        'disabled:cursor-no-drop',
     );
 };

@@ -33,7 +33,7 @@ export const CartStep: FC<CartStepProps> = ({
                 tabIndex={0}
                 className={twJoin(
                     'group flex max-w-17.5 flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
-                    'rounded-md',
+                    'rounded-control',
                     isDisabled ? 'cursor-default' : 'cursor-pointer',
                 )}
                 onClick={() => onClickHandler(step, url, pageType)(activeStep)}
@@ -51,9 +51,9 @@ export const CartStep: FC<CartStepProps> = ({
 
                 <span
                     className={twJoin(
-                        'font-secondary font-semibold text-xs lg:text-lg',
+                        'font-semibold text-xs lg:text-lg',
                         !isDisabled && 'group-hover:text-link-hovered',
-                        step === activeStep ? 'text-link-default' : '',
+                        step === activeStep ? 'text-text-accent' : '',
                     )}
                 >
                     {label}

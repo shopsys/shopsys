@@ -9,6 +9,6 @@ export const SkeletonPageOrderWithdrawalSuccess: FC = () => (
             <SkeletonModulePageHero />
         </div>
 
-        <Skeleton className="my-4 h-32 rounded-xl" />
+        <Skeleton className="my-4 h-32 rounded-card" />
     </Webline>
 );

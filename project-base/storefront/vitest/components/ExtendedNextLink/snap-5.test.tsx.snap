@@ -13,6 +13,13 @@
             link text
           </span>
         </div>
+        <span
+          class="sr-only"
+        >
+           (
+          Open in new tab
+          )
+        </span>
       </a>
     </div>
   </body>,
@@ -28,6 +35,13 @@
           link text
         </span>
       </div>
+      <span
+        class="sr-only"
+      >
+         (
+        Open in new tab
+        )
+      </span>
     </a>
   </div>,
   "debug": [Function],

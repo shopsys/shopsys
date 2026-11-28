@@ -1,12 +1,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FilterPanel, FilterPanelProps } from 'components/Blocks/Product/Filter/FilterPanel';
-import type { ComponentType } from 'react';
+import type { ComponentProps, ComponentType } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 import { getEmptyDefaultProductFiltersMap } from 'utils/seoCategories/getEmptyDefaultProductFiltersMap';
-import { useMediaMin } from 'utils/ui/useMediaMin';
 import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest';
 
 vi.mock('utils/i18n/useTranslationWrapper', () => ({
@@ -34,9 +33,9 @@ vi.mock('next/dynamic', async () => {
 
 vi.mock('utils/queryParams/useCurrentFilterQuery', () => ({ useCurrentFilterQuery: vi.fn() }));
 vi.mock('utils/queryParams/useUpdateFilterQuery', () => ({ useUpdateFilterQuery: vi.fn() }));
-vi.mock('utils/ui/useMediaMin', () => ({ useMediaMin: vi.fn() }));
 vi.mock('components/Blocks/Product/Filter/filterElementIds', () => ({ scrollToProductListControls: vi.fn() }));
-const props: FilterPanelProps = {
+const props: ComponentProps<typeof FilterPanel> = {
+    isInDrawer: false,
     orderingMode: null,
     originalSlug: null,
     slug: 'category',
@@ -152,7 +151,6 @@ beforeEach(() => {
         storedFocusElement: null,
         defaultProductFiltersMap: getEmptyDefaultProductFiltersMap(),
     });
-    vi.mocked(useMediaMin).mockReturnValue(true);
     vi.mocked(useCurrentFilterQuery).mockReturnValue(null);
     vi.mocked(useUpdateFilterQuery).mockReturnValue({
         updateFilterInStockQuery,
@@ -280,10 +278,10 @@ describe('Primary filters alongside the complete popup', () => {
         'shows the numeric SEO preset $value as checked and locked (desktop: $isDesktop)',
         async ({ value, isDesktop }) => {
             const user = userEvent.setup();
-            vi.mocked(useMediaMin).mockReturnValue(isDesktop);
             render(
                 <FilterPanel
                     {...props}
+                    isInDrawer={!isDesktop}
                     originalSlug="original-category"
                     productFilterOptions={{
                         ...props.productFilterOptions,
@@ -328,10 +326,10 @@ describe('Primary filters alongside the complete popup', () => {
 
     test.each([true, false])('keeps a numeric SEO range locked (desktop: %s)', async (isDesktop) => {
         const user = userEvent.setup();
-        vi.mocked(useMediaMin).mockReturnValue(isDesktop);
         render(
             <FilterPanel
                 {...props}
+                isInDrawer={!isDesktop}
                 originalSlug="original-category"
                 productFilterOptions={{
                     ...props.productFilterOptions,

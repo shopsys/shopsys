@@ -32,7 +32,7 @@ export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
         <div id="apply-code-form" className={isContentVisible ? 'flex!' : 'hidden'}>
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="grid w-full grid-cols-1 gap-2 px-3 pt-1 pb-3 sm:grid-cols-[minmax(0,1fr)_auto] [&>div:last-child]:w-full sm:[&>div:last-child]:w-fit"
+                    className="grid w-full grid-cols-1 items-start gap-2 px-3 pt-1 pb-3 sm:grid-cols-[minmax(0,1fr)_auto] [&>div:last-child]:w-full sm:[&>div:last-child]:w-fit"
                     formName={formMeta.formName}
                     onSubmit={formProviderMethods.handleSubmit(onApplyCodeHandler)}
                 >
@@ -42,7 +42,6 @@ export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
                             formName={formMeta.formName}
                             name={formMeta.fields.code.name}
                             textInputProps={{
-                                inputSize: 'small',
                                 label: formMeta.fields.code.label,
                                 required: true,
                             }}
@@ -51,9 +50,8 @@ export const ApplyCodeForm: FC<ApplyCodeFormProps> = ({ isContentVisible }) => {
 
                     <SubmitButton
                         aria-label={t('Apply discount coupon or gift voucher code', { ns: 'accessibility' })}
-                        className="h-12 w-full whitespace-nowrap py-0 sm:w-auto"
-                        hasDisabledCursor={!formProviderMethods.formState.isValid}
-                        size="medium"
+                        className="min-h-14 w-full whitespace-nowrap sm:w-auto"
+                        size="large"
                         tid={TIDs.blocks_promocode_apply_button}
                     >
                         {t('Apply code')}

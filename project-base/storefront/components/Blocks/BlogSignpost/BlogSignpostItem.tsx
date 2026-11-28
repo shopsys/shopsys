@@ -27,9 +27,9 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                 <button
                     aria-controls={getBlogSignpostPanelId(blogCategory.uuid)}
                     className={twMergeCustom(
-                        'group flex w-full cursor-pointer items-center justify-between rounded-md bg-background-more px-3 py-2 text-left font-secondary font-semibold text-sm text-text-default transition-colors hover:bg-background-most focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 active:bg-background-most',
+                        'group flex w-full cursor-pointer items-center justify-between rounded-control bg-background-more px-3 py-2 text-left font-semibold text-sm text-text-default transition-colors hover:bg-background-most focus-visible:outline-2 focus-visible:outline-input-border-active focus-visible:outline-offset-2 active:bg-background-most',
                         isInActivePath &&
-                            'bg-background-accent-less text-link-default hover:bg-background-accent-less active:bg-background-accent-less',
+                            'bg-background-accent-less text-text-accent hover:bg-background-accent-less active:bg-background-accent-less',
                     )}
                     type="button"
                     onClick={() => onPanelChange(blogCategory.uuid)}
@@ -38,7 +38,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     <ArrowIcon
                         className={twMergeCustom(
                             'size-4 shrink-0 -rotate-90 text-text-less transition-transform group-hover:translate-x-0.5',
-                            isInActivePath && 'text-link',
+                            isInActivePath && 'text-text-accent',
                         )}
                     />
                 </button>

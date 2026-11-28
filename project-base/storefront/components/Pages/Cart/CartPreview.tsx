@@ -1,6 +1,7 @@
 import { Flag } from 'components/Basic/Flag/Flag';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { Button } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
 import { RefObject } from 'react';
@@ -60,12 +61,12 @@ export const CartPreview: FC<CartPreviewProps> = ({
     return (
         <div
             className={twJoin(
-                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-xl bg-background-more px-4 py-6 font-secondary font-semibold sm:p-8',
+                'relative flex w-full vl:max-w-123.75 flex-col gap-4 rounded-surface bg-background-more px-4 py-6 tabular-nums sm:p-8',
                 !isFirstStep && 'text-sm',
             )}
         >
             {(isRemovingCodeFromCart || isTransportOrPaymentLoading) && (
-                <LoaderWithOverlay className="size-5" overlayClassName="rounded-xl" />
+                <LoaderWithOverlay className="size-5" overlayClassName="rounded-surface" />
             )}
 
             {!isFirstStep && (
@@ -141,10 +142,8 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             </Flag>
 
                             {isFirstStep && (
-                                <button
-                                    className="cursor-pointer text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
-                                    data-tid={TIDs.blocks_promocode_remove_button}
-                                    tabIndex={0}
+                                <TextButton
+                                    tid={TIDs.blocks_promocode_remove_button}
                                     aria-label={t('Remove promo code {{ promoCode }}', {
                                         ns: 'accessibility',
                                         promoCode: promoCodes[0].code,
@@ -152,7 +151,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                                     onClick={() => removeCodeFromCart(promoCodes[0].code)}
                                 >
                                     {t('Remove')}
-                                </button>
+                                </TextButton>
                             )}
 
                             {hasPromoCodeDiscount && (
@@ -184,12 +183,12 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             'border-border-less border-t-3 pt-4',
                     )}
                 >
-                    <span>{t('Total')}</span>
+                    <span className="font-semibold">{t('Total')}</span>
 
                     <div className="flex flex-col gap-2">
                         <span
                             className={twJoin(
-                                'whitespace-nowrap text-price-default',
+                                'whitespace-nowrap font-price text-price-default',
                                 isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
                             )}
                         >
@@ -218,10 +217,9 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             </Flag>
 
                             {isFirstStep && (
-                                <button
-                                    className="col-start-1 row-start-2 cursor-pointer justify-self-start text-link-default text-xs underline hover:text-link-hovered hover:no-underline"
-                                    data-tid={TIDs.blocks_promocode_giftvoucher_remove_button}
-                                    tabIndex={0}
+                                <TextButton
+                                    className="col-start-1 row-start-2 justify-self-start"
+                                    tid={TIDs.blocks_promocode_giftvoucher_remove_button}
                                     aria-label={t('Remove gift voucher {{ giftVoucherCode }}', {
                                         ns: 'accessibility',
                                         giftVoucherCode: giftVoucher.code,
@@ -229,7 +227,7 @@ export const CartPreview: FC<CartPreviewProps> = ({
                                     onClick={() => removeCodeFromCart(giftVoucher.code)}
                                 >
                                     {t('Remove')}
-                                </button>
+                                </TextButton>
                             )}
 
                             {isPriceVisible(giftVoucher.valueWithVat) && (
@@ -245,13 +243,13 @@ export const CartPreview: FC<CartPreviewProps> = ({
                             className="flex items-baseline justify-between gap-2 border-border-less border-t-[3px] pt-4"
                             data-tid={TIDs.cart_preview_remaining_amount_to_pay}
                         >
-                            <span className={twJoin(isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg')}>
+                            <span className={twJoin('font-semibold', isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg')}>
                                 {t('Remaining to pay')}
                             </span>
 
                             <span
                                 className={twJoin(
-                                    'whitespace-nowrap text-price-default',
+                                    'whitespace-nowrap font-price text-price-default',
                                     isFirstStep ? 'text-lg sm:text-2xl' : 'text-lg',
                                 )}
                             >

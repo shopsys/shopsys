@@ -113,13 +113,13 @@ describe('ArticleDate', () => {
     });
 
     describe('default styling', () => {
-        test('has default font classes', () => {
+        test('uses the regular text font', () => {
             const { container } = render(<ArticleDate date="2024-03-15T10:30:00Z" />);
 
             const timeElement = getTimeElement(container);
-            expect(timeElement).toHaveClass('font-secondary');
+            expect(timeElement).not.toHaveClass('font-secondary');
             expect(timeElement).toHaveClass('text-sm');
-            expect(timeElement).toHaveClass('font-semibold');
+            expect(timeElement).not.toHaveClass('font-semibold');
         });
     });
 });

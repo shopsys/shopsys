@@ -47,18 +47,3 @@ export const fadeAnimation: Variants = {
         opacity: 0,
     },
 };
-
-export const slideAnimation = {
-    hiddenRight: {
-        x: '25%',
-        opacity: 0.75,
-    },
-    hiddenLeft: {
-        x: '-25%',
-        opacity: 0.75,
-    },
-    visible: {
-        x: 0,
-        opacity: 1,
-    },
-};

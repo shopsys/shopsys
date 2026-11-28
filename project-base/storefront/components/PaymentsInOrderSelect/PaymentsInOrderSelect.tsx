@@ -91,7 +91,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                         ? t('Repeat payment or change your payment method')
                         : t('Change order payment')}
                 </span>
-                <div className="flex w-full flex-col overflow-hidden rounded-md">
+                <div className="flex w-full flex-col overflow-hidden rounded-card">
                     <ul className="w-full">
                         {currentOrderPayment && (
                             <PaymentsInOrderSelectItem

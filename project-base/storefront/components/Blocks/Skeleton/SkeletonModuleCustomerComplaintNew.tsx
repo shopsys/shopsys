@@ -6,10 +6,10 @@ export const SkeletonModuleCustomerComplaintNew: FC = () => (
     <SkeletonModuleCustomer>
         <SkeletonModulePageHero />
 
-        <Skeleton className="h-12" />
+        <Skeleton className="h-12 rounded-input" />
 
-        <Skeleton className="h-32 rounded-xl" />
-        <Skeleton className="h-32 rounded-xl" />
-        <Skeleton className="h-32 rounded-xl" />
+        <Skeleton className="h-32 rounded-card" />
+        <Skeleton className="h-32 rounded-card" />
+        <Skeleton className="h-32 rounded-card" />
     </SkeletonModuleCustomer>
 );

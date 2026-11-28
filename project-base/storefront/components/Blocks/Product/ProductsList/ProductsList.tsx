@@ -1,4 +1,5 @@
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
+import { SkeletonCrossfade } from 'components/Blocks/Skeleton/SkeletonCrossfade';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/CategoryDetailContentMessage';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -64,9 +65,19 @@ export const ProductsList: FC<ProductsListProps> = ({
         return <CategoryDetailContentMessage />;
     }
 
-    if (products?.length && !areProductsFetching) {
-        return (
-            <>
+    const isListSkeletonVisible = !products?.length || !!areProductsFetching;
+    const listSkeleton = (
+        <div className={currentProductListTwClass}>
+            {createEmptyArray(calculatePageSize(currentLoadMore)).map((_, index) => (
+                <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
+            ))}
+        </div>
+    );
+
+    return (
+        <>
+            {/* a sort, filter or page change shows the skeleton, which then fades out over the loaded products */}
+            <SkeletonCrossfade isSkeletonVisible={isListSkeletonVisible} skeleton={listSkeleton}>
                 <h2 className="sr-only">{t('Product list')}</h2>
 
                 <ProductsListContent
@@ -76,7 +87,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     isWithImageGallery
                     productListViewMode={productListViewMode}
                     productItemProps={productItemProps}
-                    products={products}
+                    products={products ?? []}
                 >
                     {category && (
                         <li className="col-span-full row-start-2 mx-auto w-full min-w-0 justify-center">
@@ -84,23 +95,15 @@ export const ProductsList: FC<ProductsListProps> = ({
                         </li>
                     )}
                 </ProductsListContent>
+            </SkeletonCrossfade>
 
-                {isLoadingMoreProducts && loadingMoreProductsCount > 0 && (
-                    <div className={currentProductListTwClass}>
-                        {createEmptyArray(loadingMoreProductsCount).map((_, index) => (
-                            <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
-                        ))}
-                    </div>
-                )}
-            </>
-        );
-    }
-
-    return (
-        <div className={currentProductListTwClass}>
-            {createEmptyArray(calculatePageSize(currentLoadMore)).map((_, index) => (
-                <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
-            ))}
-        </div>
+            {!isListSkeletonVisible && isLoadingMoreProducts && loadingMoreProductsCount > 0 && (
+                <div className={currentProductListTwClass}>
+                    {createEmptyArray(loadingMoreProductsCount).map((_, index) => (
+                        <SkeletonModuleProductListItem key={index} productListViewMode={productListViewMode} />
+                    ))}
+                </div>
+            )}
+        </>
     );
 };

@@ -33,7 +33,7 @@ export const ColorPreview: FC<ColorPreviewProps> = ({
             aria-hidden={isDecorative ? 'true' : undefined}
             style={{ backgroundColor: hasImage ? undefined : (rgbHex ?? undefined) }}
             className={twMergeCustom(
-                'relative flex size-4 shrink-0 justify-center overflow-hidden rounded-sm',
+                'relative flex size-4 shrink-0 justify-center overflow-hidden rounded-detail',
                 !hasImage && 'border border-icon-default',
                 className,
             )}

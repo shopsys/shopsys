@@ -11,7 +11,7 @@ export const SkeletonPageStore: FC = () => (
         <Webline>
             <div className="mb-5 flex flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-5">
                 <Skeleton className="h-8 w-40 lg:h-10" />
-                <Skeleton className="h-5 w-20 rounded-sm" />
+                <Skeleton className="h-5 w-20 rounded-detail" />
             </div>
 
             <div className="flex w-full flex-col gap-5 lg:flex-row">
@@ -43,20 +43,20 @@ export const SkeletonPageStore: FC = () => (
                             <Skeleton className="h-6 w-60" />
                         </div>
 
-                        <Skeleton className="h-80" />
+                        <Skeleton className="h-80 rounded-card" />
                     </VerticalStack>
                 </div>
 
                 <div className="basis-1/2">
-                    <div className="flex aspect-square w-full rounded-xl bg-skeleton-less p-5">
-                        <Skeleton className="h-full w-full" />
+                    <div className="flex aspect-square w-full rounded-card bg-skeleton-less p-5">
+                        <Skeleton className="h-full w-full rounded-card" />
                     </div>
                 </div>
             </div>
 
             <div className="mt-8 grid snap-x snap-mandatory gap-4 vl:gap-8 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto max-vl:grid-flow-col lg:flex lg:flex-wrap">
                 {createEmptyArray(3).map((_, index) => (
-                    <Skeleton key={index} className="m-0.5 flex h-47.5 w-70 rounded-xl" />
+                    <Skeleton key={index} className="m-0.5 flex h-47.5 w-70 rounded-card" />
                 ))}
             </div>
         </Webline>

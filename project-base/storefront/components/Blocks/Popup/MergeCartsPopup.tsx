@@ -1,5 +1,6 @@
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { TIDs } from 'cypress/tids';
 import { useRef } from 'react';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -25,10 +26,11 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
 
     return (
         <Popup size="small" title={t('Do you want to merge the current cart and items from the previous order?')}>
-            <div className="flex justify-between">
+            <PopupActions>
                 <Button
+                    className="w-full sm:w-auto"
                     tid={TIDs.repeat_order_dont_merge_carts_button}
-                    variant="secondary"
+                    variant="outline"
                     onClick={() =>
                         mergeOrderItemsWithCurrentCart(
                             orderForPrefillingUuidRef.current,
@@ -39,6 +41,7 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
                     {t('No')}
                 </Button>
                 <Button
+                    className="w-full sm:w-auto"
                     tid={TIDs.repeat_order_merge_carts_button}
                     onClick={() =>
                         mergeOrderItemsWithCurrentCart(
@@ -50,7 +53,7 @@ export const MergeCartsPopup: FC<MergeCartsPopupProps> = ({
                 >
                     {t('Yes')}
                 </Button>
-            </div>
+            </PopupActions>
         </Popup>
     );
 };

@@ -1,4 +1,5 @@
 import { Flag } from 'components/Basic/Flag/Flag';
+import { ShowMoreButton } from 'components/Basic/ShowMoreButton/ShowMoreButton';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
@@ -13,7 +14,6 @@ import {
     FilterGroupHiddenItems,
     FilterGroupTitle,
     FilterGroupWrapper,
-    ShowAllButton,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
 
@@ -131,9 +131,13 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                         </AnimatePresence>
 
                         {isShowLessMoreShown && (
-                            <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
+                            <ShowMoreButton
+                                controlsId={contentId}
+                                isExpanded={isWithAllItemsShown}
+                                onClick={() => setAreAllItemsShown((prev) => !prev)}
+                            >
                                 {isWithAllItemsShown ? t('Show less') : t('Show more')}
-                            </ShowAllButton>
+                            </ShowMoreButton>
                         )}
                     </FilterGroupContent>
                 )}

@@ -44,7 +44,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
     };
 
     return (
-        <div className="flex flex-col gap-5 rounded-md bg-background-more p-4 vl:p-6">
+        <div className="flex flex-col gap-5 rounded-card bg-background-more p-4 vl:p-6">
             <div className="flex vl:flex-row flex-col vl:items-start gap-4">
                 <Image
                     priority
@@ -76,7 +76,6 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             value={
                                 <ExtendedNextLink
                                     type="orderDetail"
-                                    className="text-sm"
                                     href={{
                                         pathname: customerOrderDetailUrl,
                                         query: { orderNumber: orderedItem.order.number },
@@ -100,7 +99,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             <OrderedItemColumnInfo
                                 title={t('Price')}
                                 value={formatPrice(orderedItem.totalPrice.priceWithVat)}
-                                valueClassName="text-price-default"
+                                valueClassName="font-price text-price-default"
                                 wrapperClassName="min-w-20"
                             />
                         )}
@@ -111,7 +110,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         <Button
                             aria-haspopup="dialog"
                             className="w-full md:w-auto"
-                            size="small"
+                            size="medium"
                             variant="secondary"
                             onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                         >
@@ -141,8 +140,8 @@ const OrderedItemColumnInfo: FC<OrderedItemColumnInfoProps> = ({
 }) => {
     return (
         <div className={twMergeCustom('flex flex-col gap-1', wrapperClassName)}>
-            <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold', valueClassName)} data-tid={tid}>
+            <span className="text-sm text-text-less">{title}</span>
+            <span className={twMergeCustom('font-ui', valueClassName)} data-tid={tid}>
                 {value}
             </span>
         </div>

@@ -4,7 +4,9 @@ import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { StarIcon } from 'components/Basic/Icon/StarIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { Link } from 'components/Basic/Link/Link';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
+import { TextButton } from 'components/Basic/TextButton/TextButton';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -14,7 +16,6 @@ import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/O
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeOrderItemTypeEnum, TypeProductTypeEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
@@ -115,7 +116,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                 <span className="font-semibold text-sm">{orderItem.name}</span>
 
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <div className="whitespace-nowrap font-bold font-secondary text-price-discounted">
+                    <div className="whitespace-nowrap font-price text-price-discounted tabular-nums">
                         {formatPrice(mapPriceForCalculations(orderItem.totalPrice.priceWithVat))}
                     </div>
                 )}
@@ -144,12 +145,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
     }
 
     return (
-        <div
-            className={twJoin(
-                'font-secondary font-semibold first:border-none',
-                'border-t border-t-border-default py-5 first:pt-0 last:pb-0',
-            )}
-        >
+        <div className="border-t border-t-border-default py-5 first:border-none first:pt-0 last:pb-0">
             <div className="relative flex flex-col gap-3">
                 <div
                     className={twMergeCustom(
@@ -174,7 +170,10 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                         <div className="flex flex-col gap-2">
                             {orderItem.product?.isVisible ? (
                                 <ExtendedNextLink
-                                    className="vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+                                    className={twMergeCustom(
+                                        getLinkClassName({ variant: 'navigation' }),
+                                        'vl:w-fit w-full text-sm',
+                                    )}
                                     href={orderItem.product.slug}
                                     skeletonType="product"
                                     aria-label={t('Go to product {{ productName }}', {
@@ -189,25 +188,27 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                             )}
 
                             {showComplaintButton && (
-                                <button
+                                <TextButton
                                     aria-haspopup="dialog"
-                                    className="inline-flex cursor-pointer items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm underline outline-hidden hover:text-link-hovered"
-                                    data-tid={TIDs.order_detail_create_complaint_button}
-                                    tabIndex={0}
+                                    className="self-baseline whitespace-nowrap"
+                                    tid={TIDs.order_detail_create_complaint_button}
                                     aria-label={t('Create complaint for product {{ productName }}', {
                                         ns: 'accessibility',
                                         productName: orderItem.name,
                                     })}
                                     onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
                                 >
-                                    <FillIcon className="mr-1 size-5" />
+                                    <FillIcon aria-hidden="true" className="size-4" />
                                     {t('Create complaint')}
-                                </button>
+                                </TextButton>
                             )}
 
                             {showWriteReviewButton && (
                                 <ExtendedNextLink
-                                    className="inline-flex items-center self-baseline whitespace-nowrap rounded-sm text-link-default text-sm hover:text-link-hovered"
+                                    className={twMergeCustom(
+                                        getLinkClassName({ variant: 'action' }),
+                                        'self-baseline whitespace-nowrap',
+                                    )}
                                     href={getWriteReviewUrl()}
                                     tid={TIDs.order_detail_write_review_button}
                                     skeletonType="product"
@@ -216,7 +217,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                         productName: orderItem.name,
                                     })}
                                 >
-                                    <StarIcon className="mr-1 size-5" />
+                                    <StarIcon aria-hidden="true" className="size-4" />
                                     {t('Write a review')}
                                 </ExtendedNextLink>
                             )}
@@ -243,7 +244,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                     </span>
 
                     {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                        <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                        <span className="text-right font-price">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                     )}
                 </div>
 
@@ -254,7 +255,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({
                                 key={giftVoucher.pdfUrl}
                                 isButton
                                 isExternal
-                                buttonVariant="tertiary"
+                                buttonVariant="ghost"
                                 href={giftVoucher.pdfUrl}
                                 tid={TIDs.order_detail_download_gift_voucher_button_ + giftVoucherIndex}
                             >

@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { SelectableCode } from 'components/Basic/SelectableCode/SelectableCode';
 import { AdditionalServiceSummaryList } from 'components/Blocks/Product/AdditionalServices/AdditionalServiceSummaryList';
 import { CustomerRecordRowInfo } from 'components/Pages/Customer/CustomerRecordElements';
@@ -41,7 +42,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
     const complaintItemTotalPrice = complaintItem.orderItem?.totalPrice;
     const productLink = complaintItem.product?.isVisible ? (
         <ExtendedNextLink
-            className="wrap-break-word vl:w-fit w-full text-sm text-text-default no-underline hover:text-text-hovered hover:underline"
+            className={twJoin(getLinkClassName({ variant: 'navigation' }), 'wrap-break-word vl:w-fit w-full text-sm')}
             href={complaintItem.product.slug}
             skeletonType="product"
             type="product"
@@ -89,24 +90,24 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         />
                     </div>
 
-                    <div className="wrap-break-word min-w-0 font-secondary font-semibold text-sm">{productLink}</div>
+                    <div className="wrap-break-word min-w-0 font-product-name text-sm">{productLink}</div>
                 </div>
 
                 {complaintItem.catnum && (
                     <SelectableCode
-                        className="vl:w-auto w-full font-secondary font-semibold text-sm text-text-less"
+                        className="vl:w-auto w-full text-sm text-text-less"
                         label={t('Code')}
                         value={complaintItem.catnum}
                     />
                 )}
 
-                <span className="vl:text-left text-right font-secondary font-semibold">
+                <span className="vl:text-left text-right">
                     {complaintItem.quantity}
                     {complaintItemUnit && ` ${complaintItemUnit}`}
                 </span>
 
                 {complaintItemTotalPrice && isPriceVisible(complaintItemTotalPrice.priceWithVat) && (
-                    <span className="text-right font-bold font-secondary">
+                    <span className="text-right font-price tabular-nums">
                         {formatPrice(complaintItemTotalPrice.priceWithVat)}
                     </span>
                 )}
@@ -115,7 +116,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
             <AdditionalServiceSummaryList className="vl:pl-25" services={additionalServiceLines} />
 
             <CustomerRecordRowInfo className="items-start" title={t('Description')}>
-                <span className="font-secondary font-semibold">{complaintItem.description}</span>
+                <span>{complaintItem.description}</span>
             </CustomerRecordRowInfo>
 
             {!!complaintItem.files?.length && (
@@ -136,7 +137,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         aria-label={t('View complaint images in gallery', { ns: 'accessibility' })}
                                         title={t('Open gallery')}
                                         className={twJoin(
-                                            'flex size-16 cursor-pointer items-center justify-center rounded-xl border border-transparent bg-base-white p-2 transition-all hover:border-border-less',
+                                            'flex size-16 cursor-pointer items-center justify-center rounded-control border border-transparent bg-background-default p-2 transition-all hover:border-border-less',
                                             isWithAdditionalImages && 'relative',
                                         )}
                                         type="button"
@@ -152,7 +153,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                                         />
 
                                         {isWithAdditionalImages && (
-                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-xl bg-image-overlay font-bold text-lg">
+                                            <span className="absolute top-0 left-0 flex size-full items-center justify-center rounded-control bg-white-alpha-100 font-bold text-lg">
                                                 +{galleryAdditionalItemsCount}
                                             </span>
                                         )}

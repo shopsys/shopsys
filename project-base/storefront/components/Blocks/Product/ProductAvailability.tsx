@@ -62,7 +62,7 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                     <>
                         <ProductAvailabilityIcon className="size-3 shrink-0" status={availability.status} />
 
-                        <span className="font-semibold">{availabilityText}</span>
+                        <span className="font-ui">{availabilityText}</span>
                     </>
                 ) : (
                     <>
@@ -80,15 +80,18 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
                                 status={availability.status}
                             />
 
-                            <span className="font-secondary font-semibold">{availability.name}</span>
+                            <span>{availability.name}</span>
                         </span>
 
                         {inStockAvailabilityDetails && (
                             <span
                                 className={twMergeCustom(
                                     // indented under the name, past the icon
-                                    'pl-5 font-secondary text-text-less',
-                                    isDetailDisplay ? 'underline hover:text-link-default' : 'text-xs',
+                                    'pl-5 text-text-less',
+                                    // only the details are the link, the availability name above stays a status
+                                    isDetailDisplay
+                                        ? 'underline group-hover/availability:text-link-default'
+                                        : 'text-xs',
                                     isInlineDisplay && 'relative pl-0',
                                     detailsClassName,
                                 )}

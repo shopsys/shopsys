@@ -1,4 +1,5 @@
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { StatusBadge } from 'components/Basic/StatusBadge/StatusBadge';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
@@ -10,6 +11,7 @@ import { useRemoveCustomerUserMutation } from 'graphql/requests/customer/mutatio
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
+import { twJoin } from 'tailwind-merge';
 import { useErrorHandler } from 'utils/errors/useErrorHandler';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -90,7 +92,7 @@ export const CustomerUsersTable: FC = () => {
                 aria-haspopup="dialog"
                 className="w-fit self-center"
                 tid={TIDs.customer_users_add_button}
-                size="small"
+                size="medium"
                 onClick={() => openManageCustomerUserPopup()}
             >
                 <PlusIcon aria-hidden="true" className="size-4" />
@@ -108,18 +110,18 @@ export const CustomerUsersTable: FC = () => {
                             <Cell
                                 isHead
                                 scope="col"
-                                className="w-1/2 py-3 text-left font-medium text-text-less text-xs"
+                                className="w-1/2 py-3 text-left font-semibold text-text-less text-xs"
                             >
                                 {t('User')}
                             </Cell>
-                            <Cell isHead scope="col" className="py-3 text-left font-medium text-text-less text-xs">
+                            <Cell isHead scope="col" className="py-3 text-left font-semibold text-text-less text-xs">
                                 {t('Role group')}
                             </Cell>
                             <Cell
                                 isHead
                                 scope="col"
                                 align="right"
-                                className="w-28 py-3 font-medium text-text-less text-xs"
+                                className="w-28 py-3 font-semibold text-text-less text-xs"
                             >
                                 {t('Actions')}
                             </Cell>
@@ -141,7 +143,10 @@ export const CustomerUsersTable: FC = () => {
                                     )}
                                 </div>
                                 <a
-                                    className="wrap-anywhere mt-1 inline-block text-text-less text-xs no-underline hover:text-link-hovered hover:underline focus-visible:outline-2 focus-visible:outline-border-active"
+                                    className={twJoin(
+                                        getLinkClassName({ tone: 'subtle' }),
+                                        'wrap-anywhere mt-1 inline-block text-xs',
+                                    )}
                                     href={`mailto:${user.email}`}
                                 >
                                     {user.email}

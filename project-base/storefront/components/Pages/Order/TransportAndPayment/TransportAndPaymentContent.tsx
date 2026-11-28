@@ -10,7 +10,6 @@ import { getTransportAndPaymentValidationMessages } from 'utils/cart/getTranspor
 import { useChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { useChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isEmailTransport } from 'utils/packetery';
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
@@ -79,7 +78,9 @@ export const TransportAndPaymentContent: FC = () => {
     const { goToPreviousStepFromTransportAndPaymentPage, goToNextStepFromTransportAndPaymentPage } =
         useTransportAndPaymentPageNavigation(validationMessages);
 
-    const isDisabled = hasValidationErrors(validationMessages) || isChangingTransportInCart || isChangingPaymentInCart;
+    // An incomplete selection keeps the button enabled; its click shows what is missing.
+    const isCartUpdating = isChangingTransportInCart || isChangingPaymentInCart;
+    const shouldShowNextStepSpinner = isCartUpdating && !!transport && !!payment;
 
     return (
         <OrderLayout
@@ -88,10 +89,7 @@ export const TransportAndPaymentContent: FC = () => {
         >
             <h1 className="sr-only">{t('Transport and payment')}</h1>
 
-            <OrderContentWrapper
-                activeStep={2}
-                isTransportOrPaymentLoading={isChangingTransportInCart || isChangingPaymentInCart}
-            >
+            <OrderContentWrapper activeStep={2} isTransportOrPaymentLoading={isCartUpdating}>
                 {!!transportsData?.transports.length && (
                     <TransportAndPaymentSelect
                         changePaymentInCart={changePaymentInCart}
@@ -104,7 +102,7 @@ export const TransportAndPaymentContent: FC = () => {
                         isNothingLeftToPay={isNothingLeftToPay}
                         isSingularElectronicGiftVoucher={isSingularElectronicGiftVoucher}
                         isChangingTransportInCart={isChangingTransportInCart}
-                        isTransportSelectionLoading={isChangingTransportInCart || isChangingPaymentInCart}
+                        isTransportSelectionLoading={isCartUpdating}
                         lastOrderPickupPlace={lastOrderPickupPlace}
                         transports={transportsData.transports}
                     />
@@ -114,15 +112,13 @@ export const TransportAndPaymentContent: FC = () => {
                     backStepClickHandler={goToPreviousStepFromTransportAndPaymentPage}
                     buttonBack={t('Back')}
                     buttonNext={t('Contact information')}
-                    isDisabled={isDisabled}
+                    isDisabled={isCartUpdating}
                     nextStepClickHandler={goToNextStepFromTransportAndPaymentPage}
                     ariaLabelNextStep={t('Continue with order to {{ step }}', {
                         ns: 'accessibility',
                         step: t('Contact information'),
                     })}
-                    shouldShowSpinnerOnNextStepButton={
-                        (isChangingTransportInCart || isChangingPaymentInCart) && !!transport && !!payment
-                    }
+                    shouldShowSpinnerOnNextStepButton={shouldShowNextStepSpinner}
                 />
             </OrderContentWrapper>
         </OrderLayout>

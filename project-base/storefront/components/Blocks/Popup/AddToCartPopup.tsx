@@ -80,7 +80,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
             <VerticalStack gap={'xs'}>
                 <section
                     aria-labelledby={`added-product-${product.uuid}-name`}
-                    className="relative rounded-xl bg-background-more p-4 vl:p-5"
+                    className="relative rounded-card bg-background-more p-4 vl:p-5"
                 >
                     <div className="flex flex-row flex-wrap items-center gap-4 lg:flex-nowrap">
                         <div className="grid min-w-0 vl:flex-1 basis-full vl:basis-auto grid-cols-[80px_minmax(0,1fr)] grid-rows-[auto_auto] gap-x-2.5 gap-y-2">
@@ -112,11 +112,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                                 </div>
 
                                 <h3
-                                    className="col-start-2 row-start-1 self-end font-secondary font-semibold text-sm tracking-wide group-hover/product-link:underline lg:text-sm"
+                                    className="col-start-2 row-start-1 self-end font-default font-product-name text-sm tracking-wide lg:text-sm"
                                     data-tid={TIDs.blocks_product_addtocartpopup_product_name}
                                     id={`added-product-${product.uuid}-name`}
                                 >
-                                    <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                                    <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-hover/product-link:underline group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                                         {product.fullName}
                                     </span>
                                 </h3>
@@ -130,7 +130,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                         </div>
 
                         <div className="flex flex-1 items-center justify-between gap-4 vl:gap-6 md:justify-end">
-                            <div className="font-secondary">
+                            <div className="">
                                 <span className="font-semibold" data-tid={TIDs.add_to_cart_popup_quantity}>
                                     {quantity}
                                 </span>
@@ -139,7 +139,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
 
                             {isPriceVisible(product.price.priceWithVat) && (
                                 <div className="flex flex-col items-end vl:gap-6 gap-y-1 sm:flex-row sm:items-center sm:gap-4">
-                                    <div className="whitespace-nowrap font-secondary">
+                                    <div className="whitespace-nowrap tabular-nums">
                                         <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
                                         <span className="text-sm text-text-less">&nbsp;/&nbsp;{product.unit.name}</span>
                                     </div>
@@ -194,15 +194,22 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
                     />
                 </section>
 
-                <div className="vl:static sticky bottom-0 z-10 order-last vl:order-0 -mx-5 vl:mx-0 flex items-center justify-between gap-4 bg-background-default px-5 vl:px-0 vl:py-0 pt-3 pb-5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] vl:shadow-none">
+                <div className="vl:static sticky bottom-0 z-10 order-last vl:order-0 -mx-5 vl:mx-0 flex flex-col gap-3 bg-background-default px-5 vl:px-0 vl:py-0 pt-3 pb-5 shadow-[0_-4px_16px_rgba(0,0,0,0.1)] vl:shadow-none sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                     {onChooseAnotherVariant ? (
-                        <Button variant="tertiary" onClick={onChooseAnotherVariant}>
+                        <Button
+                            className="w-full sm:w-auto"
+                            size="large"
+                            variant="ghost"
+                            onClick={onChooseAnotherVariant}
+                        >
                             {t('Choose another variant')}
                         </Button>
                     ) : (
                         <Button
                             aria-label={t('Go back to shop', { ns: 'accessibility' })}
-                            variant="tertiary"
+                            className="w-full sm:w-auto"
+                            size="large"
+                            variant="ghost"
                             onClick={handleClosePopup}
                         >
                             {t('Back to shop')}
@@ -211,6 +218,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({
 
                     <LinkButton
                         aria-label={t('Go to cart', { ns: 'accessibility' })}
+                        className="w-full sm:w-auto"
                         href={cartUrl}
                         skeletonType="cart"
                         tid={TIDs.popup_go_to_cart_button}

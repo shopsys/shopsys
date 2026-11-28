@@ -1,6 +1,6 @@
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
-import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { RejectedIcon } from 'components/Basic/Icon/RejectedIcon';
+import { CheckmarkRoundIcon } from 'components/Basic/Icon/CheckmarkRoundIcon';
+import { CloseRoundIcon } from 'components/Basic/Icon/CloseRoundIcon';
 import { WarningIcon } from 'components/Basic/Icon/WarningIcon';
 import { TIDs } from 'cypress/tids';
 import { ReactNode } from 'react';
@@ -43,7 +43,7 @@ const ToastMessageContent: FC<ToastMessageContentProps> = ({ message, tid, actio
 
 export const showMessage = (
     message: string,
-    type: 'info' | 'error' | 'success',
+    type: 'warning' | 'error' | 'success',
     options?: ShowMessageOptions,
 ): void => {
     const toastId = options?.toastId ?? message;
@@ -81,12 +81,12 @@ export const showMessage = (
                     toastId,
                     closeOnClick: !options?.action,
                     ...(options?.action && { autoClose: false }),
-                    icon: <RejectedIcon className="p-1" />,
+                    icon: <CloseRoundIcon />,
                 },
             );
         }
-    } else if (type === 'info') {
-        toast.info(() => <ToastMessageContent message={message} tid={TIDs.toast_info} />, {
+    } else if (type === 'warning') {
+        toast.warning(() => <ToastMessageContent message={message} tid={TIDs.toast_warning} />, {
             toastId,
             closeOnClick: true,
             icon: <WarningIcon />,
@@ -96,7 +96,7 @@ export const showMessage = (
         const successOptions = {
             toastId,
             closeOnClick: !options?.action,
-            icon: <CheckmarkIcon />,
+            icon: <CheckmarkRoundIcon />,
             ...(options?.autoClose !== undefined && { autoClose: options.autoClose }),
         };
         if (options?.updateExisting && toast.isActive(toastId)) {

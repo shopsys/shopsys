@@ -67,10 +67,10 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
             data-tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
             ref={forwardedRef}
             className={twMergeCustom(
-                'group relative flex select-text flex-col rounded-xl border border-background-more bg-background-more px-2.5 pt-4 pb-2.5 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)] sm:px-5 sm:pb-5',
+                'group relative flex select-text flex-col rounded-product-card border border-background-more bg-background-more px-2.5 pt-4 pb-2.5 text-left transition-[box-shadow,border-color,background-color,color] duration-200 ease-out pointer-fine:hover:shadow-[0_8px_18px_-12px_rgb(37_40_61/30%),0_2px_6px_-4px_rgb(37_40_61/16%)] sm:px-5 sm:pb-5',
                 size === 'small' && 'pb-4 sm:pb-4',
                 'hover:border-border-less hover:bg-background-default',
-                highlightBadgeText && 'bg-primary-500/20 hover:border-primary-500',
+                highlightBadgeText && 'bg-background-accent/20 hover:border-border-active',
                 className,
             )}
         >
@@ -102,7 +102,7 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
             <div className="grid grow grid-cols-1 grid-rows-[auto_auto_minmax(0,1fr)_auto_auto_auto_auto]">
                 <ExtendedNextLink
                     preventRedirectOnTextSelection
-                    className="group/product-link col-start-1 row-start-1 row-end-7 -mx-2.5 grid select-text grid-cols-1 grid-rows-subgrid rounded-xl px-2.5 text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden sm:-mx-5 sm:px-5"
+                    className="group/product-link col-start-1 row-start-1 row-end-7 -mx-2.5 grid select-text grid-cols-1 grid-rows-subgrid rounded-product-card px-2.5 text-text-default no-underline hover:text-text-default hover:no-underline focus-visible:outline-hidden sm:-mx-5 sm:px-5"
                     data-focus-color="preserve"
                     draggable={false}
                     href={product.slug}
@@ -129,17 +129,17 @@ export const ProductListItemGridView: FC<ProductListItemGridViewProps> = ({
 
                     <h3
                         className={twJoin(
-                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-secondary font-semibold group-hover:text-text-default group-hover:underline',
+                            'wrap-break-word row-start-3 mt-2.5 overflow-hidden font-default font-product-name group-hover/product-link:text-text-default',
                             textSize === 'xs' ? 'text-xs lg:text-xs' : 'text-sm lg:text-sm',
                         )}
                     >
-                        <span className="-mx-1 rounded-sm box-decoration-clone px-1 group-focus-visible/product-link:bg-orange-500 group-focus-visible/product-link:text-text-default!">
+                        <span className="-mx-1 rounded-detail box-decoration-clone px-1 group-focus-visible/product-link:bg-focus-background group-focus-visible/product-link:text-text-default!">
                             {product.fullName}
                         </span>
                     </h3>
 
                     {product.__typename === 'MainVariant' && (
-                        <div className="row-start-4 mt-2.5 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background-default px-2.5 py-1.5 font-secondary text-xs group-hover:text-text-default">
+                        <div className="row-start-4 mt-2.5 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-detail bg-background-default px-2.5 py-1.5 text-xs group-hover:text-text-default">
                             <VariantIcon className="size-4 text-text-accent" fill="currentColor" />
                             {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                         </div>

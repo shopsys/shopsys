@@ -1,7 +1,7 @@
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 
 export const SkeletonModuleComparison: FC = () => (
-    <div aria-hidden="true" className="mx-auto w-full max-w-318 overflow-hidden rounded-lg border border-border-less">
+    <div aria-hidden="true" className="mx-auto w-full max-w-318 overflow-hidden rounded-card border border-border-less">
         <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-[12rem_repeat(3,minmax(0,1fr))]">
             <div className="hidden md:block" />
             {[0, 1, 2].map((index) => (

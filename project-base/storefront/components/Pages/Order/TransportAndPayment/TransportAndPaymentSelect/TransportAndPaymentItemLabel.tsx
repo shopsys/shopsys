@@ -56,17 +56,17 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
         <div
             data-tid={TIDs.transport_and_payment_list_item_image}
             className={twJoin(
-                'isolate flex h-12 w-20 min-w-20 shrink-0 items-center justify-center rounded-xl',
+                'isolate flex h-12 w-20 min-w-20 shrink-0 items-center justify-center rounded-control',
                 isImageOnWhiteBackground ? 'bg-background-default' : 'bg-background-more',
                 !image && 'hidden',
             )}
         >
             <Image
                 alt={getImageAlt(image?.name, name)}
-                className="aspect-video h-7 object-contain object-center mix-blend-multiply"
-                height={28}
+                className="aspect-video h-8 object-contain object-center mix-blend-multiply"
+                height={32}
                 src={image?.url}
-                width={60}
+                width={68}
             />
         </div>
     );
@@ -75,7 +75,7 @@ export const TransportAndPaymentItemLabel: FC<TransportAndPaymentItemLabelProps>
         <div
             data-tid={TIDs.transport_and_payment_price}
             className={twJoin(
-                'ml-auto font-secondary font-semibold text-sm text-text-default',
+                'ml-auto font-semibold text-sm text-text-default tabular-nums',
                 isPriceNextToDeliveryDateOnSmallScreen &&
                     'max-sm:col-start-3 max-sm:row-start-2 max-sm:whitespace-nowrap',
             )}

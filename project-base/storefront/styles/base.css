@@ -1,3 +1,8 @@
+/* Matches a focused element only while the customer navigates with the keyboard (see utils/accessibility/useFocusSource.ts). */
+@custom-variant focus-keyboard (html[data-focus-source="keyboard"] &:focus);
+/* The same for an element that contains the focused one, e.g. a select focused through its button or search input. */
+@custom-variant focus-within-keyboard (html[data-focus-source="keyboard"] &:focus-within);
+
 @layer base {
     /* Keep SSR content visible when JavaScript is disabled (Tailwind v4 + React streaming). */
     @media (scripting: none) {
@@ -47,15 +52,19 @@
     h2,
     h3,
     h4,
-    h5,
-    h6,
     .h1,
     .h2,
     .h3,
-    .h4,
+    .h4 {
+        @apply font-secondary font-heading;
+    }
+
+    /* small headings stay in the UI font, Raleway is for headings from 18px */
+    h5,
+    h6,
     .h5,
     .h6 {
-        @apply font-secondary font-semibold;
+        @apply font-default font-heading;
     }
 
     h1,
@@ -110,12 +119,13 @@
     }
 
     a {
-        @apply text-link-default hover:text-link-hovered active:text-link-hovered disabled:text-link-disabled cursor-pointer rounded-sm text-sm underline hover:underline lg:text-md;
+        /* an unstyled link is an inline link (see getLinkClassName): it takes the size of the text it is part of */
+        @apply text-link-default hover:text-link-hovered active:text-link-active disabled:text-link-disabled cursor-pointer rounded-detail underline hover:underline;
     }
 
     b,
     strong {
-        @apply font-bold;
+        @apply font-semibold;
     }
 
     input::-webkit-outer-spin-button,
@@ -156,6 +166,15 @@
         @apply focus-visible:outline-hidden;
     }
 
+    /* boxed messages (toasts, alerts, infoboxes) share one 24px icon size */
+    .Toastify__toast-icon {
+        @apply w-6;
+
+        svg {
+            @apply size-6;
+        }
+    }
+
     .custom-toast-content {
         @apply text-text-default! max-w-[90%];
 
@@ -172,7 +191,7 @@
         }
     }
 
-    .Toastify__toast--info {
+    .Toastify__toast--warning {
         @apply bg-toast-bg-warning! border-toast-border-warning! text-toast-text-warning!;
 
         svg {
@@ -220,6 +239,11 @@
         }
     }
 
+    /* The timer sits inside the toast above its bottom border, so the border stays the same on every side. */
+    .Toastify__progress-bar--wrp {
+        @apply right-4! bottom-1.5! left-4! h-0.75! w-auto! overflow-hidden! rounded-full!;
+    }
+
     /* Keep the visual timer visible while it remains hidden from assistive technologies. */
     .Toastify__progress-bar--wrp[data-hidden='true'] {
         opacity: 1 !important;
@@ -246,11 +270,11 @@
 
     a:focus-visible:not([data-focus-color='preserve']),
     button:focus-visible {
-        @apply text-text-default! bg-orange-500! outline-hidden!;
+        @apply text-text-default! bg-focus-background! outline-hidden!;
     }
 
     button[data-focus-style='ring']:focus-visible {
-        @apply bg-transparent! ring-2 ring-orange-500 ring-inset;
+        @apply bg-transparent! ring-2 ring-focus-ring ring-inset;
     }
 
     a:focus-visible:not([data-focus-color='preserve']) svg,
@@ -261,7 +285,7 @@
     }
 
     input[type='checkbox']:focus-visible + label > span:first-child {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[type='checkbox']:focus-visible + label > span:first-child svg {
@@ -269,11 +293,11 @@
     }
 
     input[type='radio']:focus-visible + label > span:first-child {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[role='switch']:focus-visible + label {
-        @apply bg-orange-500!;
+        @apply bg-focus-background!;
     }
 
     input[role='switch']:focus-visible + label:after {

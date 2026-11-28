@@ -15,13 +15,13 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type, rgbBgColo
     const textColor = rgbBgColor && getYIQContrastTextColor(rgbBgColor);
 
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded-flag px-1.5 py-0.5 font-secondary font-semibold text-flag-text text-xs transition-all',
+        'inline-flex rounded-flag px-1.5 py-0.5 font-semibold text-flag-text text-xs transition-all',
         textColor,
         href && 'cursor-pointer',
-        type === 'blog' && 'bg-secondary-500',
+        type === 'blog' && 'bg-flag-bg-blog',
         type === 'blog' && href && 'hover:bg-background-accent-more',
         type === 'discount' && 'bg-price-discounted',
-        type === 'highlight' && 'bg-orange-500 text-text-default',
+        type === 'highlight' && 'bg-flag-bg-highlight text-text-default',
         className,
     );
 

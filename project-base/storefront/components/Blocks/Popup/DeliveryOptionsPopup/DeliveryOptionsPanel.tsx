@@ -39,7 +39,7 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
             >
                 <span
                     className={twJoin(
-                        'flex h-10 w-14 min-w-14 items-center justify-center rounded-xl text-icon-accent',
+                        'flex h-12 w-20 min-w-20 items-center justify-center rounded-control text-icon-accent',
                         isOpen ? 'bg-background-more' : 'bg-background-default',
                     )}
                 >
@@ -47,11 +47,9 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
                 </span>
 
                 <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="font-secondary font-semibold text-text-default">{title}</span>
+                    <span className="font-semibold text-text-default">{title}</span>
 
-                    {summary !== null && (
-                        <span className="font-secondary font-semibold text-sm text-text-less">{summary}</span>
-                    )}
+                    {summary !== null && <span className="text-sm text-text-less">{summary}</span>}
                 </span>
 
                 <ArrowIcon
@@ -76,7 +74,7 @@ export const DeliveryOptionsPanel: FC<DeliveryOptionsPanelProps> = ({
                     inert={!isDesktop && !isOpen ? true : undefined}
                 >
                     <div
-                        className="border-border-less max-lg:border-t max-lg:px-4 max-lg:py-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1"
+                        className="thin-scrollbar border-border-less max-lg:border-t max-lg:px-4 max-lg:py-4 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1"
                         id={scrollableContentId}
                     >
                         {children}

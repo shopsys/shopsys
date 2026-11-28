@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { ContactInformationsIcon } from 'components/Basic/Icon/ContactInformationsIcon';
 import { DeliveryAddressIcon } from 'components/Basic/Icon/DeliveryAddressIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
+import { getLinkClassName } from 'components/Basic/Link/linkUtils';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { twJoin } from 'tailwind-merge';
 import { normalizeTelephone } from 'utils/formaters/normalizeTelephone';
@@ -15,7 +16,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
     const { t } = useTranslation();
 
     return (
-        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-xl bg-background-more p-5 lg:grid-cols-2">
+        <div className="grid grid-cols-1 vl:grid-cols-3 gap-2.5 rounded-card bg-background-more p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<ContactInformationsIcon className="size-8" />}>
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}
@@ -24,7 +25,8 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                 <ExtendedNextLink
                     href={`mailto:${complaint.email}`}
                     className={twJoin(
-                        'overflow-x-auto whitespace-nowrap text-sm text-text-default underline hover:no-underline',
+                        getLinkClassName(),
+                        'overflow-x-auto whitespace-nowrap',
                         '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
                     )}
                 >

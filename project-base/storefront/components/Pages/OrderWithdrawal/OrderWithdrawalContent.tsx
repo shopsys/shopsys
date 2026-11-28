@@ -223,10 +223,7 @@ export const OrderWithdrawalContent: FC<OrderWithdrawalContentProps> = ({ order 
                             </FormBlockWrapper>
 
                             <FormButtonWrapper>
-                                <SubmitButton
-                                    hasDisabledCursor={!formProviderMethods.formState.isValid}
-                                    tid={TIDs.order_withdrawal_submit_button}
-                                >
+                                <SubmitButton size="large" tid={TIDs.order_withdrawal_submit_button}>
                                     {t('Confirm withdrawal from contract')}
                                 </SubmitButton>
                             </FormButtonWrapper>

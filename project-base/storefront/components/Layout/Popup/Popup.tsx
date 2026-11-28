@@ -152,7 +152,7 @@ export const Popup: React.FC<PopupProps> = ({
                             tabIndex={-1}
                             transition={{ duration: 0.2 }}
                             className={twMergeCustom(
-                                'fixed z-maximum mx-5 flex max-h-[80vh] cursor-auto flex-col rounded-md bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
+                                'fixed z-maximum mx-5 flex max-h-[80vh] cursor-auto flex-col rounded-surface bg-background-default p-5 shadow-2xl focus-visible:outline-hidden',
                                 popupWidthClassNameBySize[size],
                                 isDrawer && 'mx-0 h-dvh max-h-none rounded-none',
                                 isDrawer && DRAWER_WIDTH_CLASS_NAME,
@@ -174,7 +174,11 @@ export const Popup: React.FC<PopupProps> = ({
                             <div className={twMergeCustom('mb-3 flex justify-between', headerClassName)}>
                                 <h2
                                     aria-describedby={descriptionId}
-                                    className={twMergeCustom('h3 outline-hidden', isTitleHidden && 'sr-only')}
+                                    className={twMergeCustom(
+                                        size === 'small' ? 'h4' : 'h3',
+                                        'outline-hidden',
+                                        isTitleHidden && 'sr-only',
+                                    )}
                                     id={titleId}
                                     ref={titleRef}
                                     tabIndex={-1}

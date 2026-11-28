@@ -14,7 +14,7 @@ export const ContactInformationDeliveryPickUpAddress: FC = () => {
     return (
         <div className="flex flex-col gap-5 md:flex-row">
             <div className="flex flex-col gap-2.5">
-                <p className="font-secondary font-semibold">{t('Address')}</p>
+                <p className="font-semibold">{t('Address')}</p>
 
                 <p className="text-sm">
                     {pickupPlace.street}
@@ -28,7 +28,7 @@ export const ContactInformationDeliveryPickUpAddress: FC = () => {
             </div>
 
             <div className="flex flex-1 flex-col gap-2.5" data-tid={TIDs.opening_hours_in_contact_information}>
-                <p className="font-secondary font-semibold">{t('Opening hours')}</p>
+                <p className="font-semibold">{t('Opening hours')}</p>
 
                 <OpeningHours className="text-sm" openingHours={pickupPlace.openingHours} />
             </div>

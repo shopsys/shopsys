@@ -8,10 +8,11 @@ type AlertProps = {
     title?: ReactNode;
     variant: AlertVariant;
     tid?: string;
+    role?: 'alert' | 'status';
     children?: ReactNode;
 };
 
-export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, children, className }) => {
+export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, role, children, className }) => {
     const alertVariantClasses: Record<AlertVariant, string> = {
         error: 'border-alert-border-error bg-alert-bg-error text-alert-text-error',
         info: 'border-alert-border-info bg-alert-bg-info text-alert-text-info',
@@ -28,21 +29,20 @@ export const Alert: FC<AlertProps> = ({ icon: Icon, title, variant, tid, childre
     return (
         <div
             className={twMergeCustom(
-                'flex w-full items-start gap-3 rounded-xl border-1 p-4 text-left text-sm sm:p-5',
+                'flex w-full items-start gap-3 rounded-card border-1 p-4 text-left text-sm sm:p-5',
                 alertVariantClasses[variant],
                 className,
             )}
             data-tid={tid}
+            role={role}
         >
+            {/* the 24px icon of boxed messages, centered on the first 20px line of the text without a badge around it */}
             {Icon && (
-                <span
-                    className={twMergeCustom(
-                        'flex size-9 shrink-0 items-center justify-center rounded-full bg-background-default',
-                        iconVariantClasses[variant],
-                    )}
-                >
-                    <Icon aria-hidden="true" className="size-5" focusable="false" />
-                </span>
+                <Icon
+                    aria-hidden="true"
+                    className={twMergeCustom('-my-0.5 size-6 shrink-0', iconVariantClasses[variant])}
+                    focusable="false"
+                />
             )}
 
             <div className="flex flex-col gap-1">

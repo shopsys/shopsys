@@ -30,7 +30,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
             title={t('Go to category')}
             type={linkType}
             className={twMergeCustom(
-                'relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-background-more bg-background-more px-5 py-2.5 no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
+                'group relative flex h-full w-full cursor-pointer items-center gap-5 rounded-card border border-background-more bg-background-more px-5 py-2.5 no-underline transition-[box-shadow,border-color,background-color,color] duration-200 ease-out',
                 'text-text-default hover:border-border-less hover:bg-background-default hover:text-text-default hover:no-underline',
                 'pointer-fine:hover:shadow-[0_12px_24px_-18px_rgb(37_40_61/40%),0_4px_10px_-8px_rgb(37_40_61/24%)] motion-reduce:duration-0',
                 'lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
@@ -43,7 +43,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
                 >
                     <Image
                         alt={getImageAlt(itemImage.name, listedItem.name)}
-                        className="h-auto max-h-full w-auto max-w-full rounded-md object-contain mix-blend-multiply"
+                        className="h-auto max-h-full w-auto max-w-full rounded-detail object-contain mix-blend-multiply"
                         height={60}
                         src={itemImage.url}
                         width={60}
@@ -53,7 +53,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({ li
 
             {icon}
 
-            <div className="z-above font-semibold text-sm">{listedItem.name}</div>
+            <div className="z-above font-ui text-sm">{listedItem.name}</div>
             {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
                 <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
             )}

@@ -1,11 +1,13 @@
 import { useInquiryForm, useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
+import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { PhoneNumberInputControlled } from 'components/Forms/PhonePrefixSelect/PhoneNumberInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { PopupActions } from 'components/Layout/Popup/PopupActions';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateInquiryMutation } from 'graphql/requests/inquiry/mutations/CreateInquiryMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -80,6 +82,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
 
     return (
         <Popup
+            size="small"
             className="overflow-x-auto"
             title={t('Inquiry')}
             ariaDescription={t(
@@ -90,7 +93,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
             <FormProvider {...formProviderMethods}>
                 <Form formName={formMeta.formName} onSubmit={formProviderMethods.handleSubmit(inquiryHandler)}>
                     <FormContentWrapper>
-                        <FormBlockWrapper>
+                        <FormBlockWrapper variant="plain">
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}
@@ -186,11 +189,19 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
                             />
                         </FormBlockWrapper>
 
-                        <FormButtonWrapper>
-                            <SubmitButton aria-label={t('Send. Submit inquiry request', { ns: 'accessibility' })}>
+                        <PopupActions>
+                            <Button className="w-full sm:w-auto" variant="outline" onClick={closePortalContent}>
+                                {t('Cancel')}
+                            </Button>
+
+                            <SubmitButton
+                                className="w-full sm:w-auto"
+                                wrapperClassName="w-full sm:w-fit"
+                                aria-label={t('Send. Submit inquiry request', { ns: 'accessibility' })}
+                            >
                                 {t('Send')}
                             </SubmitButton>
-                        </FormButtonWrapper>
+                        </PopupActions>
                     </FormContentWrapper>
                 </Form>
             </FormProvider>

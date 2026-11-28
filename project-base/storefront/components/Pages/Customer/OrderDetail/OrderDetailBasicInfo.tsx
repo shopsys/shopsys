@@ -1,6 +1,6 @@
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { WalletIcon } from 'components/Basic/Icon/WalletIcon';
+import { Link } from 'components/Basic/Link/Link';
 import { ExpectedDeliveryDateSummary } from 'components/Blocks/ExpectedDeliveryDateInfo/ExpectedDeliveryDateSummary';
 import { useCurrentCustomerUserReviewedProductUuids } from 'components/Blocks/ProductReviews/useCurrentCustomerUserReviewedProductUuids';
 import { Button } from 'components/Forms/Button/Button';
@@ -146,23 +146,23 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 <div>
                                     {t('Tracking package')}
                                     {' - '}
-                                    <ExtendedNextLink
+                                    <Link
+                                        isExternal
                                         href={order.trackingUrl}
                                         target="_blank"
-                                        className="text-sm"
                                         aria-label={t('Go to tracking package {{ trackingNumber }}', {
                                             ns: 'accessibility',
                                             trackingNumber: order.trackingNumber,
                                         })}
                                     >
                                         {order.trackingNumber}
-                                    </ExtendedNextLink>
+                                    </Link>
                                 </div>
                             )}
                         </div>
 
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
+                            <span className="font-price">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -182,7 +182,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         />
 
                         {isPriceVisible(orderPayment.totalPrice.priceWithVat) && (
-                            <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                            <span className="font-price">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
                         )}
                     </div>
                 </OrderDetailRowInfo>
@@ -190,13 +190,13 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
             {orderRounding && isPriceVisible(orderRounding.totalPrice.priceWithVat) && (
                 <OrderDetailRowInfo title={t('Rounding')}>
-                    <span className="block w-full text-right font-bold">
+                    <span className="block w-full text-right font-price">
                         {formatPrice(orderRounding.totalPrice.priceWithVat)}
                     </span>
                 </OrderDetailRowInfo>
             )}
 
-            <div className="rounded-xl bg-background-more p-5">
+            <div className="rounded-card bg-background-more p-5">
                 <div data-tid={TIDs.order_detail_items}>
                     {filteredOrderItems.map((orderItem) => (
                         <OrderDetailOrderItem
@@ -217,7 +217,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     ))}
                 </div>
 
-                <div className="mt-8 flex flex-col gap-2 font-secondary font-semibold text-sm">
+                <div className="mt-8 flex flex-col gap-2 text-sm">
                     <span className="text-lg">{t('Order summary')}</span>
 
                     {order.promoCode && (
@@ -240,7 +240,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 {t('Total price')}
 
                                 <div className="flex flex-col items-end gap-2">
-                                    <strong className="text-lg text-price">
+                                    <strong className="text-lg text-price-default">
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </strong>
 
@@ -303,7 +303,7 @@ type OrderDetailRowInfoProps = {
 
 const OrderDetailRowInfo: FC<OrderDetailRowInfoProps> = ({ tid, title, children }) => {
     return (
-        <CustomerRecordRowInfo className="rounded-xl bg-background-more p-5" tid={tid} title={title}>
+        <CustomerRecordRowInfo className="rounded-card bg-background-more p-5" tid={tid} title={title}>
             {children}
         </CustomerRecordRowInfo>
     );

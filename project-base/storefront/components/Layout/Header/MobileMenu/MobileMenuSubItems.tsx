@@ -27,7 +27,7 @@ export const SubMenu: FC<SubMenuProps> = ({ onNavigate }) => {
     return (
         <div className="mt-auto">
             <div className="mx-5 mt-5 border-border-less border-t pt-5 pb-5">
-                <p className="mb-3 font-secondary font-semibold text-text-less text-xs uppercase">{t('Quick links')}</p>
+                <p className="mb-3 font-semibold text-text-less text-xs uppercase">{t('Quick links')}</p>
 
                 <div className="flex flex-col gap-2">
                     <SubMenuItem
@@ -75,7 +75,7 @@ const SubMenuItem: FC<SubMenuItemProps> = ({ count, href, icon: Icon, label, onC
         <ExtendedNextLink
             passHref
             aria-label={count ? `${label} (${count})` : label}
-            className="flex min-h-12 items-center gap-3 rounded-md bg-background-more px-3 py-3 text-left font-secondary font-semibold text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
+            className="flex min-h-12 items-center gap-3 rounded-control bg-background-more px-3 py-3 text-left font-ui text-base text-text-default no-underline transition-colors hover:bg-background-most hover:text-text-default hover:no-underline active:bg-background-most"
             href={href}
             type={type}
             onClick={onClick}

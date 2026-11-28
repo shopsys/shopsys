@@ -24,17 +24,17 @@ export const ReviewStars: FC<ReviewStarsProps> = ({ rating, ariaLabel, starClass
                 <span key={index} aria-hidden="true" className="relative flex">
                     <StarIcon
                         className={twMergeCustom(
-                            'size-5 text-gray-400',
-                            isFullyFilled && 'text-orange-500',
+                            'size-5 text-rating-empty',
+                            isFullyFilled && 'text-rating-fill',
                             starClassName,
                         )}
-                        fill={isFullyFilled ? 'currentColor' : 'var(--color-gray-400)'}
+                        fill={isFullyFilled ? 'currentColor' : 'var(--color-rating-empty)'}
                     />
 
                     {fillPercentage > 0 && !isFullyFilled && (
                         <span className="absolute inset-0 flex overflow-hidden" style={{ width: `${fillPercentage}%` }}>
                             <StarIcon
-                                className={twMergeCustom('size-5 shrink-0 text-orange-500', starClassName)}
+                                className={twMergeCustom('size-5 shrink-0 text-rating-fill', starClassName)}
                                 fill="currentColor"
                             />
                         </span>

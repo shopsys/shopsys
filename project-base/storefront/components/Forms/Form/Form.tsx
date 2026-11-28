@@ -78,11 +78,19 @@ export const FormContentWrapper: FC = ({ children, className }) => {
     return <div className={twMergeCustom('flex w-full flex-col gap-5', className)}>{children}</div>;
 };
 
-export const FormBlockWrapper: FC = ({ children, className }) => {
+type FormBlockWrapperProps = {
+    // "plain" drops the gray surface for forms inside a popup, so the fields align with the popup title and actions;
+    // a scrolling popup content then needs `-mx-1 px-1`, so it does not clip the hover rings and focus outlines
+    variant?: 'surface' | 'plain';
+};
+
+export const FormBlockWrapper: FC<FormBlockWrapperProps> = ({ children, className, variant = 'surface' }) => {
     return (
         <fieldset
             className={twMergeCustom(
-                'flex min-w-0 flex-col gap-5 rounded-xl bg-background-more p-5 vl:px-20 py-8',
+                'flex min-w-0 flex-col gap-5',
+                variant === 'surface' && 'rounded-surface bg-background-more p-5 vl:px-20 py-8',
+                variant === 'plain' && 'not-first:border-border-less not-first:border-t not-first:pt-5',
                 className,
             )}
         >
